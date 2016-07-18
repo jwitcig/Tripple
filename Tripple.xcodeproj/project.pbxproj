@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
-		8BD5278C1D3C2CA1004F100E /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* FirstViewController.swift */; };
-		8BD5278E1D3C2CA1004F100E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* SecondViewController.swift */; };
+		8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */; };
+		8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */; };
 		8BD527911D3C2CA1004F100E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BD5278F1D3C2CA1004F100E /* Main.storyboard */; };
 		8BD527931D3C2CA1004F100E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BD527921D3C2CA1004F100E /* Assets.xcassets */; };
 		8BD527961D3C2CA1004F100E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BD527941D3C2CA1004F100E /* LaunchScreen.storyboard */; };
 		8BD527A11D3C2CA1004F100E /* TrippleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527A01D3C2CA1004F100E /* TrippleTests.swift */; };
 		8BD527AC1D3C2CA1004F100E /* TrippleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527AB1D3C2CA1004F100E /* TrippleUITests.swift */; };
+		8BD527BA1D3C3CE8004F100E /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527B91D3C3CE8004F100E /* Waypoint.swift */; };
+		8BD527BF1D3C7C2D004F100E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD527BE1D3C7C2D004F100E /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +39,8 @@
 /* Begin PBXFileReference section */
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8BD5278B1D3C2CA1004F100E /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		8BD5278D1D3C2CA1004F100E /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWaypointViewController.swift; sourceTree = "<group>"; };
+		8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWaypointsViewController.swift; sourceTree = "<group>"; };
 		8BD527901D3C2CA1004F100E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BD527921D3C2CA1004F100E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BD527951D3C2CA1004F100E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +51,9 @@
 		8BD527A71D3C2CA1004F100E /* TrippleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrippleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527AB1D3C2CA1004F100E /* TrippleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrippleUITests.swift; sourceTree = "<group>"; };
 		8BD527AD1D3C2CA1004F100E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BD527B91D3C3CE8004F100E /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
+		8BD527BB1D3C491D004F100E /* Tripple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tripple.entitlements; sourceTree = "<group>"; };
+		8BD527BE1D3C7C2D004F100E /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD527BF1D3C7C2D004F100E /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +85,7 @@
 		8BD5277D1D3C2CA1004F100E = {
 			isa = PBXGroup;
 			children = (
+				8BD527BE1D3C7C2D004F100E /* CloudKit.framework */,
 				8BD527881D3C2CA1004F100E /* Tripple */,
 				8BD5279F1D3C2CA1004F100E /* TrippleTests */,
 				8BD527AA1D3C2CA1004F100E /* TrippleUITests */,
@@ -99,9 +106,11 @@
 		8BD527881D3C2CA1004F100E /* Tripple */ = {
 			isa = PBXGroup;
 			children = (
+				8BD527BB1D3C491D004F100E /* Tripple.entitlements */,
 				8BD527891D3C2CA1004F100E /* AppDelegate.swift */,
-				8BD5278B1D3C2CA1004F100E /* FirstViewController.swift */,
-				8BD5278D1D3C2CA1004F100E /* SecondViewController.swift */,
+				8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */,
+				8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */,
+				8BD527B91D3C3CE8004F100E /* Waypoint.swift */,
 				8BD5278F1D3C2CA1004F100E /* Main.storyboard */,
 				8BD527921D3C2CA1004F100E /* Assets.xcassets */,
 				8BD527941D3C2CA1004F100E /* LaunchScreen.storyboard */,
@@ -196,6 +205,12 @@
 				TargetAttributes = {
 					8BD527851D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 349WFX4WJR;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					8BD5279B1D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -259,9 +274,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BD5278E1D3C2CA1004F100E /* SecondViewController.swift in Sources */,
+				8BD527BA1D3C3CE8004F100E /* Waypoint.swift in Sources */,
+				8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */,
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
-				8BD5278C1D3C2CA1004F100E /* FirstViewController.swift in Sources */,
+				8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,10 +421,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Tripple/Tripple.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Tripple/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -416,10 +436,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Tripple/Tripple.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Tripple/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
