@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 import UIKit
 
-class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate {
+class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
@@ -63,9 +63,11 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate 
         locationManager.delegate = self
         
         locationManager.requestWhenInUseAuthorization()
+        
+        scrollView.scrollEnabled = false
 
         setupProcessViews()
-        updateProcessControls()
+        updateProcessControls(proceedEnabled: false)
         
         findLocation()
     }
@@ -97,9 +99,17 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate 
         }
     }
     
+    func processFormUpdate(form form: ProcessView) {
+        updateProcessControls(proceedEnabled: form.formComplete)
+    }
+    
     func setupProcessViews() {
         processViewItems = [nameView, messageView, viewCompleteWaypointView].map {
+            guard var processView = $0 as? ProcessView else { fatalError() }
+            
             $0.translatesAutoresizingMaskIntoConstraints = false
+            
+            processView.formDelegate = self
             
             stackView.addArrangedSubview($0)
             
@@ -110,8 +120,8 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate 
         }
     }
     
-    func updateProcessControls() {
-        let animationDuration = 0.8
+    let animationDuration = 0.8
+    func updateProcessControls(proceedEnabled proceedEnabled: Bool? = nil) {
         
         // back button
         if currentItemIndex == 0 {
@@ -132,6 +142,7 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate 
 //                self.nextButton.enabled = false
 //                self.nextButton.alpha = 0
             
+               
                 self.nextButton.setTitle("post", forState: .Normal)
                 self.nextButton.setTitle("post", forState: .Selected)
             }
@@ -144,19 +155,53 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate 
                 self.nextButton.setTitle("next", forState: .Selected)
             }
         }
+        
+        if let enabled = proceedEnabled {
+            self.nextButton.enabled = enabled
+            
+            if enabled {
+                self.nextButton.alpha = 1
+            } else {
+                self.nextButton.alpha = 0.4
+            }
+        }
     }
     
     func slideToItem(item: ProcessViewItem) {
-        let index = (processViewItems.map{$0.view}).indexOf(item.view)
-        
-        guard let itemIndex = index else { return }
-        
-        if item.view == viewCompleteWaypointView {
-            refreshCompletionView()
+        processViewItems.forEach {
+            ($0.view as? ProcessView)?.dismissKeyboard()
         }
         
-        UIView.animateWithDuration(slideAnimationTime) { 
+        guard let itemIndex = (processViewItems.map{$0.view}).indexOf(item.view) else { return }
+        
+        let processView = item.view as! ProcessView
+        
+        updateProcessControls(proceedEnabled: processView.formComplete)
+        
+        switch item.view {
+            
+        case nameView:
+            break
+            
+        case messageView:
+            break
+            
+        case viewCompleteWaypointView:
+            refreshCompletionView()
+
+        default:
+            print("Unimplemented view: 'slideToItem:'")
+        }
+        
+        self.scrollView.scrollEnabled = true
+        self.scrollView.userInteractionEnabled = false
+
+        UIView.animateWithDuration(slideAnimationTime, animations: {
             self.scrollView.contentOffset = CGPoint(x: self.scrollView.frame.width*CGFloat(itemIndex), y: 0)
+            
+        }) { (finished) in
+            self.scrollView.scrollEnabled = false
+            self.scrollView.userInteractionEnabled = true
         }
     }
     
@@ -215,38 +260,96 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate 
 
 }
 
-private protocol ProcessView { }
+protocol ProcessView {
+    var formDelegate: ProcessViewDelegate? { get set }
+    
+    var formComplete: Bool { get set }
+    
+    func dismissKeyboard()
+}
+
+protocol ProcessViewDelegate {
+    func processFormUpdate(form form: ProcessView)
+}
 
 class CreateWaypointNameView: UIView, ProcessView {
-    @IBOutlet weak var textField: UITextField!
+    
+    @IBOutlet weak var textField: UITextField! {
+        didSet {
+            textField?.addTarget(self, action: #selector(CreateWaypointNameView.textFieldTextDidChange(_:)), forControlEvents: .EditingChanged)
+        }
+    }
+    
+    var formDelegate: ProcessViewDelegate?
+    
+    var formComplete = false {
+        didSet {
+            formDelegate?.processFormUpdate(form: self)
+        }
+    }
     
     var pinName: String? {
         get { return textField.text }
     }
+    
+    func textFieldTextDidChange(notification: NSNotification) {
+        if textField.text?.characters.count == 0 {
+            formComplete = false
+        } else {
+            formComplete = true
+        }
+    }
+    
+    func dismissKeyboard() {
+        textField?.resignFirstResponder()
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        dismissKeyboard()
+    }
+    
 }
 
 class CreateWaypointMessageView: UIView, ProcessView, UITextViewDelegate {
+    
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeholderLabel: UILabel!
+    
+    var formDelegate: ProcessViewDelegate?
+    
+    var formComplete = true {
+        didSet {
+            formDelegate?.processFormUpdate(form: self)
+        }
+    }
     
     var pinMessage: String? {
         get { return textView.text }
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
+        placeholderLabel.hidden = true
         textView.recalculateVerticalAlignment()
     }
     
     func textViewDidEndEditing(textView: UITextView) {
         placeholderLabel.hidden = textView.hasText()
         textView.recalculateVerticalAlignment()
-
     }
     
     func textViewDidChange(textView: UITextView) {
         placeholderLabel.hidden = textView.hasText()
         textView.recalculateVerticalAlignment()
 
+        formComplete = true
+    }
+    
+    func dismissKeyboard() {
+        textView?.resignFirstResponder()
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        dismissKeyboard()
     }
 
 }
@@ -256,6 +359,14 @@ class ViewNewWaypointView: UIView, ProcessView, MKMapViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+   
+    var formDelegate: ProcessViewDelegate?
+    
+    var formComplete = true {
+        didSet {
+            formDelegate?.processFormUpdate(form: self)
+        }
+    }
     
     var pinTitle: String? {
         get { return titleLabel.text }
@@ -284,6 +395,8 @@ class ViewNewWaypointView: UIView, ProcessView, MKMapViewDelegate {
             }
         }
     }
+    
+    func dismissKeyboard() { }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
