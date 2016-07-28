@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B11864A1D420D28000E7D6B /* mapPin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1186471D420D28000E7D6B /* mapPin@3x.png */; };
+		8B11864B1D420D28000E7D6B /* mapPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1186481D420D28000E7D6B /* mapPin@2x.png */; };
+		8B11864C1D420D28000E7D6B /* mapPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1186491D420D28000E7D6B /* mapPin.png */; };
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
 		8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */; };
 		8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */; };
@@ -17,6 +20,9 @@
 		8BD527AC1D3C2CA1004F100E /* TrippleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527AB1D3C2CA1004F100E /* TrippleUITests.swift */; };
 		8BD527BA1D3C3CE8004F100E /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527B91D3C3CE8004F100E /* Waypoint.swift */; };
 		8BD527BF1D3C7C2D004F100E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD527BE1D3C7C2D004F100E /* CloudKit.framework */; };
+		8BDC18071D3F07BE00D3E305 /* WaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */; };
+		8BDC180B1D3F212400D3E305 /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BDC180A1D3F212400D3E305 /* appIcon.png */; };
+		8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B1186471D420D28000E7D6B /* mapPin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapPin@3x.png"; path = "../../../../Desktop/mapPin@3x.png"; sourceTree = "<group>"; };
+		8B1186481D420D28000E7D6B /* mapPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapPin@2x.png"; path = "../../../../Desktop/mapPin@2x.png"; sourceTree = "<group>"; };
+		8B1186491D420D28000E7D6B /* mapPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapPin.png; path = ../../../../Desktop/mapPin.png; sourceTree = "<group>"; };
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWaypointViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +63,9 @@
 		8BD527B91D3C3CE8004F100E /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
 		8BD527BB1D3C491D004F100E /* Tripple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tripple.entitlements; sourceTree = "<group>"; };
 		8BD527BE1D3C7C2D004F100E /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointAnnotationView.swift; sourceTree = "<group>"; };
+		8BDC180A1D3F212400D3E305 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon.png; path = ../../../../Desktop/appIcon.png; sourceTree = "<group>"; };
+		8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,11 +122,17 @@
 				8BD527891D3C2CA1004F100E /* AppDelegate.swift */,
 				8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */,
 				8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */,
+				8BDC180A1D3F212400D3E305 /* appIcon.png */,
 				8BD527B91D3C3CE8004F100E /* Waypoint.swift */,
 				8BD5278F1D3C2CA1004F100E /* Main.storyboard */,
+				8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */,
+				8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */,
 				8BD527921D3C2CA1004F100E /* Assets.xcassets */,
 				8BD527941D3C2CA1004F100E /* LaunchScreen.storyboard */,
 				8BD527971D3C2CA1004F100E /* Info.plist */,
+				8B1186471D420D28000E7D6B /* mapPin@3x.png */,
+				8B1186481D420D28000E7D6B /* mapPin@2x.png */,
+				8B1186491D420D28000E7D6B /* mapPin.png */,
 			);
 			path = Tripple;
 			sourceTree = "<group>";
@@ -247,9 +265,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BDC180B1D3F212400D3E305 /* appIcon.png in Resources */,
+				8B11864A1D420D28000E7D6B /* mapPin@3x.png in Resources */,
 				8BD527961D3C2CA1004F100E /* LaunchScreen.storyboard in Resources */,
+				8B11864C1D420D28000E7D6B /* mapPin.png in Resources */,
 				8BD527931D3C2CA1004F100E /* Assets.xcassets in Resources */,
 				8BD527911D3C2CA1004F100E /* Main.storyboard in Resources */,
+				8B11864B1D420D28000E7D6B /* mapPin@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +298,10 @@
 			files = (
 				8BD527BA1D3C3CE8004F100E /* Waypoint.swift in Sources */,
 				8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */,
+				8BDC18071D3F07BE00D3E305 /* WaypointAnnotationView.swift in Sources */,
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
 				8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */,
+				8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +536,7 @@
 				8BD527B21D3C2CA1004F100E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BD527B31D3C2CA1004F100E /* Build configuration list for PBXNativeTarget "TrippleTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +545,7 @@
 				8BD527B51D3C2CA1004F100E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BD527B61D3C2CA1004F100E /* Build configuration list for PBXNativeTarget "TrippleUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +554,7 @@
 				8BD527B81D3C2CA1004F100E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

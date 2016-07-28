@@ -10,13 +10,23 @@ import CloudKit
 import MapKit
 import UIKit
 
-class ViewWaypointsController: UIViewController, CLLocationManagerDelegate {
+struct MapItem {
+    let waypoint: Waypoint
+    let annotation: MKPointAnnotation
+    
+    init (waypoint: Waypoint, annotation: MKPointAnnotation) {
+        self.waypoint = waypoint
+        self.annotation = annotation
+    }
+}
+
+class ViewWaypointsController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
 
     let locationManager = CLLocationManager()
     
-    var waypoints = [Waypoint]()
+    var mapItems = [MapItem]()
     
     var shouldJumpToMyLocation = true
     
@@ -37,16 +47,23 @@ class ViewWaypointsController: UIViewController, CLLocationManagerDelegate {
             
             guard let records = records else { return }
             
-            self.waypoints = records.map { Waypoint(location: $0.valueForKey("location")! as! CLLocation) }
+            let waypoints = records.map { Waypoint(location: $0.valueForKey("location")! as! CLLocation) }
             
+            self.mapItems = waypoints.map {
+                let annotation = MKPointAnnotation()
+                annotation.title = "Waypoint"
+                annotation.coordinate = $0.location.coordinate
+                return MapItem(waypoint: $0, annotation: annotation)
+            }
             
-            let waypoint = self.waypoints.first!
+            if let waypoint = waypoints.first {
+                let region = MKCoordinateRegion(center: waypoint.location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+                self.mapView.setRegion(region, animated: true)
+                
+                self.shouldJumpToMyLocation = false
+            }
             
-            
-            let region = MKCoordinateRegion(center: waypoint.location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-            self.mapView.setRegion(region, animated: true)
-            
-            self.shouldJumpToMyLocation = false
+            self.mapView.addAnnotations(self.mapItems.map{$0.annotation})
         }
     }
     
@@ -72,5 +89,39 @@ class ViewWaypointsController: UIViewController, CLLocationManagerDelegate {
         print("Error updating location: \(error)")
     }
 
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+
+        let id = WaypointAnnotationView.reuseIdentifier!
+        
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(id)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: id)
+            annotationView!.image = UIImage(named: "mapPin")
+            annotationView!.canShowCallout = true
+        } else {
+            //we are re-using a view, update its annotation reference...
+            annotationView!.annotation = annotation
+        }
+        
+        annotationView?.detailCalloutAccessoryView = nil
+        
+        return annotationView
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+
+        let selectedAnnotation = mapItems.filter {
+            if let annotation = view.annotation as? MKPointAnnotation {
+                return $0.annotation == annotation
+            }
+            return false
+        }.first
+        
+        guard let mapItem = selectedAnnotation else { return }
+    
+        print(mapItem)
+    }
+    
 }
 
