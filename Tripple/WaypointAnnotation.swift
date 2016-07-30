@@ -1,5 +1,5 @@
 //
-//  WaypointAnnotation.swift
+//  PinAnnotation.swift
 //  Tripple
 //
 //  Created by Developer on 7/19/16.
@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class WaypointAnnotation: NSObject, MKAnnotation {
+class PinAnnotation: NSObject, MKAnnotation {
 
     @objc var coordinate: CLLocationCoordinate2D
     

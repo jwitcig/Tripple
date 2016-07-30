@@ -1,5 +1,5 @@
 //
-//  WaypointAnnotationView.swift
+//  PinAnnotationView.swift
 //  Tripple
 //
 //  Created by Developer on 7/19/16.
@@ -9,22 +9,22 @@
 import MapKit
 import UIKit
 
-class WaypointAnnotationView: MKAnnotationView {
+class PinAnnotationView: MKAnnotationView {
 
     static var reuseIdentifier: String? {
-        return "WaypointAnnotationView"
+        return "PinAnnotationView"
     }
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(NSBundle.mainBundle().loadNibNamed("WaypointAnnotationView", owner: self, options: nil).first! as! UIView)
+        self.addSubview(NSBundle.mainBundle().loadNibNamed("PinAnnotationView", owner: self, options: nil).first! as! UIView)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.addSubview(NSBundle.mainBundle().loadNibNamed("WaypointAnnotationView", owner: self, options: nil).first! as! UIView)
+        self.addSubview(NSBundle.mainBundle().loadNibNamed("PinAnnotationView", owner: self, options: nil).first! as! UIView)
     }
     
     // Only override drawRect: if you perform custom drawing.

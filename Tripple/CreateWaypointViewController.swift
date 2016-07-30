@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 import UIKit
 
-class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
+class CreatePinViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
@@ -19,9 +19,9 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
-    @IBOutlet weak var nameView: CreateWaypointNameView!
-    @IBOutlet weak var messageView: CreateWaypointMessageView!
-    @IBOutlet weak var viewCompleteWaypointView: ViewNewWaypointView!
+    @IBOutlet weak var nameView: CreatePinNameView!
+    @IBOutlet weak var messageView: CreatePinMessageView!
+    @IBOutlet weak var viewCompletePinView: ViewNewPinView!
     
     var locationManager = CLLocationManager()
     
@@ -39,7 +39,7 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
                 currentItemIndex = 0
             } else if currentItemIndex == processViewItems.count {
                 // process is complete
-                createWaypoint()
+                createPin()
                 currentItemIndex -= 1
                 return
             }
@@ -91,7 +91,7 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
             }
             
             if let location = self.currentLocation {
-                self.viewCompleteWaypointView.coordinate = location.coordinate
+                self.viewCompletePinView.coordinate = location.coordinate
                 print("set location")
             } else {
                 print("unable to retrieve location")
@@ -104,7 +104,7 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func setupProcessViews() {
-        processViewItems = [nameView, messageView, viewCompleteWaypointView].map {
+        processViewItems = [nameView, messageView, viewCompletePinView].map {
             guard var processView = $0 as? ProcessView else { fatalError() }
             
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -138,22 +138,11 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
         
         // next button
         if currentItemIndex == processViewItems.count - 1 {
-            UIView.animateWithDuration(animationDuration) {
-//                self.nextButton.enabled = false
-//                self.nextButton.alpha = 0
-            
-               
-                self.nextButton.setTitle("post", forState: .Normal)
-                self.nextButton.setTitle("post", forState: .Selected)
-            }
+            self.nextButton.setTitle("drop", forState: .Normal)
+            self.nextButton.setTitle("drop", forState: .Selected)
         } else {
-            UIView.animateWithDuration(animationDuration) {
-//                self.nextButton.enabled = true
-//                self.nextButton.alpha = 1
-                
-                self.nextButton.setTitle("next", forState: .Normal)
-                self.nextButton.setTitle("next", forState: .Selected)
-            }
+            self.nextButton.setTitle("next", forState: .Normal)
+            self.nextButton.setTitle("next", forState: .Selected)
         }
         
         if let enabled = proceedEnabled {
@@ -186,7 +175,7 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
         case messageView:
             break
             
-        case viewCompleteWaypointView:
+        case viewCompletePinView:
             refreshCompletionView()
 
         default:
@@ -223,29 +212,33 @@ class CreateWaypointViewController: UIViewController, CLLocationManagerDelegate,
     }
     
     func refreshCompletionView() {
-        viewCompleteWaypointView.pinTitle = nameView.pinName
-        viewCompleteWaypointView.pinMessage = messageView.pinMessage
-        viewCompleteWaypointView.coordinate = currentLocation?.coordinate
+        viewCompletePinView.pinTitle = nameView.pinName
+        viewCompletePinView.pinMessage = messageView.pinMessage
+        viewCompletePinView.coordinate = currentLocation?.coordinate
     }
     
-    func createWaypoint() {
+    func createPin() {
         guard let location = self.currentLocation else {
             print("No location found: cannot save")
             return
         }
         
-        let waypoint = Waypoint(location: location)
+        let pin = Pin()
+        pin._title = nameView.pinName
+        pin._message = messageView.pinMessage
         
-        let record = CKRecord(recordType: "Waypoint")
-        record.setValue(waypoint.location, forKey: "location")
+        let waypoint = Waypoint(pin: pin, location: location)
         
-        CKContainer.defaultContainer().publicCloudDatabase.saveRecord(record) { (record, error) in
-            
-            guard error == nil else {
-                print("Error saving record: \(error)")
-                return
-            }
-        }
+//        let record = CKRecord(recordType: "Pin")
+//        record.setValue(pin.location, forKey: "location")
+//        
+//        CKContainer.defaultContainer().publicCloudDatabase.saveRecord(record) { (record, error) in
+//            
+//            guard error == nil else {
+//                print("Error saving record: \(error)")
+//                return
+//            }
+//        }
         
     }
     
@@ -272,11 +265,11 @@ protocol ProcessViewDelegate {
     func processFormUpdate(form form: ProcessView)
 }
 
-class CreateWaypointNameView: UIView, ProcessView {
+class CreatePinNameView: UIView, ProcessView {
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
-            textField?.addTarget(self, action: #selector(CreateWaypointNameView.textFieldTextDidChange(_:)), forControlEvents: .EditingChanged)
+            textField?.addTarget(self, action: #selector(CreatePinNameView.textFieldTextDidChange(_:)), forControlEvents: .EditingChanged)
         }
     }
     
@@ -310,7 +303,7 @@ class CreateWaypointNameView: UIView, ProcessView {
     
 }
 
-class CreateWaypointMessageView: UIView, ProcessView, UITextViewDelegate {
+class CreatePinMessageView: UIView, ProcessView, UITextViewDelegate {
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeholderLabel: UILabel!
@@ -354,7 +347,7 @@ class CreateWaypointMessageView: UIView, ProcessView, UITextViewDelegate {
 
 }
 
-class ViewNewWaypointView: UIView, ProcessView, MKMapViewDelegate {
+class ViewNewPinView: UIView, ProcessView, MKMapViewDelegate {
   
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
@@ -400,7 +393,7 @@ class ViewNewWaypointView: UIView, ProcessView, MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let id = WaypointAnnotationView.reuseIdentifier!
+        let id = PinAnnotationView.reuseIdentifier!
         
         var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(id)
         

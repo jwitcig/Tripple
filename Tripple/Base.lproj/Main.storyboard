@@ -10,7 +10,7 @@
         <!--First-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="CreateWaypointViewController" customModule="Tripple" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" customClass="CreatePinViewController" customModule="Tripple" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qxA-WT-Gch">
-                                <rect key="frame" x="20" y="20" width="560" height="531"/>
+                                <rect key="frame" x="20" y="40" width="560" height="511"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="IFP-3h-rVM">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="38"/>
@@ -52,7 +52,7 @@
                                         </subviews>
                                     </stackView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGo-V1-c5l">
-                                        <rect key="frame" x="0.0" y="38" width="560" height="493"/>
+                                        <rect key="frame" x="0.0" y="38" width="560" height="473"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="smO-CH-8dJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="560" height="471"/>
@@ -82,7 +82,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="qxA-WT-Gch" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="ZoC-QT-6Za"/>
+                            <constraint firstItem="qxA-WT-Gch" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="20" id="ZoC-QT-6Za"/>
                             <constraint firstItem="qxA-WT-Gch" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="bGW-4E-Wa1"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="qxA-WT-Gch" secondAttribute="bottom" id="c9f-6F-eaV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qxA-WT-Gch" secondAttribute="trailing" id="gRN-zH-9y9"/>
@@ -96,11 +96,11 @@
                         <outlet property="nextButton" destination="l5Y-A2-hbG" id="8DN-Mk-MER"/>
                         <outlet property="scrollView" destination="zGo-V1-c5l" id="CVE-sb-8Q0"/>
                         <outlet property="stackView" destination="6k7-Mn-eml" id="NW5-z8-qwK"/>
-                        <outlet property="viewCompleteWaypointView" destination="Vb8-YI-soD" id="0lm-Nt-OUI"/>
+                        <outlet property="viewCompletePinView" destination="Vb8-YI-soD" id="pj5-bS-elg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="CZc-oX-gRe" customClass="CreateWaypointNameView" customModule="Tripple" customModuleProvider="target">
+                <view contentMode="scaleToFill" id="CZc-oX-gRe" customClass="CreatePinNameView" customModule="Tripple" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="394" height="426"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -123,7 +123,7 @@
                         <outlet property="textField" destination="u1R-WE-JO6" id="Hjk-DV-581"/>
                     </connections>
                 </view>
-                <view contentMode="scaleToFill" id="RG5-rK-Yid" customClass="CreateWaypointMessageView" customModule="Tripple" customModuleProvider="target">
+                <view contentMode="scaleToFill" id="RG5-rK-Yid" customClass="CreatePinMessageView" customModule="Tripple" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="434" height="425"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -158,14 +158,14 @@
                         <outlet property="textView" destination="Yte-Xf-Hgx" id="xhB-Kk-Unh"/>
                     </connections>
                 </view>
-                <view contentMode="scaleToFill" id="Vb8-YI-soD" userLabel="View New WaypointView" customClass="ViewNewWaypointView" customModule="Tripple" customModuleProvider="target">
+                <view contentMode="scaleToFill" id="Vb8-YI-soD" customClass="ViewNewPinView" customModule="Tripple" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="434" height="425"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="s0m-8A-FjM">
                             <rect key="frame" x="0.0" y="0.0" width="434" height="425"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Waypoint Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFc-ZO-lBB">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Pin Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFc-ZO-lBB">
                                     <rect key="frame" x="0.0" y="0.0" width="434" height="39"/>
                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="32"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -228,49 +228,129 @@
             </objects>
             <point key="canvasLocation" x="750" y="-320"/>
         </scene>
-        <!--Second-->
+        <!--Stuff-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="ViewWaypointsController" customModule="Tripple" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8rJ-Kc-sve" customClass="ViewPinController" customModule="Tripple" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" translatesAutoresizingMaskIntoConstraints="NO" id="TgF-gY-GuL">
-                                <rect key="frame" x="0.0" y="20" width="600" height="459"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TgF-gY-GuL">
+                                <rect key="frame" x="0.0" y="20" width="600" height="536"/>
                                 <connections>
                                     <outlet property="delegate" destination="8rJ-Kc-sve" id="mhC-AB-zDQ"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWH-Vr-kVz">
-                                <rect key="frame" x="260.5" y="498" width="79" height="30"/>
-                                <state key="normal" title="my location"/>
-                                <connections>
-                                    <action selector="goToMyLocation:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="EDl-qa-KxS"/>
-                                </connections>
-                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aaj-Ux-R03">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gxM-tH-VLG"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Title" id="OzE-iH-RsK"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TgF-gY-GuL" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="0zQ-og-i5D"/>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="UWH-Vr-kVz" secondAttribute="bottom" constant="23" id="IXg-62-gIx"/>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="TgF-gY-GuL" secondAttribute="bottom" constant="72" id="JuZ-Tp-BCc"/>
-                            <constraint firstItem="TgF-gY-GuL" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="LGA-QK-HiZ"/>
-                            <constraint firstItem="UWH-Vr-kVz" firstAttribute="centerX" secondItem="TgF-gY-GuL" secondAttribute="centerX" id="YJE-2Z-K6X"/>
-                            <constraint firstAttribute="trailing" secondItem="TgF-gY-GuL" secondAttribute="trailing" id="are-hC-lwS"/>
-                            <constraint firstItem="UWH-Vr-kVz" firstAttribute="top" secondItem="TgF-gY-GuL" secondAttribute="bottom" constant="19" id="nXy-jN-HJK"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="TgF-gY-GuL" secondAttribute="bottom" id="09q-ww-JFy"/>
+                            <constraint firstItem="TgF-gY-GuL" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="Er8-PL-elE"/>
+                            <constraint firstItem="aaj-Ux-R03" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="OBz-Ig-Oft"/>
+                            <constraint firstAttribute="trailing" secondItem="aaj-Ux-R03" secondAttribute="trailing" id="YaV-md-EOt"/>
+                            <constraint firstItem="TgF-gY-GuL" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="cgn-kW-ypL"/>
+                            <constraint firstItem="aaj-Ux-R03" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="hGW-Rd-V0u"/>
+                            <constraint firstAttribute="trailing" secondItem="TgF-gY-GuL" secondAttribute="trailing" id="y5h-eb-D5H"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Stuff" id="aFL-5S-ZqK"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="TgF-gY-GuL" id="0oe-cH-wyp"/>
+                        <outlet property="navigationBar" destination="aaj-Ux-R03" id="8rd-J6-FBA"/>
+                        <outlet property="pinInfoView" destination="5Wx-IR-9p6" id="vDj-kb-cLE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="5Wx-IR-9p6" customClass="PinInfoView" customModule="Tripple" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="316" height="506"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="mqo-wp-FMs">
+                            <rect key="frame" x="20" y="20" width="276" height="466"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qYI-1h-VT4">
+                                    <rect key="frame" x="0.0" y="0.0" width="276" height="30"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pin Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQk-lt-edF">
+                                            <rect key="frame" x="0.0" y="0.0" width="138" height="30"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Do4-v8-DqP">
+                                            <rect key="frame" x="138" y="0.0" width="138" height="30"/>
+                                            <state key="normal" title="more info"/>
+                                            <connections>
+                                                <action selector="moreInfoPressed:" destination="5Wx-IR-9p6" eventType="touchUpInside" id="HvH-hC-uoY"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2lS-9S-BYG">
+                                    <rect key="frame" x="0.0" y="35" width="276" height="382"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCW-h9-Uhz">
+                                    <rect key="frame" x="0.0" y="422" width="276" height="44"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                    <state key="normal" title="pick up pin"/>
+                                    <connections>
+                                        <action selector="pickUpPinPressed:" destination="5Wx-IR-9p6" eventType="touchUpInside" id="hHU-a3-t4q"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kzN-PR-jVm">
+                            <rect key="frame" x="139.5" y="0.0" width="37" height="30"/>
+                            <state key="normal" title="close"/>
+                            <connections>
+                                <action selector="closeInfoView:" destination="5Wx-IR-9p6" eventType="touchUpInside" id="bPy-M9-k1H"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstItem="mqo-wp-FMs" firstAttribute="top" secondItem="5Wx-IR-9p6" secondAttribute="top" constant="20" id="4cP-tA-O4q"/>
+                        <constraint firstItem="mqo-wp-FMs" firstAttribute="leading" secondItem="5Wx-IR-9p6" secondAttribute="leading" constant="20" id="58K-Kz-toe"/>
+                        <constraint firstAttribute="bottom" secondItem="mqo-wp-FMs" secondAttribute="bottom" constant="20" id="X5O-bA-c5P"/>
+                        <constraint firstItem="kzN-PR-jVm" firstAttribute="centerX" secondItem="5Wx-IR-9p6" secondAttribute="centerX" id="fkm-FV-u4V"/>
+                        <constraint firstItem="kzN-PR-jVm" firstAttribute="top" secondItem="5Wx-IR-9p6" secondAttribute="top" id="nQO-Bm-wXT"/>
+                        <constraint firstAttribute="trailing" secondItem="mqo-wp-FMs" secondAttribute="trailing" constant="20" id="zKs-UL-OAG"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="infoToggleButton" destination="Do4-v8-DqP" id="c7V-Jv-R3f"/>
+                        <outlet property="messageLabel" destination="2lS-9S-BYG" id="GpZ-JT-f7R"/>
+                        <outlet property="titleLabel" destination="IQk-lt-edF" id="CN3-oZ-zV8"/>
+                        <outletCollection property="gestureRecognizers" destination="36I-II-SfL" appends="YES" id="EuP-vd-0pO"/>
+                    </connections>
+                </view>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="36I-II-SfL">
+                    <connections>
+                        <action selector="viewDragged:" destination="5Wx-IR-9p6" id="VZS-xJ-fxo"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="750" y="360"/>
         </scene>
