@@ -45,6 +45,7 @@
 		8B37FD951D4C464400073E67 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B37FD971D4C54F400073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD961D4C54F400073E67 /* Info.plist */; };
 		8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B874C431D4D6B0700AEF8A1 /* Pickup.swift */; };
+		8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */; };
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
 		8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */; };
 		8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */; };
@@ -54,7 +55,6 @@
 		8BD527A11D3C2CA1004F100E /* TrippleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527A01D3C2CA1004F100E /* TrippleTests.swift */; };
 		8BD527AC1D3C2CA1004F100E /* TrippleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527AB1D3C2CA1004F100E /* TrippleUITests.swift */; };
 		8BD527BA1D3C3CE8004F100E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527B91D3C3CE8004F100E /* Models.swift */; };
-		8BD527BF1D3C7C2D004F100E /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD527BE1D3C7C2D004F100E /* CloudKit.framework */; };
 		8BDC18071D3F07BE00D3E305 /* WaypointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */; };
 		8BDC180B1D3F212400D3E305 /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BDC180A1D3F212400D3E305 /* appIcon.png */; };
 		8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */; };
@@ -125,6 +125,7 @@
 		8B37FD911D4C37EE00073E67 /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
 		8B37FD961D4C54F400073E67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B874C431D4D6B0700AEF8A1 /* Pickup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pickup.swift; sourceTree = "<group>"; };
+		8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWaypointViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +141,6 @@
 		8BD527AD1D3C2CA1004F100E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BD527B91D3C3CE8004F100E /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		8BD527BB1D3C491D004F100E /* Tripple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tripple.entitlements; sourceTree = "<group>"; };
-		8BD527BE1D3C7C2D004F100E /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointAnnotationView.swift; sourceTree = "<group>"; };
 		8BDC180A1D3F212400D3E305 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon.png; path = ../../../../Desktop/appIcon.png; sourceTree = "<group>"; };
 		8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointAnnotation.swift; sourceTree = "<group>"; };
@@ -151,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */,
 				8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */,
 				8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */,
 				8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */,
@@ -164,7 +165,6 @@
 				8B37FD631D4C2C4100073E67 /* GoogleAppUtilities.framework in Frameworks */,
 				8B37FD7C1D4C301F00073E67 /* AWSDynamoDB.framework in Frameworks */,
 				8B37FD6C1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Frameworks */,
-				8BD527BF1D3C7C2D004F100E /* CloudKit.framework in Frameworks */,
 				8B37FD5D1D4C2C4100073E67 /* AWSCore.framework in Frameworks */,
 				8B37FD641D4C2C4100073E67 /* GoogleAuthUtilities.framework in Frameworks */,
 				8B37FD5F1D4C2C4100073E67 /* AWSMobileAnalytics.framework in Frameworks */,
@@ -262,7 +262,6 @@
 			children = (
 				8B37FD791D4C2D5B00073E67 /* libz.tbd */,
 				8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */,
-				8BD527BE1D3C7C2D004F100E /* CloudKit.framework */,
 				8BD527881D3C2CA1004F100E /* Tripple */,
 				8BD5279F1D3C2CA1004F100E /* TrippleTests */,
 				8BD527AA1D3C2CA1004F100E /* TrippleUITests */,
@@ -283,6 +282,7 @@
 		8BD527881D3C2CA1004F100E /* Tripple */ = {
 			isa = PBXGroup;
 			children = (
+				8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */,
 				8B37FD701D4C2CE900073E67 /* AmazonAws */,
 				8B37FD4E1D4C2C4100073E67 /* Sdk */,
 				8B37FD7D1D4C329500073E67 /* AWS Code */,
@@ -654,6 +654,7 @@
 					"$(PROJECT_DIR)/Tripple/Sdk/Aws",
 					"$(PROJECT_DIR)/Tripple/Sdk/Google",
 					"$(PROJECT_DIR)/Tripple/AmazonAws",
+					"$(PROJECT_DIR)/Tripple",
 				);
 				INFOPLIST_FILE = Tripple/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -675,6 +676,7 @@
 					"$(PROJECT_DIR)/Tripple/Sdk/Aws",
 					"$(PROJECT_DIR)/Tripple/Sdk/Google",
 					"$(PROJECT_DIR)/Tripple/AmazonAws",
+					"$(PROJECT_DIR)/Tripple",
 				);
 				INFOPLIST_FILE = Tripple/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

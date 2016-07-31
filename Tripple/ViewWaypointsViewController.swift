@@ -10,6 +10,7 @@ import MapKit
 import UIKit
 
 import AWSDynamoDB
+import GoogleMobileAds
 
 struct MapItem {
     let pin: Pin
@@ -23,11 +24,18 @@ struct MapItem {
     }
 }
 
-class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GADBannerViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var navigationBar: UINavigationBar!
+    
+    @IBOutlet weak var mainStackView: UIStackView!
+    
+    @IBOutlet weak var adBannerHolder: UIView!
+    
+    var adBannerView: GADBannerView?
+    var adBannerViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var pinInfoView: PinInfoView!
     
@@ -124,8 +132,35 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             })
         })
         
+        adBannerView = createAdBannerView()
     }
-   
+    
+    func createAdBannerView() -> GADBannerView {
+        let adView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        adView.adUnitID = "ca-app-pub-0507224597790106/4302627325"
+        adView.delegate = self
+        adView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = [kGADSimulatorID, "8dba35d6e5470a34c709123c81ec85c1"]
+        adView.loadRequest(request)
+        
+        adBannerHolder.addSubview(adView)
+        adBannerHolder.hidden = true
+        return adView
+    }
+    
+    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        UIView.animateWithDuration(0.8) {
+            self.adBannerHolder.hidden = false
+        }
+    }
+    
+    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        UIView.animateWithDuration(0.8) {
+            self.adBannerHolder.hidden = true
+        }
+    }
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard let location = locations.first else { return }
@@ -157,14 +192,14 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        let selectedAnnotation = mapItems.filter {
+        let selectedMapItem = mapItems.filter {
             if let annotation = view.annotation as? MKPointAnnotation {
                 return $0.annotation == annotation
             }
             return false
         }.first
         
-        guard let mapItem = selectedAnnotation else { return }
+        guard let mapItem = selectedMapItem else { return }
         
         if !self.view.subviews.contains(pinInfoView) {
             pinInfoView.translatesAutoresizingMaskIntoConstraints = false
@@ -196,6 +231,8 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         pinInfoView.titleLabel.text = mapItem.pin._title
         pinInfoView.messageLabel.text = mapItem.pin._message
         pinInfoView.peek()
+        
+        mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
 }
