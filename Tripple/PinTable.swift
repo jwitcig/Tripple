@@ -125,7 +125,7 @@ class PinTable: NSObject, Table {
         itemForGet._id = "demo-id-500000"
         itemForGet._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
         itemForGet._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
-        
+    
         
         dispatch_group_enter(group)
         

@@ -29,7 +29,6 @@
 		8B37FD6D1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD521D4C2C4100073E67 /* AWSMobileAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B37FD731D4C2CE900073E67 /* AWSMobileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD711D4C2CE900073E67 /* AWSMobileClient.swift */; };
 		8B37FD741D4C2CE900073E67 /* AWSMobileHubHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD721D4C2CE900073E67 /* AWSMobileHubHelper.framework */; };
-		8B37FD761D4C2D3600073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD751D4C2D3600073E67 /* Info.plist */; };
 		8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */; };
 		8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD791D4C2D5B00073E67 /* libz.tbd */; };
 		8B37FD7C1D4C301F00073E67 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; };
@@ -44,6 +43,8 @@
 		8B37FD931D4C37EE00073E67 /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD911D4C37EE00073E67 /* Waypoint.swift */; };
 		8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; };
 		8B37FD951D4C464400073E67 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B37FD971D4C54F400073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD961D4C54F400073E67 /* Info.plist */; };
+		8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B874C431D4D6B0700AEF8A1 /* Pickup.swift */; };
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
 		8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */; };
 		8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */; };
@@ -110,7 +111,6 @@
 		8B37FD5C1D4C2C4100073E67 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		8B37FD711D4C2CE900073E67 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
 		8B37FD721D4C2CE900073E67 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
-		8B37FD751D4C2D3600073E67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8B37FD791D4C2D5B00073E67 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSDynamoDB.framework; sourceTree = "<group>"; };
@@ -123,6 +123,8 @@
 		8B37FD851D4C32B300073E67 /* PinTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTable.swift; sourceTree = "<group>"; };
 		8B37FD901D4C37EE00073E67 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		8B37FD911D4C37EE00073E67 /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
+		8B37FD961D4C54F400073E67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B874C431D4D6B0700AEF8A1 /* Pickup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pickup.swift; sourceTree = "<group>"; };
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWaypointViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				8B37FD831D4C32B300073E67 /* NoSQLTableViewController.swift */,
 				8B37FD901D4C37EE00073E67 /* Pin.swift */,
 				8B37FD911D4C37EE00073E67 /* Waypoint.swift */,
+				8B874C431D4D6B0700AEF8A1 /* Pickup.swift */,
 				8B37FD851D4C32B300073E67 /* PinTable.swift */,
 			);
 			name = "AWS Code";
@@ -292,7 +295,7 @@
 				8BD5278F1D3C2CA1004F100E /* Main.storyboard */,
 				8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */,
 				8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */,
-				8B37FD751D4C2D3600073E67 /* Info.plist */,
+				8B37FD961D4C54F400073E67 /* Info.plist */,
 				8BD527921D3C2CA1004F100E /* Assets.xcassets */,
 				8BD527941D3C2CA1004F100E /* LaunchScreen.storyboard */,
 				8B1186471D420D28000E7D6B /* mapPin@3x.png */,
@@ -440,7 +443,7 @@
 				8B37FD611D4C2C4100073E67 /* NOTICE in Resources */,
 				8BD527931D3C2CA1004F100E /* Assets.xcassets in Resources */,
 				8BD527911D3C2CA1004F100E /* Main.storyboard in Resources */,
-				8B37FD761D4C2D3600073E67 /* Info.plist in Resources */,
+				8B37FD971D4C54F400073E67 /* Info.plist in Resources */,
 				8B37FD621D4C2C4100073E67 /* CheckXcodeVersion.sh in Resources */,
 				8B11864B1D420D28000E7D6B /* mapPin@2x.png in Resources */,
 			);
@@ -497,6 +500,7 @@
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
 				8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */,
 				8B37FD8A1D4C32B300073E67 /* NoSQLTableListViewController.swift in Sources */,
+				8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */,
 				8B37FD871D4C32B300073E67 /* NoSQLQueryResultViewController.swift in Sources */,
 				8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */,
 			);

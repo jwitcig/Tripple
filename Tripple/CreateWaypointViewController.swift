@@ -11,6 +11,8 @@ import CoreLocation
 import MapKit
 import UIKit
 
+import AWSDynamoDB
+
 class CreatePinViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -224,21 +226,37 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         }
         
         let pin = Pin()
+        pin._userId = "shibby"
+        pin._id = NSUUID().UUIDString
         pin._title = nameView.pinName
         pin._message = messageView.pinMessage
+        pin.createdDate = NSDate()
         
-        let waypoint = Waypoint(pin: pin, location: location)
-        
-//        let record = CKRecord(recordType: "Pin")
-//        record.setValue(pin.location, forKey: "location")
-//        
-//        CKContainer.defaultContainer().publicCloudDatabase.saveRecord(record) { (record, error) in
-//            
-//            guard error == nil else {
-//                print("Error saving record: \(error)")
-//                return
-//            }
-//        }
+        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+
+        objectMapper.save(pin) { error in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
+            let waypoint = Waypoint(pin: pin, location: location)
+            waypoint._userId = "shibby"
+            waypoint._id = NSUUID().UUIDString
+            waypoint.createdDate = NSDate()
+            objectMapper.save(waypoint) { error in
+                guard error == nil else {
+                    print(error)
+                    return
+                }
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                }
+            }
+            
+        }
+
         
     }
     

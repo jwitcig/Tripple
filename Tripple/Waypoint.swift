@@ -24,6 +24,7 @@ class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var _location: [String: String]?
     var _pinId: String?
     var _previousWaypointId: String?
+    var _timestamp: NSNumber?
     
     class func dynamoDBTableName() -> String {
 
@@ -42,39 +43,59 @@ class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                "_location" : "location",
                "_pinId" : "pinId",
                "_previousWaypointId" : "previousWaypointId",
+               "_timestamp" : "timestamp",
         ]
+    }
+    
+    static func ignoreAttributes() -> [String] {
+        return ["dropLocation", "createdDate"]
     }
     
     // additions
     
     var latitude: CLLocationDegrees? {
-        guard let latitude = _location?["latitude"] else { return nil }
-        
-        return (latitude as NSString).doubleValue
+        guard let value = _location?["latitude"] else { return nil }
+        return (value as NSString).doubleValue
     }
     
     var longitude: CLLocationDegrees? {
-        guard let longitude = _location?["longitude"] else { return nil }
+        guard let value = _location?["longitude"] else { return nil }
         
-        return (longitude as NSString).doubleValue
+        return (value as NSString).doubleValue
     }
     
     var altitude: CLLocationDegrees? {
-        guard let altitude = _location?["altitude"] else { return nil }
-        return (altitude as NSString).doubleValue
+        guard let value = _location?["altitude"] else { return nil }
+        return (value as NSString).doubleValue
     }
     
-    var location: CLLocation? {
+    var dropLocation: CLLocation? {
         get {
             guard let latitude = latitude, let longitude = longitude else { return nil }
             return CLLocation(latitude: latitude, longitude: longitude)
         }
         set {
             _location = [
-                "latitude": "\(newValue?.coordinate.latitude)",
-                "longitude": "\(newValue?.coordinate.longitude)",
-                "altitude": "\(newValue?.altitude)",
+                "latitude": newValue != nil ? "\(newValue!.coordinate.latitude)" : "",
+                "longitude": newValue != nil ? "\(newValue!.coordinate.longitude)" : "",
+                "altitude": newValue != nil ? "\(newValue!.altitude)" : "",
             ]
+        }
+    }
+    
+    var createdDate: NSDate? {
+        get {
+            if let interval = _timestamp {
+                return NSDate(timeIntervalSince1970: interval.doubleValue)
+            }
+            return nil
+        }
+        set {
+            if let interval = newValue?.timeIntervalSince1970 {
+                _timestamp = NSNumber(double: interval)
+                return
+            }
+            _timestamp = nil
         }
     }
     
@@ -82,11 +103,15 @@ class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         super.init()
     }
     
+    override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
+        try super.init(dictionary: dictionaryValue, error: error)
+    }
+    
     convenience init(pin: Pin, location: CLLocation, previousWaypoint: Waypoint? = nil) {
         self.init()
         
         self._pinId = pin._id
-        self.location = location
+        self.dropLocation = location
         self._previousWaypointId = previousWaypoint?._id
     }
     

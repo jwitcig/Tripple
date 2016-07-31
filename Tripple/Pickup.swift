@@ -1,5 +1,5 @@
 //
-//  Pin.swift
+//  Pickup.swift
 //  MySampleApp
 //
 //
@@ -15,36 +15,34 @@ import Foundation
 import UIKit
 import AWSDynamoDB
 
-class Pin: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
+class Pickup: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
-    var _userId: String?
-    var _id: String?
-    var _message: String?
-    var _title: String?
+    var _pinId: String?
+    var _waypointId: String?
     var _timestamp: NSNumber?
+    var _userId: String?
     
     class func dynamoDBTableName() -> String {
 
-        return "tripple-mobilehub-1169331636-Pin"
+        return "tripple-mobilehub-1169331636-Pickup"
     }
     
     class func hashKeyAttribute() -> String {
 
-        return "_userId"
+        return "_pinId"
     }
     
     class func rangeKeyAttribute() -> String {
 
-        return "_id"
+        return "_waypointId"
     }
     
     override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
         return [
-               "_userId" : "userId",
-               "_id" : "id",
-               "_message" : "message",
-               "_title" : "title",
+               "_pinId" : "pinId",
+               "_waypointId" : "waypointId",
                "_timestamp" : "timestamp",
+               "_userId" : "userId",
         ]
     }
     
@@ -78,11 +76,13 @@ class Pin: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     
-    convenience init(title: String, message: String? = nil) {
+    convenience init(pin: Pin, waypoint: Waypoint, userId: String) {
         self.init()
-
-        self._title = title
-        self._message = message
+        
+        self._pinId = pin._id
+        self._waypointId = waypoint._id
+        self._userId = userId
+        self.createdDate = NSDate()
     }
     
     required init!(coder: NSCoder!) {
