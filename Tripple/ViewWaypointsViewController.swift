@@ -11,6 +11,7 @@ import UIKit
 
 import AWSDynamoDB
 import GoogleMobileAds
+import RealmSwift
 
 struct MapItem {
     let pin: Pin
@@ -59,7 +60,7 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         navigationBar.translucent = false
         
         pinInfoView.pickupSuccessBlock = { pickup, pin, waypoint in
-            let title = pin._title != nil ? "You picked up \(pin._title!)" : "You picked up a pin!"
+            let title = "You picked up \(pin.title)"
             let message = "You have 24 hours to carry the message wherever you like! Hurry!"
             
             let alert = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
@@ -71,18 +72,18 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let scanExpression = AWSDynamoDBScanExpression()
         scanExpression.limit = 5
         
-        objectMapper.scan(Pin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.scan(CloudPin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             
             guard let response = response else {
                 print("no response")
                 return
             }
             
-            guard let pins = response.items as? [Pin] else {
+            guard let pins = response.items as? [CloudPin] else {
                 return
             }
             
-            let pinIds = pins.map{$0._id!}
+            let pinIds = pins.map{$0.id}
             
             let idList = pinIds.joinWithSeparator(",")
             
@@ -97,19 +98,24 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             scanExpression.expressionAttributeNames = ["#pinId": "pinId",]
             scanExpression.expressionAttributeValues = dict
             
-            objectMapper.scan(Waypoint.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+            
+            objectMapper.scan(CloudWaypoint.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
                 dispatch_async(dispatch_get_main_queue(), {
                     
                     guard let response = response else {
-                        print("no response")
+                        print("no response: \(error)")
                         return
                     }
                     
-                    guard let waypoints = response.items as? [Waypoint] else {
+                    guard let waypoints = response.items as? [CloudWaypoint] else {
                         return
                     }
                     
-                    var pinStatuses = [Pin: Waypoint]()
+                    let syncer = Syncer()
+                    syncer.writeToLocal(LocalPin.self, cloudRepresentations: pins)
+                    syncer.writeToLocal(LocalWaypoint.self, cloudRepresentations: waypoints)
+                    
+                    var pinStatuses = [CloudPin: CloudWaypoint]()
                     
                     pins.forEach { pin in
                         if let currentWaypoint = (waypoints.filter{$0._pinId == pin._id}).first {
@@ -117,10 +123,10 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                         }
                     }
                     
-                    self.mapItems = pinStatuses.filter{$0.1._location != nil}.map {
+                    self.mapItems = pinStatuses.filter{$0.1.dropLocation != nil}.map {
                         let annotation = MKPointAnnotation()
                         annotation.title = "Pin"
-                        annotation.coordinate = $0.1.dropLocation!.coordinate
+                        annotation.coordinate = $0.1.dropLocation.coordinate
                         return MapItem(pin: $0.0, waypoint: $0.1, annotation: annotation)
                     }
                     
@@ -228,8 +234,8 @@ class ViewPinController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         pinInfoView.mapItem = mapItem
         
-        pinInfoView.titleLabel.text = mapItem.pin._title
-        pinInfoView.messageLabel.text = mapItem.pin._message
+        pinInfoView.titleLabel.text = mapItem.pin.title
+        pinInfoView.messageLabel.text = mapItem.pin.message
         pinInfoView.peek()
         
         mapView.deselectAnnotation(view.annotation, animated: false)
@@ -320,10 +326,12 @@ class PinInfoView: UIView {
             return
         }
         
-        let pickup = Pickup(pin: mapItem.pin, waypoint: mapItem.currentWaypoint, userId: userId)
+        var pickup = CloudPickup()
+        pickup.pinId = mapItem.pin.id
+        pickup.waypointId = mapItem.currentWaypoint.id
+        pickup.userId = userId
         
         let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        
         objectMapper.save(pickup) { error in
             guard error == nil else {
                 print("Error creating pickup: \(error!)")
@@ -332,6 +340,11 @@ class PinInfoView: UIView {
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.pickupSuccessBlock(pickup: pickup, pin: self.mapItem.pin, waypoint: self.mapItem.currentWaypoint)
+            }
+            
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(LocalPickup(value: pickup))
             }
         }
         

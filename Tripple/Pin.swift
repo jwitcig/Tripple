@@ -13,10 +13,125 @@
 
 import Foundation
 import UIKit
-import AWSDynamoDB
 
-class Pin: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
+import AWSDynamoDB
+import RealmSwift
+
+protocol Pin {
+    var userId: String { get set }
+    var id: String { get set }
+    var message: String? { get set }
+    var title: String { get set }
     
+    var createdDate: NSDate { get set }
+}
+
+protocol LocalPinModel: Pin {
+    var _userId: String { get set }
+    var _id: String { get set }
+    var _message: String? { get set }
+    var _title: String { get set }
+    var _timestamp: Int { get set }
+}
+
+protocol CloudPinModel: Pin {
+    var _userId: String? { get set }
+    var _id: String? { get set }
+    var _message: String? { get set }
+    var _title: String? { get set }
+    var _timestamp: NSNumber? { get set }
+}
+
+extension Pin {
+    init() {
+        self.init()
+    }
+    
+    init(title: String, message: String? = nil) {
+        self.init()
+        self.title = title
+        self.message = message
+    }
+}
+
+extension LocalPinModel {
+    
+    var userId: String {
+        get { return _userId ?? "" }
+        set { _userId = newValue }
+    }
+    var id: String {
+        get { return _id ?? "" }
+        set { _id = newValue }
+    }
+    var message: String? {
+        get { return _message }
+        set { _message = newValue }
+    }
+    var title: String {
+        get { return _title ?? "" }
+        set { _title = newValue }
+    }
+
+    
+    var createdDate: NSDate {
+        get {
+            return NSDate(timeIntervalSince1970: Double(_timestamp))
+        }
+        set {
+            _timestamp = Int(newValue.timeIntervalSince1970)
+        }
+    }
+}
+
+extension CloudPinModel {
+    var userId: String {
+        get { return _userId ?? "" }
+        set { _userId = newValue }
+    }
+    var id: String {
+        get { return _id ?? "" }
+        set { _id = newValue }
+    }
+    var message: String? {
+        get { return _message }
+        set { _message = newValue }
+    }
+    var title: String {
+        get { return _title ?? "" }
+        set { _title = newValue }
+    }
+    
+    var createdDate: NSDate {
+        get {
+            if let interval = _timestamp {
+                return NSDate(timeIntervalSince1970: interval.doubleValue)
+            }
+            return NSDate()
+        }
+        set {
+            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+        }
+    }
+}
+
+class LocalPin: Object, LocalPinModel {
+    dynamic var _userId = ""
+    dynamic var _id = ""
+    dynamic var _message: String?
+    dynamic var _title = ""
+    dynamic var _timestamp = 0
+    
+    override static func primaryKey() -> String? {
+        return "_id"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["userId", "id", "message", "title", "timestamp"]
+    }
+}
+
+class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
     var _userId: String?
     var _id: String?
     var _message: String?
@@ -54,35 +169,12 @@ class Pin: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     // additions
     
-    var createdDate: NSDate? {
-        get {
-            if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
-            }
-            return nil
-        }
-        set {
-            if let interval = newValue?.timeIntervalSince1970 {
-                _timestamp = NSNumber(double: interval)
-                return
-            }
-            _timestamp = nil
-        }
-    }
-    
     override init() {
         super.init()
     }
     
     override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
         try super.init(dictionary: dictionaryValue, error: error)
-    }
-    
-    convenience init(title: String, message: String? = nil) {
-        self.init()
-
-        self._title = title
-        self._message = message
     }
     
     required init!(coder: NSCoder!) {

@@ -225,11 +225,11 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
             return
         }
         
-        let pin = Pin()
-        pin._userId = "shibby"
-        pin._id = NSUUID().UUIDString
-        pin._title = nameView.pinName
-        pin._message = messageView.pinMessage
+        var pin = CloudPin()
+        pin.userId = "shibby"
+        pin.id = NSUUID().UUIDString
+        pin.title = nameView.pinName ?? "none"
+        pin.message = messageView.pinMessage
         pin.createdDate = NSDate()
         
         let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
@@ -240,9 +240,11 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
                 return
             }
             
-            let waypoint = Waypoint(pin: pin, location: location)
-            waypoint._userId = "shibby"
-            waypoint._id = NSUUID().UUIDString
+            var waypoint = CloudWaypoint()
+            waypoint.pinId = pin.id
+            waypoint.dropLocation = location
+            waypoint.userId = "shibby"
+            waypoint.id = NSUUID().UUIDString
             waypoint.createdDate = NSDate()
             objectMapper.save(waypoint) { error in
                 guard error == nil else {
@@ -436,4 +438,33 @@ extension UITextView {
         self.contentInset = UIEdgeInsets(top: y, left: 0, bottom: 0, right: 0)
     }
     
+}
+
+class LocationHandler: NSObject, CLLocationManagerDelegate {
+    
+    let locationManager = CLLocationManager()
+    
+    var executionBlock: ((location: CLLocation?, error: NSError?)->())?
+    
+    override init() {
+        super.init()
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    func requestLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.executionBlock?(location: locations.first, error: nil)
+        self.executionBlock = nil
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        self.executionBlock?(location: nil, error: error)
+    }
+
 }

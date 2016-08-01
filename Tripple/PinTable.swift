@@ -35,7 +35,7 @@ class PinTable: NSObject, Table {
     
     override init() {
 
-        model = Pin()
+        model = CloudPin()
         
         tableName = model.classForCoder.dynamoDBTableName()
         partitionKeyName = model.classForCoder.hashKeyAttribute()
@@ -61,7 +61,7 @@ class PinTable: NSObject, Table {
      */
 
     func tableAttributeName(dataObjectAttributeName: String) -> String {
-        return Pin.JSONKeyPathsByPropertyKey()[dataObjectAttributeName] as! String
+        return CloudPin.JSONKeyPathsByPropertyKey()[dataObjectAttributeName] as! String
     }
     
     func getItemDescription() -> String {
@@ -70,7 +70,7 @@ class PinTable: NSObject, Table {
     
     func getItemWithCompletionHandler(completionHandler: (response: AWSDynamoDBObjectModel?, error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        objectMapper.load(Pin.self, hashKey: AWSIdentityManager.defaultIdentityManager().identityId!, rangeKey: "demo-id-500000", completionHandler: {(response: AWSDynamoDBObjectModel?, error: NSError?) -> Void in
+        objectMapper.load(CloudPin.self, hashKey: AWSIdentityManager.defaultIdentityManager().identityId!, rangeKey: "demo-id-500000", completionHandler: {(response: AWSDynamoDBObjectModel?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -86,7 +86,7 @@ class PinTable: NSObject, Table {
         let scanExpression = AWSDynamoDBScanExpression()
         scanExpression.limit = 5
 
-        objectMapper.scan(Pin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.scan(CloudPin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -105,7 +105,7 @@ class PinTable: NSObject, Table {
         scanExpression.expressionAttributeNames = ["#message": "message" ,]
         scanExpression.expressionAttributeValues = [":message": "demo-message-500000" ,]
 
-        objectMapper.scan(Pin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.scan(CloudPin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -119,7 +119,7 @@ class PinTable: NSObject, Table {
         let numberOfObjects = 20
         
 
-        let itemForGet = Pin()
+        let itemForGet = CloudPin()
         
         itemForGet._userId = AWSIdentityManager.defaultIdentityManager().identityId!
         itemForGet._id = "demo-id-500000"
@@ -141,7 +141,7 @@ class PinTable: NSObject, Table {
         
         for _ in 1..<numberOfObjects {
 
-            let item: Pin = Pin()
+            let item: CloudPin = CloudPin()
             item._userId = AWSIdentityManager.defaultIdentityManager().identityId!
             item._id = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("id")
             item._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
@@ -176,7 +176,7 @@ class PinTable: NSObject, Table {
         queryExpression.expressionAttributeNames = ["#userId": "userId"]
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.defaultIdentityManager().identityId!,]
 
-        objectMapper.query(Pin.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue(), {
                     completionHandler(errors: [error]);
@@ -211,7 +211,7 @@ class PinTable: NSObject, Table {
         let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         
 
-        let itemToUpdate: Pin = item as! Pin
+        let itemToUpdate: CloudPin = item as! CloudPin
         
         itemToUpdate._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
         itemToUpdate._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
@@ -261,7 +261,7 @@ class PinPrimaryIndex: NSObject, Index {
         queryExpression.expressionAttributeNames = ["#userId": "userId",]
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.defaultIdentityManager().identityId!,]
 
-        objectMapper.query(Pin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -288,7 +288,7 @@ class PinPrimaryIndex: NSObject, Index {
         ]
         
 
-        objectMapper.query(Pin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -314,7 +314,7 @@ class PinPrimaryIndex: NSObject, Index {
         ]
         
 
-        objectMapper.query(Pin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -343,7 +343,7 @@ class PinPrimaryIndex: NSObject, Index {
         ]
         
 
-        objectMapper.query(Pin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -379,7 +379,7 @@ class PinTitle: NSObject, Index {
         queryExpression.expressionAttributeNames = ["#title": "title",]
         queryExpression.expressionAttributeValues = [":title": "demo-title-3",]
 
-        objectMapper.query(Pin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })
@@ -408,7 +408,7 @@ class PinTitle: NSObject, Index {
         ]
         
 
-        objectMapper.query(Pin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue(), {
                 completionHandler(response: response, error: error)
             })

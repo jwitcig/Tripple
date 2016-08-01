@@ -38,14 +38,24 @@
 		8B37FD891D4C32B300073E67 /* NoSQLTableFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD811D4C32B300073E67 /* NoSQLTableFactory.swift */; };
 		8B37FD8A1D4C32B300073E67 /* NoSQLTableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD821D4C32B300073E67 /* NoSQLTableListViewController.swift */; };
 		8B37FD8B1D4C32B300073E67 /* NoSQLTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD831D4C32B300073E67 /* NoSQLTableViewController.swift */; };
-		8B37FD8D1D4C32B300073E67 /* PinTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD851D4C32B300073E67 /* PinTable.swift */; };
 		8B37FD921D4C37EE00073E67 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD901D4C37EE00073E67 /* Pin.swift */; };
 		8B37FD931D4C37EE00073E67 /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD911D4C37EE00073E67 /* Waypoint.swift */; };
 		8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; };
 		8B37FD951D4C464400073E67 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B37FD971D4C54F400073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD961D4C54F400073E67 /* Info.plist */; };
+		8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
+		8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
+		8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
+		8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
+		8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B85919D1D4EB7FF00BC6EBD /* PinTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD851D4C32B300073E67 /* PinTable.swift */; };
+		8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */; };
+		8B8591A11D4FF46500BC6EBD /* PinStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591A01D4FF46500BC6EBD /* PinStatus.swift */; };
 		8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B874C431D4D6B0700AEF8A1 /* Pickup.swift */; };
 		8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */; };
+		8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6E441D4D99090064819C /* PinListViewController.swift */; };
+		8B8D6E4B1D4D9BB30064819C /* Syncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6E4A1D4D9BB30064819C /* Syncer.swift */; };
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
 		8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */; };
 		8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */; };
@@ -86,8 +96,10 @@
 			files = (
 				8B37FD691D4C2C8100073E67 /* AWSCore.framework in Embed Frameworks */,
 				8B37FD6D1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Embed Frameworks */,
+				8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */,
 				8B37FD951D4C464400073E67 /* AWSDynamoDB.framework in Embed Frameworks */,
 				8B37FD6B1D4C2C8100073E67 /* AWSLambda.framework in Embed Frameworks */,
+				8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,8 +136,14 @@
 		8B37FD901D4C37EE00073E67 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		8B37FD911D4C37EE00073E67 /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
 		8B37FD961D4C54F400073E67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B8591951D4E980600BC6EBD /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		8B8591961D4E980600BC6EBD /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
+		8B8591A01D4FF46500BC6EBD /* PinStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinStatus.swift; sourceTree = "<group>"; };
 		8B874C431D4D6B0700AEF8A1 /* Pickup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pickup.swift; sourceTree = "<group>"; };
 		8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		8B8D6E441D4D99090064819C /* PinListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinListViewController.swift; sourceTree = "<group>"; };
+		8B8D6E4A1D4D9BB30064819C /* Syncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Syncer.swift; sourceTree = "<group>"; };
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWaypointViewController.swift; sourceTree = "<group>"; };
@@ -151,10 +169,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */,
 				8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */,
+				8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */,
 				8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */,
 				8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */,
+				8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */,
 				8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */,
+				8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */,
 				8B37FD6A1D4C2C8100073E67 /* AWSLambda.framework in Frameworks */,
 				8B37FD671D4C2C4100073E67 /* GoogleUtilities.framework in Frameworks */,
 				8B37FD681D4C2C8100073E67 /* AWSCore.framework in Frameworks */,
@@ -252,6 +274,7 @@
 				8B37FD901D4C37EE00073E67 /* Pin.swift */,
 				8B37FD911D4C37EE00073E67 /* Waypoint.swift */,
 				8B874C431D4D6B0700AEF8A1 /* Pickup.swift */,
+				8B8591A01D4FF46500BC6EBD /* PinStatus.swift */,
 				8B37FD851D4C32B300073E67 /* PinTable.swift */,
 			);
 			name = "AWS Code";
@@ -282,6 +305,8 @@
 		8BD527881D3C2CA1004F100E /* Tripple */ = {
 			isa = PBXGroup;
 			children = (
+				8B8591951D4E980600BC6EBD /* Realm.framework */,
+				8B8591961D4E980600BC6EBD /* RealmSwift.framework */,
 				8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */,
 				8B37FD701D4C2CE900073E67 /* AmazonAws */,
 				8B37FD4E1D4C2C4100073E67 /* Sdk */,
@@ -289,7 +314,10 @@
 				8BD527BB1D3C491D004F100E /* Tripple.entitlements */,
 				8BD527891D3C2CA1004F100E /* AppDelegate.swift */,
 				8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */,
+				8B8D6E4A1D4D9BB30064819C /* Syncer.swift */,
 				8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */,
+				8B8D6E441D4D99090064819C /* PinListViewController.swift */,
+				8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */,
 				8BDC180A1D3F212400D3E305 /* appIcon.png */,
 				8BD527B91D3C3CE8004F100E /* Models.swift */,
 				8BD5278F1D3C2CA1004F100E /* Main.storyboard */,
@@ -477,7 +505,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"";
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -493,13 +521,17 @@
 				8B37FD931D4C37EE00073E67 /* Waypoint.swift in Sources */,
 				8B37FD731D4C2CE900073E67 /* AWSMobileClient.swift in Sources */,
 				8B37FD861D4C32B300073E67 /* NoSQLModelHelpers.swift in Sources */,
-				8B37FD8D1D4C32B300073E67 /* PinTable.swift in Sources */,
+				8B8D6E4B1D4D9BB30064819C /* Syncer.swift in Sources */,
+				8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */,
 				8BDC18071D3F07BE00D3E305 /* WaypointAnnotationView.swift in Sources */,
 				8B37FD8B1D4C32B300073E67 /* NoSQLTableViewController.swift in Sources */,
 				8B37FD881D4C32B300073E67 /* NoSQLSampleDataGenerator.swift in Sources */,
+				8B85919D1D4EB7FF00BC6EBD /* PinTable.swift in Sources */,
+				8B8591A11D4FF46500BC6EBD /* PinStatus.swift in Sources */,
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
 				8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */,
 				8B37FD8A1D4C32B300073E67 /* NoSQLTableListViewController.swift in Sources */,
+				8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */,
 				8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */,
 				8B37FD871D4C32B300073E67 /* NoSQLQueryResultViewController.swift in Sources */,
 				8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */,

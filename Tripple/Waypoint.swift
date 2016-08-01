@@ -16,12 +16,142 @@ import Foundation
 import UIKit
 
 import AWSDynamoDB
+import RealmSwift
 
-class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
+protocol Waypoint {
+    var userId: String { get set }
+    var id: String { get set }
+    var latitude: CLLocationDegrees { get set }
+    var longitude: CLLocationDegrees { get set }
+    var pinId: String { get set }
+    var previousWaypointId: String? { get set }
+    
+    var createdDate: NSDate { get set }
+}
+
+protocol LocalWaypointModel: Waypoint {
+    var _userId: String { get set }
+    var _id: String { get set }
+    var _latitude: Double { get set }
+    var _longitude: Double { get set }
+    var _pinId: String { get set }
+    var _previousWaypointId: String? { get set }
+    var _timestamp: Int { get set }
+}
+
+protocol CloudWaypointModel: Waypoint {
+    var _userId: String? { get set }
+    var _id: String? { get set }
+    var _latitude: NSNumber? { get set }
+    var _longitude: NSNumber? { get set }
+    var _pinId: String? { get set }
+    var _previousWaypointId: String? { get set }
+    var _timestamp: NSNumber? { get set }
+}
+
+extension Waypoint {
+    init() {
+        self.init()
+    }
+}
+
+extension LocalWaypointModel {
+    var userId: String {
+        get { return _userId ?? "" }
+        set { _userId = newValue }
+    }
+    var id: String {
+        get { return _id ?? "" }
+        set { _id = newValue }
+    }
+    var latitude: CLLocationDegrees {
+        get { return _latitude }
+        set { _latitude = newValue }
+    }
+    var longitude: CLLocationDegrees {
+        get { return _longitude }
+        set { _longitude = newValue }
+    }
+    var pinId: String {
+        get { return _pinId ?? "" }
+        set { _pinId = newValue }
+    }
+    var previousWaypointId: String? {
+        get { return _previousWaypointId }
+        set { _previousWaypointId = newValue }
+    }
+    var createdDate: NSDate {
+        get {
+            return NSDate(timeIntervalSince1970: Double(_timestamp))
+        }
+        set {
+            _timestamp = Int(newValue.timeIntervalSince1970)
+        }
+    }
+}
+
+extension CloudWaypointModel {
+    var userId: String {
+        get { return _userId ?? "" }
+        set { _userId = newValue }
+    }
+    var id: String {
+        get { return _id ?? "" }
+        set { _id = newValue }
+    }
+    var latitude: CLLocationDegrees {
+        get { return _latitude?.doubleValue ?? 0.0 }
+        set { _latitude = newValue }
+    }
+    var longitude: CLLocationDegrees {
+        get { return _longitude?.doubleValue ?? 0.0 }
+        set { _longitude = newValue }
+    }
+    var pinId: String {
+        get { return _pinId ?? "" }
+        set { _pinId = newValue }
+    }
+    var previousWaypointId: String? {
+        get { return _previousWaypointId }
+        set { _previousWaypointId = newValue }
+    }
+    var createdDate: NSDate {
+        get {
+            if let interval = _timestamp {
+                return NSDate(timeIntervalSince1970: interval.doubleValue)
+            }
+            return NSDate()
+        }
+        set {
+            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+        }
+    }
+}
+
+class LocalWaypoint: Object, LocalWaypointModel {
+    dynamic var _userId = ""
+    dynamic var _id = NSUUID().UUIDString
+    dynamic var _latitude: Double = 0.0
+    dynamic var _longitude: Double = 0.0
+    dynamic var _pinId = ""
+    dynamic var _previousWaypointId: String?
+    dynamic var _timestamp = 0
+    
+    override static func primaryKey() -> String? {
+        return "_id"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["userId", "id", "latitude", "longitude", "pinId", "previousWaypointId", "timestamp"]
+    }
+}
+
+class CloudWaypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudWaypointModel {
     
     var _userId: String?
     var _id: String?
-    var _location: [String: String]?
+    var _latitude: NSNumber?
+    var _longitude: NSNumber?
     var _pinId: String?
     var _previousWaypointId: String?
     var _timestamp: NSNumber?
@@ -36,11 +166,16 @@ class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return "_userId"
     }
     
+    static func rangeKeyAttribute() -> String {
+        return "_id"
+    }
+    
     override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
         return [
                "_userId" : "userId",
                "_id" : "id",
-               "_location" : "location",
+               "_latitude" : "latitude",
+               "_longitude" : "longitude",
                "_pinId" : "pinId",
                "_previousWaypointId" : "previousWaypointId",
                "_timestamp" : "timestamp",
@@ -52,50 +187,14 @@ class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
     
     // additions
-    
-    var latitude: CLLocationDegrees? {
-        guard let value = _location?["latitude"] else { return nil }
-        return (value as NSString).doubleValue
-    }
-    
-    var longitude: CLLocationDegrees? {
-        guard let value = _location?["longitude"] else { return nil }
-        
-        return (value as NSString).doubleValue
-    }
-    
-    var altitude: CLLocationDegrees? {
-        guard let value = _location?["altitude"] else { return nil }
-        return (value as NSString).doubleValue
-    }
-    
-    var dropLocation: CLLocation? {
+
+    var dropLocation: CLLocation {
         get {
-            guard let latitude = latitude, let longitude = longitude else { return nil }
             return CLLocation(latitude: latitude, longitude: longitude)
         }
         set {
-            _location = [
-                "latitude": newValue != nil ? "\(newValue!.coordinate.latitude)" : "",
-                "longitude": newValue != nil ? "\(newValue!.coordinate.longitude)" : "",
-                "altitude": newValue != nil ? "\(newValue!.altitude)" : "",
-            ]
-        }
-    }
-    
-    var createdDate: NSDate? {
-        get {
-            if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
-            }
-            return nil
-        }
-        set {
-            if let interval = newValue?.timeIntervalSince1970 {
-                _timestamp = NSNumber(double: interval)
-                return
-            }
-            _timestamp = nil
+            _latitude = NSNumber(double: newValue.coordinate.latitude)
+            _longitude =  NSNumber(double: newValue.coordinate.longitude)
         }
     }
     
@@ -107,13 +206,13 @@ class Waypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     
-    convenience init(pin: Pin, location: CLLocation, previousWaypoint: Waypoint? = nil) {
-        self.init()
-        
-        self._pinId = pin._id
-        self.dropLocation = location
-        self._previousWaypointId = previousWaypoint?._id
-    }
+//    convenience init(pin: Pin, location: CLLocation, previousWaypoint: Waypoint? = nil) {
+//        self.init()
+//        
+//        self._pinId = pin._id
+//        self.dropLocation = location
+//        self._previousWaypointId = previousWaypoint?._id
+//    }
     
     required init!(coder: NSCoder!) {
         fatalError("init(coder:) has not been implemented")
