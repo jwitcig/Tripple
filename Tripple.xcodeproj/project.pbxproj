@@ -52,13 +52,23 @@
 		8B85919D1D4EB7FF00BC6EBD /* PinTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD851D4C32B300073E67 /* PinTable.swift */; };
 		8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */; };
 		8B8591A11D4FF46500BC6EBD /* PinStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591A01D4FF46500BC6EBD /* PinStatus.swift */; };
+		8B8591A31D500BC900BC6EBD /* CacheTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */; };
+		8B8591A61D50907000BC6EBD /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */; };
+		8B8591A71D50907000BC6EBD /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591A51D50907000BC6EBD /* GoogleSignIn.framework */; };
+		8B8591B51D509DA300BC6EBD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B21D509DA300BC6EBD /* FBSDKCoreKit.framework */; };
+		8B8591B61D509DA300BC6EBD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B31D509DA300BC6EBD /* FBSDKLoginKit.framework */; };
+		8B8591B71D509DA300BC6EBD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B41D509DA300BC6EBD /* FBSDKShareKit.framework */; };
+		8B8591B91D50A01D00BC6EBD /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B81D50A01D00BC6EBD /* Bolts.framework */; };
+		8B8591BB1D50A37000BC6EBD /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591BA1D50A37000BC6EBD /* SignInViewController.swift */; };
+		8B8591BD1D50A75200BC6EBD /* FacebookButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8591BC1D50A75200BC6EBD /* FacebookButton.png */; };
 		8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B874C431D4D6B0700AEF8A1 /* Pickup.swift */; };
 		8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */; };
 		8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6E441D4D99090064819C /* PinListViewController.swift */; };
 		8B8D6E4B1D4D9BB30064819C /* Syncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6E4A1D4D9BB30064819C /* Syncer.swift */; };
+		8BBB46051D515E1C0028099A /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB46041D515E1C0028099A /* AccountViewController.swift */; };
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
-		8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */; };
-		8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */; };
+		8BD5278C1D3C2CA1004F100E /* CreatePinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreatePinViewController.swift */; };
+		8BD5278E1D3C2CA1004F100E /* PinMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278D1D3C2CA1004F100E /* PinMapViewController.swift */; };
 		8BD527911D3C2CA1004F100E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BD5278F1D3C2CA1004F100E /* Main.storyboard */; };
 		8BD527931D3C2CA1004F100E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BD527921D3C2CA1004F100E /* Assets.xcassets */; };
 		8BD527961D3C2CA1004F100E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BD527941D3C2CA1004F100E /* LaunchScreen.storyboard */; };
@@ -140,14 +150,24 @@
 		8B8591961D4E980600BC6EBD /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		8B8591A01D4FF46500BC6EBD /* PinStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinStatus.swift; sourceTree = "<group>"; };
+		8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTransaction.swift; sourceTree = "<group>"; };
+		8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
+		8B8591A51D50907000BC6EBD /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
+		8B8591B21D509DA300BC6EBD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		8B8591B31D509DA300BC6EBD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		8B8591B41D509DA300BC6EBD /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		8B8591B81D50A01D00BC6EBD /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		8B8591BA1D50A37000BC6EBD /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		8B8591BC1D50A75200BC6EBD /* FacebookButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FacebookButton.png; sourceTree = "<group>"; };
 		8B874C431D4D6B0700AEF8A1 /* Pickup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pickup.swift; sourceTree = "<group>"; };
 		8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		8B8D6E441D4D99090064819C /* PinListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinListViewController.swift; sourceTree = "<group>"; };
 		8B8D6E4A1D4D9BB30064819C /* Syncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Syncer.swift; sourceTree = "<group>"; };
+		8BBB46041D515E1C0028099A /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWaypointViewController.swift; sourceTree = "<group>"; };
-		8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWaypointsViewController.swift; sourceTree = "<group>"; };
+		8BD5278B1D3C2CA1004F100E /* CreatePinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePinViewController.swift; sourceTree = "<group>"; };
+		8BD5278D1D3C2CA1004F100E /* PinMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMapViewController.swift; sourceTree = "<group>"; };
 		8BD527901D3C2CA1004F100E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BD527921D3C2CA1004F100E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BD527951D3C2CA1004F100E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -176,18 +196,23 @@
 				8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */,
 				8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */,
 				8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */,
+				8B8591B91D50A01D00BC6EBD /* Bolts.framework in Frameworks */,
 				8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */,
 				8B37FD6A1D4C2C8100073E67 /* AWSLambda.framework in Frameworks */,
 				8B37FD671D4C2C4100073E67 /* GoogleUtilities.framework in Frameworks */,
 				8B37FD681D4C2C8100073E67 /* AWSCore.framework in Frameworks */,
 				8B37FD5E1D4C2C4100073E67 /* AWSLambda.framework in Frameworks */,
+				8B8591B71D509DA300BC6EBD /* FBSDKShareKit.framework in Frameworks */,
 				8B37FD741D4C2CE900073E67 /* AWSMobileHubHelper.framework in Frameworks */,
+				8B8591A71D50907000BC6EBD /* GoogleSignIn.framework in Frameworks */,
+				8B8591B61D509DA300BC6EBD /* FBSDKLoginKit.framework in Frameworks */,
 				8B37FD651D4C2C4100073E67 /* GoogleNetworkingUtilities.framework in Frameworks */,
 				8B37FD661D4C2C4100073E67 /* GoogleSymbolUtilities.framework in Frameworks */,
 				8B37FD631D4C2C4100073E67 /* GoogleAppUtilities.framework in Frameworks */,
 				8B37FD7C1D4C301F00073E67 /* AWSDynamoDB.framework in Frameworks */,
 				8B37FD6C1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Frameworks */,
 				8B37FD5D1D4C2C4100073E67 /* AWSCore.framework in Frameworks */,
+				8B8591B51D509DA300BC6EBD /* FBSDKCoreKit.framework in Frameworks */,
 				8B37FD641D4C2C4100073E67 /* GoogleAuthUtilities.framework in Frameworks */,
 				8B37FD5F1D4C2C4100073E67 /* AWSMobileAnalytics.framework in Frameworks */,
 			);
@@ -275,6 +300,7 @@
 				8B37FD911D4C37EE00073E67 /* Waypoint.swift */,
 				8B874C431D4D6B0700AEF8A1 /* Pickup.swift */,
 				8B8591A01D4FF46500BC6EBD /* PinStatus.swift */,
+				8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */,
 				8B37FD851D4C32B300073E67 /* PinTable.swift */,
 			);
 			name = "AWS Code";
@@ -308,16 +334,25 @@
 				8B8591951D4E980600BC6EBD /* Realm.framework */,
 				8B8591961D4E980600BC6EBD /* RealmSwift.framework */,
 				8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */,
+				8B8591B21D509DA300BC6EBD /* FBSDKCoreKit.framework */,
+				8B8591B31D509DA300BC6EBD /* FBSDKLoginKit.framework */,
+				8B8591B41D509DA300BC6EBD /* FBSDKShareKit.framework */,
+				8B8591B81D50A01D00BC6EBD /* Bolts.framework */,
+				8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */,
+				8B8591A51D50907000BC6EBD /* GoogleSignIn.framework */,
 				8B37FD701D4C2CE900073E67 /* AmazonAws */,
 				8B37FD4E1D4C2C4100073E67 /* Sdk */,
 				8B37FD7D1D4C329500073E67 /* AWS Code */,
 				8BD527BB1D3C491D004F100E /* Tripple.entitlements */,
 				8BD527891D3C2CA1004F100E /* AppDelegate.swift */,
-				8BD5278B1D3C2CA1004F100E /* CreateWaypointViewController.swift */,
+				8BD5278B1D3C2CA1004F100E /* CreatePinViewController.swift */,
 				8B8D6E4A1D4D9BB30064819C /* Syncer.swift */,
-				8BD5278D1D3C2CA1004F100E /* ViewWaypointsViewController.swift */,
+				8BD5278D1D3C2CA1004F100E /* PinMapViewController.swift */,
 				8B8D6E441D4D99090064819C /* PinListViewController.swift */,
 				8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */,
+				8BBB46041D515E1C0028099A /* AccountViewController.swift */,
+				8B8591BC1D50A75200BC6EBD /* FacebookButton.png */,
+				8B8591BA1D50A37000BC6EBD /* SignInViewController.swift */,
 				8BDC180A1D3F212400D3E305 /* appIcon.png */,
 				8BD527B91D3C3CE8004F100E /* Models.swift */,
 				8BD5278F1D3C2CA1004F100E /* Main.storyboard */,
@@ -465,8 +500,10 @@
 			files = (
 				8BDC180B1D3F212400D3E305 /* appIcon.png in Resources */,
 				8B11864A1D420D28000E7D6B /* mapPin@3x.png in Resources */,
+				8B8591BD1D50A75200BC6EBD /* FacebookButton.png in Resources */,
 				8BD527961D3C2CA1004F100E /* LaunchScreen.storyboard in Resources */,
 				8B37FD601D4C2C4100073E67 /* Amazon_Software_License.txt in Resources */,
+				8B8591A61D50907000BC6EBD /* GoogleSignIn.bundle in Resources */,
 				8B11864C1D420D28000E7D6B /* mapPin.png in Resources */,
 				8B37FD611D4C2C4100073E67 /* NOTICE in Resources */,
 				8BD527931D3C2CA1004F100E /* Assets.xcassets in Resources */,
@@ -516,8 +553,9 @@
 			files = (
 				8B37FD921D4C37EE00073E67 /* Pin.swift in Sources */,
 				8B37FD891D4C32B300073E67 /* NoSQLTableFactory.swift in Sources */,
+				8BBB46051D515E1C0028099A /* AccountViewController.swift in Sources */,
 				8BD527BA1D3C3CE8004F100E /* Models.swift in Sources */,
-				8BD5278E1D3C2CA1004F100E /* ViewWaypointsViewController.swift in Sources */,
+				8BD5278E1D3C2CA1004F100E /* PinMapViewController.swift in Sources */,
 				8B37FD931D4C37EE00073E67 /* Waypoint.swift in Sources */,
 				8B37FD731D4C2CE900073E67 /* AWSMobileClient.swift in Sources */,
 				8B37FD861D4C32B300073E67 /* NoSQLModelHelpers.swift in Sources */,
@@ -529,11 +567,13 @@
 				8B85919D1D4EB7FF00BC6EBD /* PinTable.swift in Sources */,
 				8B8591A11D4FF46500BC6EBD /* PinStatus.swift in Sources */,
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
-				8BD5278C1D3C2CA1004F100E /* CreateWaypointViewController.swift in Sources */,
+				8BD5278C1D3C2CA1004F100E /* CreatePinViewController.swift in Sources */,
 				8B37FD8A1D4C32B300073E67 /* NoSQLTableListViewController.swift in Sources */,
+				8B8591A31D500BC900BC6EBD /* CacheTransaction.swift in Sources */,
 				8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */,
 				8B874C441D4D6B0700AEF8A1 /* Pickup.swift in Sources */,
 				8B37FD871D4C32B300073E67 /* NoSQLQueryResultViewController.swift in Sources */,
+				8B8591BB1D50A37000BC6EBD /* SignInViewController.swift in Sources */,
 				8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,6 +730,7 @@
 				);
 				INFOPLIST_FILE = Tripple/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -712,6 +753,7 @@
 				);
 				INFOPLIST_FILE = Tripple/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

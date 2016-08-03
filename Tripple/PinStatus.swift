@@ -25,10 +25,6 @@ protocol PinStatus {
 protocol LocalPinStatusModel: PinStatus {
     var _pinId: String { get set }
     var _waypointId: String { get set }
-    
-    var _id: String { get set }
-    
-    mutating func updateId()
 }
 
 protocol CloudPinStatusModel: PinStatus {
@@ -45,21 +41,11 @@ extension PinStatus {
 extension LocalPinStatusModel {
     var pinId: String {
         get { return _pinId ?? "" }
-        set {
-            _pinId = newValue
-            updateId()
-        }
+        set { _pinId = newValue }
     }
     var waypointId: String {
         get { return _waypointId ?? "" }
-        set {
-            _waypointId = newValue
-            updateId()
-        }
-    }
-    
-    mutating func updateId() {
-        self._id = "\((pinId + waypointId).hashValue)"
+        set { _waypointId = newValue }
     }
 }
 
@@ -75,13 +61,11 @@ extension CloudPinStatusModel {
 }
 
 class LocalPinStatus: Object, LocalPinStatusModel {
-    dynamic var _pinId = ""
+    dynamic var _pinId = NSUUID().UUIDString
     dynamic var _waypointId = ""
     
-    dynamic var _id = ""
-    
     override static func primaryKey() -> String? {
-        return "_id"
+        return "_pinId"
     }
     
     override static func ignoredProperties() -> [String] {
@@ -90,7 +74,7 @@ class LocalPinStatus: Object, LocalPinStatusModel {
 }
 
 class CloudPinStatus: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinStatusModel {
-    var _pinId: String?
+    var _pinId: String? = NSUUID().UUIDString
     var _waypointId: String?
     
     class func dynamoDBTableName() -> String {

@@ -18,6 +18,7 @@ import AWSDynamoDB
 import RealmSwift
 
 protocol Pickup {
+    var id: String { get set }
     var userId: String { get set }
     var pinId: String { get set }
     var waypointId: String { get set }
@@ -27,16 +28,15 @@ protocol Pickup {
 }
 
 protocol LocalPickupModel: Pickup {
-    var id: String { get set }
+    var _id: String { get set }
     var _userId: String { get set }
     var _pinId: String { get set }
     var _waypointId: String { get set }
     var _timestamp: Int { get set }
-    
-    func updateId()
 }
 
 protocol CloudPickupModel: Pickup {
+    var _id: String? { get set }
     var _userId: String? { get set }
     var _pinId: String? { get set }
     var _waypointId: String? { get set }
@@ -50,23 +50,21 @@ extension Pickup {
 }
 
 extension LocalPickupModel {
+    var id: String {
+        get { return _id ?? "" }
+        set { _id = newValue }
+    }
     var userId: String {
         get { return _userId ?? "" }
         set { _userId = newValue }
     }
     var pinId: String {
         get { return _pinId ?? "" }
-        set {
-            _pinId = newValue
-            updateId()
-        }
+        set { _pinId = newValue }
     }
     var waypointId: String {
         get { return _waypointId }
-        set {
-            _waypointId = newValue
-            updateId()
-        }
+        set { _waypointId = newValue }
     }
     
     var createdDate: NSDate {
@@ -85,6 +83,10 @@ extension LocalPickupModel {
 }
 
 extension CloudPickupModel {
+    var id: String {
+        get { return _id ?? NSUUID().UUIDString }
+        set { _id = newValue }
+    }
     var userId: String {
         get { return _userId ?? "" }
         set { _userId = newValue }
@@ -116,28 +118,24 @@ extension CloudPickupModel {
 }
 
 class LocalPickup: Object, LocalPickupModel {
+    dynamic var _id = NSUUID().UUIDString
     dynamic var _userId = ""
     dynamic var _pinId = ""
     dynamic var _waypointId = ""
     dynamic var _timestamp = 0
     
-    dynamic var id = ""
-    
-    func updateId() {
-        self.id = "\((pinId + waypointId).hashValue)"
-    }
-    
     override static func primaryKey() -> String? {
-        return "id"
+        return "_id"
     }
     
     override static func ignoredProperties() -> [String] {
-        return ["userId", "pinId", "waypointId", "timestamp"]
+        return ["id", "userId", "pinId", "waypointId", "timestamp"]
     }
 }
 
 
 class CloudPickup: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPickupModel {
+    var _id: String? = NSUUID().UUIDString
     var _userId: String?
     var _pinId: String?
     var _waypointId: String?
@@ -150,20 +148,21 @@ class CloudPickup: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPickupModel
     
     class func hashKeyAttribute() -> String {
 
-        return "_pinId"
+        return "_userId"
     }
     
     class func rangeKeyAttribute() -> String {
 
-        return "_waypointId"
+        return "_id"
     }
     
     override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
         return [
-               "_pinId" : "pinId",
-               "_waypointId" : "waypointId",
-               "_timestamp" : "timestamp",
-               "_userId" : "userId",
+            "_id": "id",
+            "_pinId" : "pinId",
+            "_waypointId" : "waypointId",
+            "_timestamp" : "timestamp",
+            "_userId" : "userId",
         ]
     }
     

@@ -61,7 +61,7 @@ extension LocalWaypointModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? "" }
+        get { return _id ?? NSUUID().UUIDString }
         set { _id = newValue }
     }
     var latitude: CLLocationDegrees {
@@ -96,7 +96,7 @@ extension CloudWaypointModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? "" }
+        get { return _id ?? NSUUID().UUIDString }
         set { _id = newValue }
     }
     var latitude: CLLocationDegrees {
@@ -149,7 +149,7 @@ class LocalWaypoint: Object, LocalWaypointModel {
 class CloudWaypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudWaypointModel {
     
     var _userId: String?
-    var _id: String?
+    var _id: String? = NSUUID().UUIDString
     var _latitude: NSNumber?
     var _longitude: NSNumber?
     var _pinId: String?

@@ -61,7 +61,7 @@ extension LocalPinModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? "" }
+        get { return _id ?? NSUUID().UUIDString }
         set { _id = newValue }
     }
     var message: String? {
@@ -90,7 +90,7 @@ extension CloudPinModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? "" }
+        get { return _id ?? NSUUID().UUIDString }
         set { _id = newValue }
     }
     var message: String? {
@@ -117,7 +117,7 @@ extension CloudPinModel {
 
 class LocalPin: Object, LocalPinModel {
     dynamic var _userId = ""
-    dynamic var _id = ""
+    dynamic var _id = NSUUID().UUIDString
     dynamic var _message: String?
     dynamic var _title = ""
     dynamic var _timestamp = 0
@@ -133,7 +133,7 @@ class LocalPin: Object, LocalPinModel {
 
 class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
     var _userId: String?
-    var _id: String?
+    var _id: String? = NSUUID().UUIDString
     var _message: String?
     var _title: String?
     var _timestamp: NSNumber?

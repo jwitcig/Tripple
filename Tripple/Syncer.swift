@@ -13,12 +13,13 @@ import RealmSwift
 
 struct Syncer {
 
+    let realm = try! Realm()
+
     init() {
         
     }
     
     func writeToLocal<T: Object>(realmClass: T.Type, cloudRepresentations: [AWSDynamoDBObjectModel]) -> [T] {
-        let realm = try! Realm()
         
         let cleanedRepresentations: [AnyObject] = cloudRepresentations.map {
             var cleaned = $0.dictionaryValue
@@ -37,5 +38,4 @@ struct Syncer {
         }
         return localObjects
     }
-    
 }
