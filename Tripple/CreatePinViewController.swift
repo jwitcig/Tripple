@@ -208,81 +208,116 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         
         var pin = CloudPin()
         pin.userId = userId
+        pin.createdDate = NSDate()
         pin.title = nameView.pinName ?? "none"
         pin.message = messageView.pinMessage
-        pin.createdDate = NSDate()
         
-        let pinId = pin.id
+        var event = CloudEvent()
+        event.userId = userId
+        event.createdDate = NSDate()
+        event.pinId = pin.id
+        event.location = location
+        event.type = EventType.Pickup.rawValue
         
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        pin.pinStatus = event.type
+        pin.geohash = event.geohash
+        pin.setCurrentEvent(event)
+        
+        let successBlock = {
+            dispatch_async(dispatch_get_main_queue()) {
+                let actionMessage = event.type == EventType.Drop.rawValue ? "dropping" : "picking up"
+                let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+        
+        let eventUserIdValue = AWSDynamoDBAttributeValue()
+        eventUserIdValue.S = event.userId
+        let eventTimestampValue = AWSDynamoDBAttributeValue()
+        eventTimestampValue.N = "\(Int(event.createdDate.timeIntervalSince1970))"
+        let eventPinIdValue = AWSDynamoDBAttributeValue()
+        eventPinIdValue.S = event.pinId
+        let eventTypeValue = AWSDynamoDBAttributeValue()
+        eventTypeValue.S = event.type
+        let eventLatitudeValue = AWSDynamoDBAttributeValue()
+        eventLatitudeValue.N = "\(event.latitude)"
+        let eventLongitudeValue = AWSDynamoDBAttributeValue()
+        eventLongitudeValue.N = "\(event.longitude)"
+        let eventGeohashValue = AWSDynamoDBAttributeValue()
+        eventGeohashValue.S = event.geohash
 
-        objectMapper.save(pin) { error in
+        let eventRequest = AWSDynamoDBPutRequest()
+        eventRequest.item = [
+            "userId": eventUserIdValue,
+            "timestamp": eventTimestampValue,
+            "pinId": eventPinIdValue,
+            "type": eventTypeValue,
+            "latitude": eventLatitudeValue,
+            "longitude": eventLongitudeValue,
+            "geohash": eventGeohashValue,
+        ]
+    
+        let pinUserIdValue = AWSDynamoDBAttributeValue()
+        pinUserIdValue.S = pin.userId
+        let pinTimestampValue = AWSDynamoDBAttributeValue()
+        pinTimestampValue.N = "\(Int(pin.createdDate.timeIntervalSince1970))"
+        let pinTitleValue = AWSDynamoDBAttributeValue()
+        pinTitleValue.S = pin.title
+        let pinMessageValue = AWSDynamoDBAttributeValue()
+        pinMessageValue.S = pin.message
+        let pinStatusValue = AWSDynamoDBAttributeValue()
+        pinStatusValue.S = pin.pinStatus
+        let pinGeohashValue = AWSDynamoDBAttributeValue()
+        pinGeohashValue.S = pin.geohash
+        let pinCurrentEventValue = AWSDynamoDBAttributeValue()
+        let pinCurrentEventIdValue = AWSDynamoDBAttributeValue()
+        pinCurrentEventIdValue.S = event.id
+        pinCurrentEventValue.M = ["id": pinCurrentEventIdValue]
+        let pinRequest = AWSDynamoDBPutRequest()
+        pinRequest.item = [
+            "userId": pinUserIdValue,
+            "timestamp": pinTimestampValue,
+            "title": pinTitleValue,
+            "pinStatus": pinStatusValue,
+            "geohash": pinGeohashValue,
+            "currentEvent": pinCurrentEventValue,
+        ]
+        
+        pinRequest.item?["message"] = pin.message != "" ? pinMessageValue : nil
+        
+        
+        let pinWrite = AWSDynamoDBWriteRequest()
+        pinWrite.putRequest = pinRequest
+        
+        let eventWrite = AWSDynamoDBWriteRequest()
+        eventWrite.putRequest = eventRequest
+        
+        let batchWrite = AWSDynamoDBBatchWriteItemInput()
+        batchWrite.requestItems = [
+            CloudPin.dynamoDBTableName(): [pinWrite],
+            CloudEvent.dynamoDBTableName(): [eventWrite]
+        ]
+        
+        let dynamo = AWSDynamoDB.defaultDynamoDB()
+        dynamo.batchWriteItem(batchWrite) { response, error in
+            
             guard error == nil else {
-                print(error)
-                
+                let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+                mapper.remove(pin)
+                mapper.remove(event)
+                print("error creating items: \(error!)")
                 return
             }
             
-            var waypoint = CloudWaypoint()
-            waypoint.pinId = pin.id
-            waypoint.dropLocation = location
-            waypoint.userId = userId
-            waypoint.createdDate = NSDate()
-            
-            let waypointId = waypoint.id
-            
-            objectMapper.save(waypoint) { error in
-                guard error == nil else {
-                    print(error)
-                    
-                    objectMapper.remove(pin)
-
-                    return
-                }
-                
-                var pinStatus = CloudPinStatus()
-                pinStatus.pinId = pinId
-                pinStatus.waypointId = waypoint.id
-                objectMapper.save(pinStatus) { error in
-                    guard error == nil else {
-                        print(error)
-                        
-                        objectMapper.remove(waypoint)
-
-                        return
-                    }
-                    
-                    
-                    var pickup = CloudPickup()
-                    pickup.userId = userId
-                    pickup.pinId = pinId
-                    pickup.waypointId = waypointId
-                    pickup.createdDate = NSDate()
-                    objectMapper.save(pickup) { error in
-                        guard error == nil else {
-                            print(error)
-                            
-                            objectMapper.remove(pinStatus)
-                            
-                            return
-                        }
-                        
-                        let syncer = Syncer()
-                        syncer.writeToLocal(LocalPin.self, cloudRepresentations: [pin])
-                        syncer.writeToLocal(LocalWaypoint.self, cloudRepresentations: [waypoint])
-                        syncer.writeToLocal(LocalPinStatus.self, cloudRepresentations: [pinStatus])
-                        syncer.writeToLocal(LocalPickup.self, cloudRepresentations: [pickup])
-                    }
-                
-                }
-                
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tabBarController?.selectedIndex = 1
             }
             
-            
-            
+            let syncer = Syncer()
+            syncer.writeToLocal(LocalPin.self, cloudRepresentations: [pin])
+            syncer.writeToLocal(LocalEvent.self, cloudRepresentations: [event])
         }
-
-        
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

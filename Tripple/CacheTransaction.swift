@@ -11,9 +11,9 @@ import UIKit
 import RealmSwift
 
 enum CacheTransactionType: String {
-    case PublicPinStatuses  // PinStatuses, Pins, and Waypoints [public, potentially limited]
-    case PinWaypoints       // Waypoints for a specific pin [note: _pinId]
-    case PersonalPickups    // Pickups for a specific user [note: _userId]
+    case PinEvents          // Events for a specific pin [note: _pinId]
+    case UserData           // Pins and Events created by user [note: _userId]
+    case PublicPins         // Public Pins and their current Event
 }
 
 class CacheTransaction: Object {
@@ -21,7 +21,7 @@ class CacheTransaction: Object {
     dynamic var _cacheType = ""
     dynamic var _note = ""
 
-    static let expirationInterval = NSTimeInterval(60 * 3) // 3 minutes
+    static let expirationInterval = NSTimeInterval(30) // 30 sec
    
     var time: NSDate {
         return NSDate(timeIntervalSince1970: Double(_timestamp))
@@ -39,10 +39,10 @@ class CacheTransaction: Object {
         return ["expirationInterval", "expired", "time"]
     }
     
-    static func cacheHasExpired(cacheType cacheType: CacheTransactionType, note: String? = nil) -> Bool {
+    static func cacheHasExpired(cacheType cacheType: CacheTransactionType, note: String? = nil, realm: Realm? = nil) -> Bool {
         let acceptableCacheTime = Int(NSDate().dateByAddingTimeInterval(-CacheTransaction.expirationInterval).timeIntervalSince1970)
         
-        let queryset = try! Realm().objects(CacheTransaction.self)
+        let queryset = try! (realm ?? Realm()).objects(CacheTransaction.self)
                                    .filter("_timestamp > %@", acceptableCacheTime)
                                    .filter("_cacheType = %@", cacheType.rawValue)
         
@@ -51,15 +51,16 @@ class CacheTransaction: Object {
         }
         
         return queryset.count == 0
-        
     }
     
-    static func markCacheUpdated(cacheType cacheType: CacheTransactionType, note: String = "") {
+    static func markCacheUpdated(cacheType cacheType: CacheTransactionType, note: String = "", realm customRealm: Realm? = nil) {
+        
+        let realm = try! customRealm ?? Realm()
+        
         let cacheTransaction = CacheTransaction()
         cacheTransaction._cacheType = cacheType.rawValue
         cacheTransaction._note = note
         
-        let realm = try! Realm()
         try! realm.write {
             realm.add(cacheTransaction)
         }

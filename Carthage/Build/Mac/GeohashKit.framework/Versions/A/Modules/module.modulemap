@@ -1,0 +1,10 @@
+framework module GeohashKit {
+  umbrella header "GeohashKit.h"
+
+  export *
+  module * { export * }
+}
+
+module GeohashKit.Swift {
+    header "GeohashKit-Swift.h"
+}

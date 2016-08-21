@@ -33,19 +33,19 @@ import Foundation
 //    return lhs.hashValue == rhs.hashValue
 //}
 //
-//class Waypoint {
+//class Event {
 //    var pin: Pin
-//    var previousWaypoint: Waypoint?
+//    var previousEvent: Event?
 //    
 //    var location: CLLocation
 //    
-//    init(pin: Pin, location: CLLocation, previousWaypoint: Waypoint? = nil) {
+//    init(pin: Pin, location: CLLocation, previousEvent: Event? = nil) {
 //        self.pin = pin
 //        self.location = location
 //        
-//        if let previousWaypoint = previousWaypoint {
-//            if previousWaypoint.pin.id == pin.id {
-//                self.previousWaypoint = previousWaypoint
+//        if let previousEvent = previousEvent {
+//            if previousEvent.pin.id == pin.id {
+//                self.previousEvent = previousEvent
 //            }
 //        }
 //    }

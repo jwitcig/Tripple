@@ -13,20 +13,6 @@ import AWSDynamoDB
 import AWSMobileHubHelper
 import RealmSwift
 
-struct PinItem {
-    let pin: Pin
-    let waypoints: Results<LocalWaypoint>
-    
-    var currentWaypoint: Waypoint {
-        return waypoints.sort{$0.0.createdDate.compare($0.1.createdDate) == .OrderedDescending}[0]
-    }
-    
-    init(pin: Pin, waypoints: Results<LocalWaypoint>) {
-        self.pin = pin
-        self.waypoints = waypoints
-    }
-}
-
 class PinViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -45,12 +31,12 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     
     var realmNotificationToken: NotificationToken?
     
-    struct WaypointInfo {
-        let waypoint: Waypoint
+    struct EventInfo {
+        let event: Event
         var placemark: CLPlacemark?
         
-        init(waypoint: Waypoint, placemark: CLPlacemark?) {
-            self.waypoint = waypoint
+        init(event: Event, placemark: CLPlacemark?) {
+            self.event = event
             self.placemark = placemark
         }
         
@@ -59,23 +45,22 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    var pin: Pin! {
+    var pinId = "" {
         didSet {
-            let waypoints = try! Realm().objects(LocalWaypoint.self).filter("_pinId == %@", pin.id)
-            pinItem = PinItem(pin: pin, waypoints: waypoints)
+            
+            guard let pin = try! Realm().objectForPrimaryKey(LocalPin.self, key: pinId) else {
+                return
+            }
+            pinItem = PinItem(pin: pin)
         }
     }
     
     var pinItem: PinItem!
     
-    var waypointInfoList = [WaypointInfo]()
+    var eventInfoList = [EventInfo]()
     
     var userHoldsPin: Bool {
-        let realm = try! Realm()
-        let statuses = realm.objects(LocalPinStatus.self)
-        let currentPickups = realm.objects(LocalPickup.self).filter("_waypointId IN %@", statuses.map{$0.waypointId})
-        
-        return currentPickups.filter("_pinId = %@", pin.id).first != nil
+        return pinItem.pin.currentEvent?.type == EventType.Pickup.rawValue
     }
     
     override func viewDidLoad() {
@@ -91,6 +76,28 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationBar.shadowImage = UIImage()
         navigationBar.backgroundColor = topColor.backgroundColor
+        
+        guard CacheTransaction.cacheHasExpired(cacheType: .PinEvents, note: pinId) else {
+            return
+        }
+        
+        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        let query = AWSDynamoDBQueryExpression()
+        query.indexName = "Pin-Timestamp-Index"
+        query.keyConditionExpression = "pinId = :id"
+        query.expressionAttributeValues = [":id": "[us-east-1:9380f898-c0d5-45f4-a3d9-ce126b8e078b]1470980661"]
+        mapper.query(CloudEvent.self, expression: query) { response, error in
+            guard error == nil else {
+                print("error: \(error)")
+                return
+            }
+            
+            guard let events = response?.items as? [CloudEvent] else { return }
+            
+            Syncer().writeToLocal(LocalEvent.self, cloudRepresentations: events) {
+                CacheTransaction.markCacheUpdated(cacheType: .PinEvents, note: self.pinId, realm: $0)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -112,8 +119,16 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         locationHandler.requestLocation()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        messageView?.scrollRangeToVisible(NSRange(location: 0,length: 0))
+    }
+    
     func locationUpdated(location location: CLLocation) {
-        let pinLocation = CLLocation(latitude: self.pinItem.currentWaypoint.latitude, longitude: self.pinItem.currentWaypoint.longitude)
+        guard let currentEvent = pinItem.pin.currentEvent else {
+            return
+        }
+        
+        let pinLocation = CLLocation(latitude: currentEvent.latitude, longitude: currentEvent.longitude)
         
         let distance = location.distanceFromLocation(pinLocation) * 0.000621371 // in miles
         dispatch_async(dispatch_get_main_queue()) {
@@ -133,13 +148,13 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         mapView.region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
     }
     
-    // Fetches GPS information for waypoints (city names, distances, etc.)
-    func fetchWaypointInformation(waypoints waypoints: Results<LocalWaypoint>) {
-        waypointInfoList = []
+    // Fetches GPS information for events (city names, distances, etc.)
+    func fetchEventInformation(events events: Results<LocalEvent>) {
+        eventInfoList = []
         
-        waypoints.forEach { waypoint in
+        events.sorted("_timestamp", ascending: false).forEach { event in
             
-            let location = CLLocation(latitude: waypoint.latitude, longitude: waypoint.longitude)
+            let location = CLLocation(latitude: event.latitude, longitude: event.longitude)
             
             CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
                 
@@ -148,30 +163,29 @@ class PinViewController: UIViewController, MKMapViewDelegate {
                     return
                 }
                 
-                self.waypointInfoList.append(WaypointInfo(waypoint: waypoint, placemark: placemarks?.first))
+                self.eventInfoList.append(EventInfo(event: event, placemark: placemarks?.first))
                 
-                if self.waypointInfoList.count == waypoints.count {
-                    self.displayWaypointInfoList(self.waypointInfoList)
+                if self.eventInfoList.count == events.count {
+                    self.displayEventInfoList(self.eventInfoList)
                 }
-                
             }
         }
     }
     
-    func displayWaypointInfoList(waypointInfoList: [WaypointInfo]) {
+    func displayEventInfoList(eventInfoList: [EventInfo]) {
         previousLocationsStackView.arrangedSubviews.forEach{$0.removeFromSuperview()}
         
-        var sortedWaypoints = waypointInfoList.sort{$0.0.waypoint.createdDate.compare($0.1.waypoint.createdDate) == .OrderedAscending}
+        var sortedEvents = eventInfoList.sort{$0.0.event.createdDate.compare($0.1.event.createdDate) == .OrderedDescending}
         
-        sortedWaypoints.enumerate().forEach { index, waypointInfo in
+        sortedEvents.enumerate().forEach { index, eventInfo in
             var distanceText: String?
             if index > 0 {
-                let previousWaypoint = sortedWaypoints[index-1]
+                let previousEvent = sortedEvents[index-1]
                 
-                let previousWaypointLocation = CLLocation(latitude: previousWaypoint.waypoint.latitude, longitude: previousWaypoint.waypoint.longitude)
-                let currentWaypointLocation = CLLocation(latitude: waypointInfo.waypoint.latitude, longitude: waypointInfo.waypoint.longitude)
+                let previousEventLocation = CLLocation(latitude: previousEvent.event.latitude, longitude: previousEvent.event.longitude)
+                let currentEventLocation = CLLocation(latitude: eventInfo.event.latitude, longitude: eventInfo.event.longitude)
                 
-                let distanceFromPrevious = previousWaypointLocation.distanceFromLocation(currentWaypointLocation)
+                let distanceFromPrevious = previousEventLocation.distanceFromLocation(currentEventLocation)
                 
                 let formatter = NSNumberFormatter()
                 formatter.maximumFractionDigits = 1
@@ -180,7 +194,7 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             }
             
             let cityLabel = UILabel()
-            cityLabel.text = (waypointInfo.cityName ?? "Unknown City") + (distanceText != nil ? " [\(distanceText!)]" : "")
+            cityLabel.text = (eventInfo.cityName ?? "Unknown City") + (distanceText != nil ? " [\(distanceText!)]" : "")
             
             let stackView = UIStackView(arrangedSubviews: [cityLabel])
             stackView.axis = .Vertical
@@ -194,11 +208,22 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     
     func updateUI() {
         titleLabel.text = pinItem.pin.title
-        messageView.text = pinItem.pin.message
+        if let message = pinItem.pin.message {
+            messageView?.text = message
+            messageView?.font = UIFont(name: "Arial", size: 26)
+            messageView?.scrollRangeToVisible(NSRange(location: 0,length: 0))
+        } else {
+            messageView?.removeFromSuperview()
+        }
         
-        setupMap(coordinate: CLLocationCoordinate2D(latitude: pinItem.currentWaypoint.latitude, longitude: pinItem.currentWaypoint.longitude))
+        guard let event = pinItem.pin.currentEvent else {
+            print("error: missing event")
+            return
+        }
         
-        fetchWaypointInformation(waypoints: pinItem.waypoints)
+        setupMap(coordinate: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude))
+        
+        fetchEventInformation(events: pinItem.pin.events)
         
         if userHoldsPin {
             dropPinButton.hidden = false
@@ -208,7 +233,8 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func pickupPressed(sender: AnyObject) {
-        let successHandler: ()->() = {
+        let successHandler: (CLLocation
+            , Event)->() = { location, event in
             dispatch_async(dispatch_get_main_queue()) {
                 self.pickupPinButton.hidden = true
                 self.dropPinButton.hidden = false
@@ -218,18 +244,18 @@ class PinViewController: UIViewController, MKMapViewDelegate {
                     self.dropPinButton.layoutIfNeeded()
                 }
                 
-                let alert = UIAlertController(title: "You picked up \(self.pin.title)!", message: "Take it as far as you can!", preferredStyle: .ActionSheet)
+                let alert = UIAlertController(title: "You picked up \(self.pinItem.pin.title)!", message: "Take it as far as you can!", preferredStyle: .ActionSheet)
                 alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
         
-        createPickup(successHandler: successHandler)
+        createEvent(type: EventType.Pickup, successHandler: successHandler)
     }
     
     @IBAction func dropPinPressed(sender: AnyObject) {
         let successHandler: (CLLocation
-            , Waypoint)->() = { location, waypoint in
+            , Event)->() = { location, event in
             dispatch_async(dispatch_get_main_queue()) {
                 self.pickupPinButton.hidden = false
                 self.dropPinButton.hidden = true
@@ -239,7 +265,7 @@ class PinViewController: UIViewController, MKMapViewDelegate {
                     self.dropPinButton.layoutIfNeeded()
                 }
                 
-                let alert = UIAlertController(title: "You dropped \(self.pin.title)!", message: "Be sure to check back and see where it goes next!", preferredStyle: .ActionSheet)
+                let alert = UIAlertController(title: "You dropped \(self.pinItem.pin.title)!", message: "Be sure to check back and see where it goes next!", preferredStyle: .ActionSheet)
                 alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
                 
@@ -252,113 +278,114 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             }
         }
         
-        
-        if let location = locationHandler.location {
-            createWaypoint(location: location, successHandler: successHandler)
+        createEvent(type: EventType.Drop, successHandler: successHandler)
+    }
+    
+    func createEvent(type type: EventType, successHandler: ((location: CLLocation, event: Event)->())) {
+        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
             return
         }
         
-        locationHandler.executionBlock = { (location, error) in
-            
-            guard let location = location else {
-                print("error getting location: \(error)")
-        
+        guard let location = locationHandler.location else {
+            locationHandler.executionBlock = { location, error in
+                
+                guard location != nil else {
+                    print("error getting location: \(error)")
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let alert = UIAlertController(title: "Oops", message: "We couldnt find your location!", preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
                 dispatch_async(dispatch_get_main_queue()) {
-                    let alert = UIAlertController(title: "Oops", message: "We couldnt find your location!", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.createEvent(type: type, successHandler: successHandler)
                 }
-                return 
             }
-            
-            self.createWaypoint(location: location, successHandler: successHandler)
-        }
-        locationHandler.requestLocation()
-        
-    }
-    
-    func createPickup(successHandler successHandler: (()->())) {
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            locationHandler.requestLocation()
             return
         }
         
-        var pickup = CloudPickup()
-        pickup.pinId = pin.id
-        pickup.waypointId = pinItem.currentWaypoint.id
-        pickup.userId = userId
-        pickup.pickupTime = NSDate()
+        guard let latestEvent = pinItem.pin.currentEvent else { return }
         
-        let pinId = pin.id
-        let waypointId = pinItem.currentWaypoint.id
+        var event = CloudEvent()
+        event.userId = userId
+        event.createdDate = NSDate()
+        event.pinId = pinItem.pin.id
+        event.location = location
+        event.type = type.rawValue
+        event.previousEventId = latestEvent.id
+
+        let pinId = pinItem.pin.id
         
-        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        mapper.save(pickup) { error in
+        let updatePin = AWSDynamoDBUpdateItemInput()
+        updatePin.tableName = CloudPin.dynamoDBTableName()
+        let hashValue = AWSDynamoDBAttributeValue()
+        hashValue.S = pinItem.pin.userId
+        let rangeValue = AWSDynamoDBAttributeValue()
+        rangeValue.N = "\(Int(pinItem.pin.createdDate.timeIntervalSince1970))"
+        let oldEventIdValue = AWSDynamoDBAttributeValue()
+        oldEventIdValue.S = latestEvent.id
+
+        let idValue = AWSDynamoDBAttributeValue()
+        idValue.S = event.id
+
+        let newEventValue = AWSDynamoDBAttributeValue()
+        newEventValue.M = [
+            "id": idValue,
+        ]
+        let statusValue = AWSDynamoDBAttributeValue()
+        statusValue.S = event.type
+        let geohashValue = AWSDynamoDBAttributeValue()
+        geohashValue.S = event.geohash
+        
+        updatePin.key = ["userId": hashValue, "timestamp": rangeValue]
+        
+        updatePin.conditionExpression = "currentEvent.id = :oldEventId"
+        updatePin.updateExpression = "SET currentEvent = :newEvent, pinStatus = :status, geohash = :geohash"
+        updatePin.expressionAttributeValues = [
+            ":oldEventId": oldEventIdValue,
+            ":newEvent": newEventValue,
+            ":status": statusValue,
+            ":geohash": geohashValue,
+        ]
+        
+        let errorBlock = {
+            dispatch_async(dispatch_get_main_queue()) {
+                let actionMessage = event.type == EventType.Drop.rawValue ? "dropping" : "picking up"
+                let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+        
+        AWSDynamoDB.defaultDynamoDB().updateItem(updatePin) { response, error in
             guard error == nil else {
-                print(error)
+                print("Error updating pin: \(error!)")
+                errorBlock()
                 return
             }
             
-            var pinStatus = CloudPinStatus()
-            pinStatus.pinId = pinId
-            pinStatus.waypointId = waypointId
-            mapper.save(pinStatus) { error in
+            AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper().save(event) { error in
                 guard error == nil else {
-                    print(error)
-                    mapper.remove(pickup)
+                    print("Error creating event: \(error!)")
+                    errorBlock()
                     return
                 }
                 
                 let syncer = Syncer()
-                syncer.writeToLocal(LocalPickup.self, cloudRepresentations: [pickup])
-                syncer.writeToLocal(LocalPinStatus.self, cloudRepresentations: [pinStatus])
-                
-                successHandler()
-            }
-        }
-    }
-    
-    func createWaypoint(location location: CLLocation, successHandler: ((location: CLLocation, waypoint: Waypoint)->())) {
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        var waypoint = CloudWaypoint()
-        waypoint.pinId = self.pin.id
-        waypoint.dropLocation = location
-        waypoint.userId = userId
-        waypoint.createdDate = NSDate()
-        waypoint.previousWaypointId = self.pinItem.currentWaypoint.id
-        
-        let pinId = self.pin.id
-        let waypointId = waypoint.id
-        
-        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        mapper.save(waypoint) { error in
-            guard error == nil else {
-                print(error)
-                return
-            }
-            
-            var pinStatus = CloudPinStatus()
-            pinStatus.pinId = pinId
-            pinStatus.waypointId = waypointId
-            mapper.save(pinStatus) { error in
-                guard error == nil else {
-                    print(error)
-                    return
-                }
-            
-                let syncer = Syncer()
-                syncer.writeToLocal(LocalWaypoint.self, cloudRepresentations: [waypoint])
-                syncer.writeToLocal(LocalPinStatus.self, cloudRepresentations: [pinStatus])
-                
-                successHandler(location: location, waypoint: waypoint)
+                syncer.updateLocal(LocalPin.self, primaryKey: pinId, updateBlock: {
+                    var pin = $0
+                    pin.pinStatus = event.type
+                    pin.geohash = event.geohash
+                })
+                syncer.writeToLocal(LocalEvent.self, cloudRepresentations: [event])
+
+                successHandler(location: location, event: event)
             }
         }
     }

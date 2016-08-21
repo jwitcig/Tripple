@@ -17,7 +17,9 @@ class NoSQLTableFactory {
     static var supportedTables: [Table] {
         return [
 
-            PinTable(),
+            CloudEventTable(),
+
+            CloudPinTable(),
         ]
     }
 }

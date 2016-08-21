@@ -17,6 +17,8 @@ import AWSMobileHubHelper
 import FBSDKLoginKit
 import GoogleSignIn
 
+import AWSDynamoDB
+
 class SignInViewController: UIViewController {
 
     @IBOutlet weak var facebookButton: UIButton!
@@ -47,14 +49,14 @@ class SignInViewController: UIViewController {
             queue: NSOperationQueue.mainQueue(),
             usingBlock: {(note: NSNotification) -> Void in
                 // perform successful login actions here
-                
+
                 self.performSegueWithIdentifier("LoginSuccess", sender: self)
         })
 
         // Facebook login permissions can be optionally set, but must be set
         // before user authenticates.
         AWSFacebookSignInProvider.sharedInstance().setPermissions(["public_profile"])
-
+        
 
         // Facebook login behavior can be optionally set, but must be set
         // before user authenticates.
@@ -90,7 +92,7 @@ class SignInViewController: UIViewController {
             // If no error reported by SignInProvider, discard the sign-in view controller.
             if error == nil {
                 dispatch_async(dispatch_get_main_queue()) {
-
+                    
                 }
             }
             print("result = \(result), error = \(error)")

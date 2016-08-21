@@ -11,17 +11,18 @@ import UIKit
 
 import AWSDynamoDB
 import AWSMobileHubHelper
+import GeohashKitiOS
 import GoogleMobileAds
 import RealmSwift
 
 struct MapItem {
     let pin: Pin
-    let currentWaypoint: Waypoint
+    let currentEvent: Event
     let annotation: MKPointAnnotation
     
-    init (pin: Pin, waypoint: Waypoint, annotation: MKPointAnnotation) {
+    init (pin: Pin, event: Event, annotation: MKPointAnnotation) {
         self.pin = pin
-        self.currentWaypoint = waypoint
+        self.currentEvent = event
         self.annotation = annotation
     }
 }
@@ -45,10 +46,17 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     let locationManager = CLLocationManager()
     
+    let locationHandler = LocationHandler()
+    
     var mapItems = [MapItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationHandler.executionBlock = {
+            self.pinInfoView?.location = $0.location
+        }
+        locationHandler.requestLocation()
         
         navigationBar.translucent = true
         navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
@@ -61,7 +69,7 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         let buttonItem = MKUserTrackingBarButtonItem(mapView: mapView)
         navigationBar.topItem?.leftBarButtonItem = buttonItem
         
-        pinInfoView.pickupSuccessBlock = { pickup, pin, waypoint in
+        pinInfoView.pickupSuccessBlock = { pin, event in
             let title = "You picked up \(pin.title)"
             let message = "You have 24 hours to carry the message wherever you like! Hurry!"
             
@@ -79,28 +87,106 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         updateMap()
     
         adBannerView = createAdBannerView()
+        
+        if CacheTransaction.cacheHasExpired(cacheType: .PublicPins) {
+            // if no caches were performed within the expiration interval, update the cache
+            
+            updateCache()
+        }
+    }
+    
+    func updateCache(geohashes geohashes: [String]? = nil) {
+        var sortKeyComparisons: String?
+        if let neighbors = geohashes {
+            sortKeyComparisons = neighbors.enumerate().reduce(" AND (", combine: { (construction, enumeration) -> String in
+                let index = enumeration.index
+                let neighbor = enumeration.element
+                
+                var newString = construction + "begins_with (geohash, neighbor)"
+                if index < neighbors.count - 1 {
+                    newString += " OR "
+                }
+                
+                return newString
+                
+            })
+            sortKeyComparisons! += ")"
+        }
+        
+        
+        let expression = AWSDynamoDBQueryExpression()
+//        expression.limit = geohashes == nil ? 50 : nil
+        expression.indexName = "Status-Geohash-Index"
+        expression.keyConditionExpression = "(pinStatus = :status)" + (sortKeyComparisons ?? "")
+        expression.expressionAttributeValues = [
+            ":status": EventType.Drop.rawValue,
+        ]
+        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        mapper.query(CloudPin.self, expression: expression) { response, error in
+            
+            
+            
+            // need to get pins for multiple grid spaces around the center of the map, user batch queries to get pins for all grids
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            guard let response = response else {
+                print("no response: \(error)")
+                return
+            }
+            
+            guard let pins = response.items as? [CloudPin] else {
+                return
+            }
+            
+            var eventQueryInfo = [String: String]()
+            pins.enumerate().forEach {
+                eventQueryInfo[":id\($0.index)"] = $0.element.id
+            }
+            
+            let eventExpression = AWSDynamoDBScanExpression()
+            eventExpression.filterExpression = "#pinId IN (\(eventQueryInfo.keys.joinWithSeparator(",")))"
+            eventExpression.expressionAttributeNames = ["#pinId": "pinId",]
+            eventExpression.expressionAttributeValues = eventQueryInfo
+            mapper.scan(CloudEvent.self, expression: eventExpression) { response, error in
+                
+                guard let response = response else {
+                    print("no response: \(error)")
+                    return
+                }
+                
+                guard let events = response.items as? [CloudEvent] else {
+                    return
+                }
+                
+                let syncer = Syncer()
+                syncer.writeToLocal(LocalPin.self, cloudRepresentations: pins)
+                syncer.writeToLocal(LocalEvent.self, cloudRepresentations: events)
+                CacheTransaction.markCacheUpdated(cacheType: .PublicPins)
+            }
+        }
     }
     
     func updateMap() {
         self.mapView.removeAnnotations(self.mapView.annotations)
         
         let realm = try! Realm()
+        let pins = realm.objects(LocalPin)
 
-        let pinStatuses: [LocalPin : LocalWaypoint] = realm.objects(LocalPinStatus.self).reduce([:]) { statuses, status in
-            let pin = realm.objects(LocalPin.self).filter("_id == %@", status.pinId).first
-            let waypoint = realm.objects(LocalWaypoint.self).filter("_id == %@", status.waypointId).first
-            
-            var dict = statuses
-            if let pin = pin, let waypoint = waypoint {
-                dict[pin] = waypoint
-            }
-            return dict
-        }
+        let pinItems = pins.map(PinItem.init).filter{$0.pin.currentEvent != nil}
         
-        self.mapItems = pinStatuses.map {
+        self.mapItems = pinItems.map {
+            let event = $0.pin.currentEvent!
             let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(latitude: $0.1.latitude, longitude: $0.1.longitude)
-            return MapItem(pin: $0.0, waypoint: $0.1, annotation: annotation)
+            annotation.coordinate = CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)
+            return MapItem(pin: $0.pin, event: event, annotation: annotation)
         }
         
         self.mapView.addAnnotations(self.mapItems.map{$0.annotation})
@@ -172,6 +258,14 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         guard let mapItem = selectedMapItem else { return }
         
+        guard let pinViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PinViewController") as? PinViewController else { return }
+        
+        pinViewController.pinId = mapItem.pin.id
+        
+        self.presentViewController(pinViewController, animated: true, completion: nil)
+    
+        return
+        
         if !self.view.subviews.contains(pinInfoView) {
             pinInfoView.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(pinInfoView)
@@ -206,11 +300,20 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let targetGeohash = Geohash.encode(coordinate: mapView.centerCoordinate, 6)
+        
+//        updateCache(geohashes: Geohash.neighbors(targetGeohash))
+        updateCache()
+    }
+    
 }
 
 class PinInfoView: UIView {
     
     var mapItem: MapItem!
+    
+    var location: CLLocation?
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UITextView!
@@ -226,7 +329,7 @@ class PinInfoView: UIView {
     let verticalLimit : CGFloat = -10
     var totalTranslation : CGFloat = -200
     
-    var pickupSuccessBlock: ((pickup: Pickup, pin: Pin, waypoint: Waypoint)->())!
+    var pickupSuccessBlock: ((pin: Pin, event: Event)->())!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -291,12 +394,17 @@ class PinInfoView: UIView {
             return
         }
         
-        var pickup = CloudPickup()
+        guard let location = location else {
+            print("missing location information")
+            return
+        }
+        
+        var pickup = CloudEvent()
         pickup.pinId = mapItem.pin.id
-        pickup.waypointId = mapItem.currentWaypoint.id
         pickup.userId = userId
-        pickup.pickupTime = NSDate()
-        pickup.id = NSUUID().UUIDString
+        pickup.location = location
+        pickup.createdDate = NSDate()
+        pickup.type = EventType.Pickup.rawValue
         
         AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper().save(pickup) { error in
             guard error == nil else {
@@ -305,10 +413,10 @@ class PinInfoView: UIView {
             }
             
             dispatch_async(dispatch_get_main_queue()) {
-                self.pickupSuccessBlock(pickup: pickup, pin: self.mapItem.pin, waypoint: self.mapItem.currentWaypoint)
+                self.pickupSuccessBlock(pin: self.mapItem.pin, event: pickup)
             }
             
-            Syncer().writeToLocal(LocalPickup.self, cloudRepresentations: [pickup])
+            Syncer().writeToLocal(LocalEvent.self, cloudRepresentations: [pickup])
         }
         
     }

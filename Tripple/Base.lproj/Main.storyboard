@@ -3,9 +3,16 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
+            <string>Roboto-Bold</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Pins-->
         <scene sceneID="ZpJ-cJ-mJF">
@@ -57,21 +64,69 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCt-t5-vJK">
-                                <rect key="frame" x="273" y="285" width="55" height="30"/>
-                                <state key="normal" title="sign out"/>
-                                <connections>
-                                    <action selector="signOutPressed:" destination="raY-aj-oys" eventType="touchUpInside" id="38b-n2-4go"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aWB-bi-6WX">
+                                <rect key="frame" x="20" y="40" width="560" height="511"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ahy-Lr-jnL">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="150"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SoW-5G-xJP">
+                                                <rect key="frame" x="205" y="0.0" width="150" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="SoW-5G-xJP" secondAttribute="height" multiplier="1:1" id="MS8-qR-snh"/>
+                                                    <constraint firstAttribute="height" constant="150" id="hUy-l5-m0o"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="2Zp-re-hMT">
+                                        <rect key="frame" x="0.0" y="170" width="560" height="341"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIG-9a-bCD">
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="48"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="pins created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0h-6e-gjh">
+                                                <rect key="frame" x="0.0" y="98" width="560" height="31"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="26"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="carries" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3U-IT-Dzu">
+                                                <rect key="frame" x="0.0" y="179" width="560" height="31"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="26"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCt-t5-vJK">
+                                                <rect key="frame" x="0.0" y="259" width="560" height="82"/>
+                                                <state key="normal" title="sign out"/>
+                                                <connections>
+                                                    <action selector="signOutPressed:" destination="raY-aj-oys" eventType="touchUpInside" id="38b-n2-4go"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.52034473110000001" green="0.84377884579999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="XCt-t5-vJK" firstAttribute="centerX" secondItem="JcF-Ak-sjb" secondAttribute="centerX" id="5mz-Oj-Ebr"/>
-                            <constraint firstItem="XCt-t5-vJK" firstAttribute="centerY" secondItem="JcF-Ak-sjb" secondAttribute="centerY" id="kSy-Bn-hvK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aWB-bi-6WX" secondAttribute="trailing" id="79A-Nm-iHL"/>
+                            <constraint firstItem="NtP-IA-znx" firstAttribute="top" secondItem="aWB-bi-6WX" secondAttribute="bottom" id="CYd-dU-6ad"/>
+                            <constraint firstItem="aWB-bi-6WX" firstAttribute="leading" secondItem="JcF-Ak-sjb" secondAttribute="leadingMargin" id="HSb-RV-8jp"/>
+                            <constraint firstItem="aWB-bi-6WX" firstAttribute="top" secondItem="K3f-wY-i6M" secondAttribute="bottom" constant="20" id="cwB-B9-l5T"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Account" id="QI2-fg-qQA"/>
+                    <connections>
+                        <outlet property="carriesLabel" destination="X3U-IT-Dzu" id="xyr-Ex-DgM"/>
+                        <outlet property="imageView" destination="SoW-5G-xJP" id="Len-5d-CSt"/>
+                        <outlet property="pinsCreatedLabel" destination="h0h-6e-gjh" id="ozT-FE-hiW"/>
+                        <outlet property="usernameLabel" destination="DIG-9a-bCD" id="NLH-Fo-f6m"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOS-4R-hCJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -111,14 +166,14 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="740" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1g6-VW-GNG">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="740" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1g6-VW-GNG">
                                                         <rect key="frame" x="0.0" y="70" width="560" height="100"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="100" id="A3C-qo-Dpd"/>
                                                         </constraints>
                                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGO-mc-b78">
@@ -141,7 +196,7 @@
                                                             <action selector="dropPinPressed:" destination="67m-Cx-NjR" eventType="touchUpInside" id="NUl-qv-ZUI"/>
                                                         </connections>
                                                     </button>
-                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75w-hC-Ze1">
+                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75w-hC-Ze1">
                                                         <rect key="frame" x="0.0" y="180" width="560" height="200"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="200" id="vDq-E3-wpa"/>
