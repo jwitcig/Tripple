@@ -19,24 +19,24 @@ class AccountViewController: UIViewController {
         
     }
     
-    @IBAction func signOutPressed(sender: AnyObject) {
-        let alert = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Sign Out", style: .Destructive) { action in
+    @IBAction func signOutPressed(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Sign Out", style: .destructive) { action in
             self.signOut()
         })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func signOut() {
-        AWSIdentityManager.defaultIdentityManager().logoutWithCompletionHandler { result, error in
+        AWSIdentityManager.default().logout { result, error in
             
             guard error == nil else {
                 print("Error signing out: \(error!)")
                 return
             }
             
-            self.tabBarController?.dismissViewControllerAnimated(true, completion: nil)
+            self.tabBarController?.dismiss(animated: true, completion: nil)
         }
         
     }

@@ -23,7 +23,7 @@ protocol Pin {
     var message: String? { get set }
     var title: String { get set }
     
-    var createdDate: NSDate { get set }
+    var createdDate: Date { get set }
 }
 
 protocol LocalPinModel: Pin {
@@ -61,7 +61,7 @@ extension LocalPinModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? NSUUID().UUIDString }
+        get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
     var message: String? {
@@ -74,9 +74,9 @@ extension LocalPinModel {
     }
 
     
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
-            return NSDate(timeIntervalSince1970: Double(_timestamp))
+            return Date(timeIntervalSince1970: Double(_timestamp))
         }
         set {
             _timestamp = Int(newValue.timeIntervalSince1970)
@@ -90,7 +90,7 @@ extension CloudPinModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? NSUUID().UUIDString }
+        get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
     var message: String? {
@@ -102,22 +102,22 @@ extension CloudPinModel {
         set { _title = newValue }
     }
     
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
             if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
+                return Date(timeIntervalSince1970: interval.doubleValue)
             }
-            return NSDate()
+            return Date()
         }
         set {
-            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+            _timestamp = NSNumber(value: newValue.timeIntervalSince1970 as Double)
         }
     }
 }
 
 class LocalPin: Object, LocalPinModel {
     dynamic var _userId = ""
-    dynamic var _id = NSUUID().UUIDString
+    dynamic var _id = UUID().uuidString
     dynamic var _message: String?
     dynamic var _title = ""
     dynamic var _timestamp = 0
@@ -133,7 +133,7 @@ class LocalPin: Object, LocalPinModel {
 
 class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
     var _userId: String?
-    var _id: String? = NSUUID().UUIDString
+    var _id: String? = UUID().uuidString
     var _message: String?
     var _title: String?
     var _timestamp: NSNumber?
@@ -153,7 +153,7 @@ class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
         return "_id"
     }
     
-    override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
+    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
                "_userId" : "userId",
                "_id" : "id",
@@ -173,7 +173,7 @@ class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
         super.init()
     }
     
-    override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
+    override init(dictionary dictionaryValue: [AnyHashable: Any]!, error: ()) throws {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     

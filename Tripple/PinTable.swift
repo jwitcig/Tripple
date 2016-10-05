@@ -46,7 +46,7 @@ class PinTable: NSObject, Table {
 
             PinTitle(),
         ]
-        if (model.classForCoder.respondsToSelector("rangeKeyAttribute")) {
+        if (model.classForCoder.responds(to: #selector(AWSDynamoDBModeling.rangeKeyAttribute))) {
             sortKeyName = model.classForCoder.rangeKeyAttribute!()
             sortKeyType = "String"
         }
@@ -60,19 +60,19 @@ class PinTable: NSObject, Table {
      * - returns: table attribute name
      */
 
-    func tableAttributeName(dataObjectAttributeName: String) -> String {
-        return CloudPin.JSONKeyPathsByPropertyKey()[dataObjectAttributeName] as! String
+    func tableAttributeName(_ dataObjectAttributeName: String) -> String {
+        return CloudPin.jsonKeyPathsByPropertyKey()[dataObjectAttributeName] as! String
     }
     
     func getItemDescription() -> String {
-        return "Find Item with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!) and id = \("demo-id-500000")."
+        return "Find Item with userId = \(AWSIdentityManager.default().identityId!) and id = \("demo-id-500000")."
     }
     
-    func getItemWithCompletionHandler(completionHandler: (response: AWSDynamoDBObjectModel?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        objectMapper.load(CloudPin.self, hashKey: AWSIdentityManager.defaultIdentityManager().identityId!, rangeKey: "demo-id-500000", completionHandler: {(response: AWSDynamoDBObjectModel?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+    func getItemWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBObjectModel?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
+        objectMapper.load(CloudPin.self, hashKey: AWSIdentityManager.default().identityId!, rangeKey: "demo-id-500000", completionHandler: {(response: AWSDynamoDBObjectModel?, error: NSError?) -> Void in
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
@@ -81,14 +81,14 @@ class PinTable: NSObject, Table {
         return "Show all items in the table."
     }
     
-    func scanWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func scanWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
         scanExpression.limit = 5
 
         objectMapper.scan(CloudPin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
@@ -97,8 +97,8 @@ class PinTable: NSObject, Table {
         return "Find all items with message < \("demo-message-500000")."
     }
     
-    func scanWithFilterWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func scanWithFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
         
         scanExpression.filterExpression = "#message < :message"
@@ -106,96 +106,96 @@ class PinTable: NSObject, Table {
         scanExpression.expressionAttributeValues = [":message": "demo-message-500000" ,]
 
         objectMapper.scan(CloudPin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
     
-    func insertSampleDataWithCompletionHandler(completionHandler: (errors: [NSError]?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func insertSampleDataWithCompletionHandler(_ completionHandler: @escaping (_ errors: [NSError]?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         var errors: [NSError] = []
-        let group: dispatch_group_t = dispatch_group_create()
+        let group: DispatchGroup = DispatchGroup()
         let numberOfObjects = 20
         
 
         let itemForGet = CloudPin()
         
-        itemForGet._userId = AWSIdentityManager.defaultIdentityManager().identityId!
+        itemForGet._userId = AWSIdentityManager.default().identityId!
         itemForGet._id = "demo-id-500000"
         itemForGet._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
         itemForGet._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
     
         
-        dispatch_group_enter(group)
+        group.enter()
         
 
         objectMapper.save(itemForGet, completionHandler: {(error: NSError?) -> Void in
             if error != nil {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     errors.append(error!)
                 })
             }
-            dispatch_group_leave(group)
+            group.leave()
         })
         
         for _ in 1..<numberOfObjects {
 
             let item: CloudPin = CloudPin()
-            item._userId = AWSIdentityManager.defaultIdentityManager().identityId!
+            item._userId = AWSIdentityManager.default().identityId!
             item._id = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("id")
             item._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
             item._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
             
-            dispatch_group_enter(group)
+            group.enter()
             
             objectMapper.save(item, completionHandler: {(error: NSError?) -> Void in
                 if error != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         errors.append(error!)
                     })
                 }
-                dispatch_group_leave(group)
+                group.leave()
             })
         }
         
-        dispatch_group_notify(group, dispatch_get_main_queue(), {
+        group.notify(queue: DispatchQueue.main, execute: {
             if errors.count > 0 {
-                completionHandler(errors: errors)
+                completionHandler(errors)
             }
             else {
-                completionHandler(errors: nil)
+                completionHandler(nil)
             }
         })
     }
     
-    func removeSampleDataWithCompletionHandler(completionHandler: (errors: [NSError]?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func removeSampleDataWithCompletionHandler(_ completionHandler: @escaping (_ errors: [NSError]?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         queryExpression.keyConditionExpression = "#userId = :userId"
         queryExpression.expressionAttributeNames = ["#userId": "userId"]
-        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.defaultIdentityManager().identityId!,]
+        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!,]
 
         objectMapper.query(CloudPin.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     completionHandler(errors: [error]);
                     })
             } else {
                 var errors: [NSError] = []
-                let group: dispatch_group_t = dispatch_group_create()
+                let group: DispatchGroup = DispatchGroup()
                 for item in response!.items {
-                    dispatch_group_enter(group)
+                    group.enter()
                     objectMapper.remove(item, completionHandler: {(error: NSError?) -> Void in
                         if error != nil {
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 errors.append(error!)
                             })
                         }
-                        dispatch_group_leave(group)
+                        group.leave()
                     })
                 }
-                dispatch_group_notify(group, dispatch_get_main_queue(), {
+                group.notify(queue: DispatchQueue.main, execute: {
                     if errors.count > 0 {
                         completionHandler(errors: errors)
                     }
@@ -207,8 +207,8 @@ class PinTable: NSObject, Table {
         }
     }
     
-    func updateItem(item: AWSDynamoDBObjectModel, completionHandler: (error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func updateItem(_ item: AWSDynamoDBObjectModel, completionHandler: @escaping (_ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         
 
         let itemToUpdate: CloudPin = item as! CloudPin
@@ -217,18 +217,18 @@ class PinTable: NSObject, Table {
         itemToUpdate._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
         
         objectMapper.save(itemToUpdate, completionHandler: {(error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(error)
             })
         })
     }
     
-    func removeItem(item: AWSDynamoDBObjectModel, completionHandler: (error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func removeItem(_ item: AWSDynamoDBObjectModel, completionHandler: @escaping (_ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         
         objectMapper.remove(item, completionHandler: {(error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(error)
             })
         })
     }
@@ -250,30 +250,30 @@ class PinPrimaryIndex: NSObject, Index {
     }
     
     func queryWithPartitionKeyDescription() -> String {
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!)."
+        return "Find all items with userId = \(AWSIdentityManager.default().identityId!)."
     }
     
-    func queryWithPartitionKeyWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func queryWithPartitionKeyWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
         queryExpression.keyConditionExpression = "#userId = :userId"
         queryExpression.expressionAttributeNames = ["#userId": "userId",]
-        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.defaultIdentityManager().identityId!,]
+        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!,]
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
     
     func queryWithPartitionKeyAndFilterDescription() -> String {
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!) and message > \("demo-message-500000")."
+        return "Find all items with userId = \(AWSIdentityManager.default().identityId!) and message > \("demo-message-500000")."
     }
     
-    func queryWithPartitionKeyAndFilterWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func queryWithPartitionKeyAndFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
         queryExpression.keyConditionExpression = "#userId = :userId"
@@ -283,24 +283,24 @@ class PinPrimaryIndex: NSObject, Index {
             "#message": "message",
         ]
         queryExpression.expressionAttributeValues = [
-            ":userId": AWSIdentityManager.defaultIdentityManager().identityId!,
+            ":userId": AWSIdentityManager.default().identityId!,
             ":message": "demo-message-500000",
         ]
         
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
     
     func queryWithPartitionKeyAndSortKeyDescription() -> String {
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!) and id < \("demo-id-500000")."
+        return "Find all items with userId = \(AWSIdentityManager.default().identityId!) and id < \("demo-id-500000")."
     }
     
-    func queryWithPartitionKeyAndSortKeyWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func queryWithPartitionKeyAndSortKeyWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
         queryExpression.keyConditionExpression = "#userId = :userId AND #id < :id"
@@ -309,24 +309,24 @@ class PinPrimaryIndex: NSObject, Index {
             "#id": "id",
         ]
         queryExpression.expressionAttributeValues = [
-            ":userId": AWSIdentityManager.defaultIdentityManager().identityId!,
+            ":userId": AWSIdentityManager.default().identityId!,
             ":id": "demo-id-500000",
         ]
         
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
     
     func queryWithPartitionKeyAndSortKeyAndFilterDescription() -> String {
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!), id < \("demo-id-500000"), and message > \("demo-message-500000")."
+        return "Find all items with userId = \(AWSIdentityManager.default().identityId!), id < \("demo-id-500000"), and message > \("demo-message-500000")."
     }
     
-    func queryWithPartitionKeyAndSortKeyAndFilterWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func queryWithPartitionKeyAndSortKeyAndFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
         queryExpression.keyConditionExpression = "#userId = :userId AND #id < :id"
@@ -337,15 +337,15 @@ class PinPrimaryIndex: NSObject, Index {
             "#message": "message",
         ]
         queryExpression.expressionAttributeValues = [
-            ":userId": AWSIdentityManager.defaultIdentityManager().identityId!,
+            ":userId": AWSIdentityManager.default().identityId!,
             ":id": "demo-id-500000",
             ":message": "demo-message-500000",
         ]
         
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
@@ -369,8 +369,8 @@ class PinTitle: NSObject, Index {
         return "Find all items with title = \("demo-title-3")."
     }
     
-    func queryWithPartitionKeyWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func queryWithPartitionKeyWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
 
@@ -380,8 +380,8 @@ class PinTitle: NSObject, Index {
         queryExpression.expressionAttributeValues = [":title": "demo-title-3",]
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }
@@ -390,8 +390,8 @@ class PinTitle: NSObject, Index {
         return "Find all items with title = \("demo-title-3") and id > \("demo-id-500000")."
     }
     
-    func queryWithPartitionKeyAndFilterWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+    func queryWithPartitionKeyAndFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+        let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
 
@@ -409,8 +409,8 @@ class PinTitle: NSObject, Index {
         
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
+            DispatchQueue.main.async(execute: {
+                completionHandler(response, error)
             })
         })
     }

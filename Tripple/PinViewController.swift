@@ -18,7 +18,7 @@ struct PinItem {
     let waypoints: Results<LocalWaypoint>
     
     var currentWaypoint: Waypoint {
-        return waypoints.sort{$0.0.createdDate.compare($0.1.createdDate) == .OrderedDescending}[0]
+        return waypoints.sorted{$0.0.createdDate.compare($0.1.createdDate) == .orderedDescending}[0]
     }
     
     init(pin: Pin, waypoints: Results<LocalWaypoint>) {
@@ -82,21 +82,21 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         realmNotificationToken = try! Realm().addNotificationBlock { notification, realm in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.updateUI()
             }
         }
         
-        navigationBar.translucent = true
-        navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBar.isTranslucent = true
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.backgroundColor = topColor.backgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.pickupPinButton.hidden = true
+        self.pickupPinButton.isHidden = true
 
         updateUI()
         
@@ -112,20 +112,20 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         locationHandler.requestLocation()
     }
     
-    func locationUpdated(location location: CLLocation) {
+    func locationUpdated(location: CLLocation) {
         let pinLocation = CLLocation(latitude: self.pinItem.currentWaypoint.latitude, longitude: self.pinItem.currentWaypoint.longitude)
         
-        let distance = location.distanceFromLocation(pinLocation) * 0.000621371 // in miles
-        dispatch_async(dispatch_get_main_queue()) {
+        let distance = location.distance(from: pinLocation) * 0.000621371 // in miles
+        DispatchQueue.main.async {
             if distance <= 0.25 {
-                self.pickupPinButton.hidden = self.userHoldsPin
+                self.pickupPinButton.isHidden = self.userHoldsPin
             } else {
-                self.pickupPinButton.hidden = true
+                self.pickupPinButton.isHidden = true
             }
         }
     }
     
-    func setupMap(coordinate coordinate: CLLocationCoordinate2D) {
+    func setupMap(coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
@@ -134,7 +134,7 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     }
     
     // Fetches GPS information for waypoints (city names, distances, etc.)
-    func fetchWaypointInformation(waypoints waypoints: Results<LocalWaypoint>) {
+    func fetchWaypointInformation(waypoints: Results<LocalWaypoint>) {
         waypointInfoList = []
         
         waypoints.forEach { waypoint in
@@ -158,12 +158,12 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func displayWaypointInfoList(waypointInfoList: [WaypointInfo]) {
+    func displayWaypointInfoList(_ waypointInfoList: [WaypointInfo]) {
         previousLocationsStackView.arrangedSubviews.forEach{$0.removeFromSuperview()}
         
-        var sortedWaypoints = waypointInfoList.sort{$0.0.waypoint.createdDate.compare($0.1.waypoint.createdDate) == .OrderedAscending}
+        var sortedWaypoints = waypointInfoList.sorted{$0.0.waypoint.createdDate.compare($0.1.waypoint.createdDate as Date) == .orderedAscending}
         
-        sortedWaypoints.enumerate().forEach { index, waypointInfo in
+        sortedWaypoints.enumerated().forEach { index, waypointInfo in
             var distanceText: String?
             if index > 0 {
                 let previousWaypoint = sortedWaypoints[index-1]
@@ -171,11 +171,11 @@ class PinViewController: UIViewController, MKMapViewDelegate {
                 let previousWaypointLocation = CLLocation(latitude: previousWaypoint.waypoint.latitude, longitude: previousWaypoint.waypoint.longitude)
                 let currentWaypointLocation = CLLocation(latitude: waypointInfo.waypoint.latitude, longitude: waypointInfo.waypoint.longitude)
                 
-                let distanceFromPrevious = previousWaypointLocation.distanceFromLocation(currentWaypointLocation)
+                let distanceFromPrevious = previousWaypointLocation.distance(from: currentWaypointLocation)
                 
-                let formatter = NSNumberFormatter()
+                let formatter = NumberFormatter()
                 formatter.maximumFractionDigits = 1
-                let formattedNumber = formatter.stringFromNumber(distanceFromPrevious * 0.000621371192)
+                let formattedNumber = formatter.string(from: distanceFromPrevious * 0.000621371192)
                 distanceText = formattedNumber != nil ? "\(formattedNumber!) mi" : nil
             }
             
@@ -183,9 +183,9 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             cityLabel.text = (waypointInfo.cityName ?? "Unknown City") + (distanceText != nil ? " [\(distanceText!)]" : "")
             
             let stackView = UIStackView(arrangedSubviews: [cityLabel])
-            stackView.axis = .Vertical
-            stackView.alignment = .Leading
-            stackView.distribution = .EqualSpacing
+            stackView.axis = .vertical
+            stackView.alignment = .leading
+            stackView.distribution = .equalSpacing
             stackView.spacing = 5
             previousLocationsStackView.addArrangedSubview(stackView)
         }
@@ -201,47 +201,47 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         fetchWaypointInformation(waypoints: pinItem.waypoints)
         
         if userHoldsPin {
-            dropPinButton.hidden = false
+            dropPinButton.isHidden = false
         } else {
-            dropPinButton.hidden = true
+            dropPinButton.isHidden = true
         }
     }
     
-    @IBAction func pickupPressed(sender: AnyObject) {
+    @IBAction func pickupPressed(_ sender: AnyObject) {
         let successHandler: ()->() = {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.pickupPinButton.hidden = true
-                self.dropPinButton.hidden = false
+            DispatchQueue.main.async {
+                self.pickupPinButton.isHidden = true
+                self.dropPinButton.isHidden = false
                 
-                UIView.animateWithDuration(0.8) {
+                UIView.animate(withDuration: 0.8, animations: {
                     self.pickupPinButton.layoutIfNeeded()
                     self.dropPinButton.layoutIfNeeded()
-                }
+                }) 
                 
-                let alert = UIAlertController(title: "You picked up \(self.pin.title)!", message: "Take it as far as you can!", preferredStyle: .ActionSheet)
-                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "You picked up \(self.pin.title)!", message: "Take it as far as you can!", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
         
         createPickup(successHandler: successHandler)
     }
     
-    @IBAction func dropPinPressed(sender: AnyObject) {
+    @IBAction func dropPinPressed(_ sender: AnyObject) {
         let successHandler: (CLLocation
             , Waypoint)->() = { location, waypoint in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.pickupPinButton.hidden = false
-                self.dropPinButton.hidden = true
+            DispatchQueue.main.async {
+                self.pickupPinButton.isHidden = false
+                self.dropPinButton.isHidden = true
                 
-                UIView.animateWithDuration(0.8) {
+                UIView.animate(withDuration: 0.8, animations: {
                     self.pickupPinButton.layoutIfNeeded()
                     self.dropPinButton.layoutIfNeeded()
-                }
+                }) 
                 
-                let alert = UIAlertController(title: "You dropped \(self.pin.title)!", message: "Be sure to check back and see where it goes next!", preferredStyle: .ActionSheet)
-                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "You dropped \(self.pin.title)!", message: "Be sure to check back and see where it goes next!", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
                 
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 let newAnnotation = MKPointAnnotation()
@@ -263,10 +263,10 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             guard let location = location else {
                 print("error getting location: \(error)")
         
-                dispatch_async(dispatch_get_main_queue()) {
-                    let alert = UIAlertController(title: "Oops", message: "We couldnt find your location!", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Oops", message: "We couldnt find your location!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
                 return 
             }
@@ -277,11 +277,11 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    func createPickup(successHandler successHandler: (()->())) {
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+    func createPickup(successHandler: @escaping (()->())) {
+        guard let userId = AWSIdentityManager.default().identityId else {
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -289,12 +289,12 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         pickup.pinId = pin.id
         pickup.waypointId = pinItem.currentWaypoint.id
         pickup.userId = userId
-        pickup.pickupTime = NSDate()
+        pickup.pickupTime = Date()
         
         let pinId = pin.id
         let waypointId = pinItem.currentWaypoint.id
         
-        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        let mapper = AWSDynamoDBObjectMapper.default()
         mapper.save(pickup) { error in
             guard error == nil else {
                 print(error)
@@ -302,9 +302,9 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             }
             
             var pinStatus = CloudPinStatus()
-            pinStatus.pinId = pinId
-            pinStatus.waypointId = waypointId
-            mapper.save(pinStatus) { error in
+            pinStatus?.pinId = pinId
+            pinStatus?.waypointId = waypointId
+            mapper.save(pinStatus!) { error in
                 guard error == nil else {
                     print(error)
                     mapper.remove(pickup)
@@ -320,11 +320,11 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func createWaypoint(location location: CLLocation, successHandler: ((location: CLLocation, waypoint: Waypoint)->())) {
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+    func createWaypoint(location: CLLocation, successHandler: @escaping ((_ location: CLLocation, _ waypoint: Waypoint)->())) {
+        guard let userId = AWSIdentityManager.default().identityId else {
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -332,13 +332,13 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         waypoint.pinId = self.pin.id
         waypoint.dropLocation = location
         waypoint.userId = userId
-        waypoint.createdDate = NSDate()
+        waypoint.createdDate = Date()
         waypoint.previousWaypointId = self.pinItem.currentWaypoint.id
         
         let pinId = self.pin.id
         let waypointId = waypoint.id
         
-        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        let mapper = AWSDynamoDBObjectMapper.default()
         mapper.save(waypoint) { error in
             guard error == nil else {
                 print(error)
@@ -346,9 +346,9 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             }
             
             var pinStatus = CloudPinStatus()
-            pinStatus.pinId = pinId
-            pinStatus.waypointId = waypointId
-            mapper.save(pinStatus) { error in
+            pinStatus?.pinId = pinId
+            pinStatus?.waypointId = waypointId
+            mapper.save(pinStatus!) { error in
                 guard error == nil else {
                     print(error)
                     return
@@ -358,13 +358,13 @@ class PinViewController: UIViewController, MKMapViewDelegate {
                 syncer.writeToLocal(LocalWaypoint.self, cloudRepresentations: [waypoint])
                 syncer.writeToLocal(LocalPinStatus.self, cloudRepresentations: [pinStatus])
                 
-                successHandler(location: location, waypoint: waypoint)
+                successHandler(location, waypoint)
             }
         }
     }
     
-    @IBAction func backPressed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backPressed(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

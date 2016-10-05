@@ -17,18 +17,18 @@ enum CacheTransactionType: String {
 }
 
 class CacheTransaction: Object {
-    dynamic var _timestamp = Int(NSDate().timeIntervalSince1970)
+    dynamic var _timestamp = Int(Date().timeIntervalSince1970)
     dynamic var _cacheType = ""
     dynamic var _note = ""
 
-    static let expirationInterval = NSTimeInterval(60 * 3) // 3 minutes
+    static let expirationInterval = TimeInterval(60 * 3) // 3 minutes
    
-    var time: NSDate {
-        return NSDate(timeIntervalSince1970: Double(_timestamp))
+    var time: Date {
+        return Date(timeIntervalSince1970: Double(_timestamp))
     }
     
     var expired: Bool {
-        return NSDate().timeIntervalSinceDate(time) > CacheTransaction.expirationInterval
+        return Date().timeIntervalSince(time) > CacheTransaction.expirationInterval
     }
     
     override static func primaryKey() -> String? {
@@ -39,8 +39,8 @@ class CacheTransaction: Object {
         return ["expirationInterval", "expired", "time"]
     }
     
-    static func cacheHasExpired(cacheType cacheType: CacheTransactionType, note: String? = nil) -> Bool {
-        let acceptableCacheTime = Int(NSDate().dateByAddingTimeInterval(-CacheTransaction.expirationInterval).timeIntervalSince1970)
+    static func cacheHasExpired(cacheType: CacheTransactionType, note: String? = nil) -> Bool {
+        let acceptableCacheTime = Int(Date().addingTimeInterval(-CacheTransaction.expirationInterval).timeIntervalSince1970)
         
         let queryset = try! Realm().objects(CacheTransaction.self)
                                    .filter("_timestamp > %@", acceptableCacheTime)
@@ -54,7 +54,7 @@ class CacheTransaction: Object {
         
     }
     
-    static func markCacheUpdated(cacheType cacheType: CacheTransactionType, note: String = "") {
+    static func markCacheUpdated(cacheType: CacheTransactionType, note: String = "") {
         let cacheTransaction = CacheTransaction()
         cacheTransaction._cacheType = cacheType.rawValue
         cacheTransaction._note = note

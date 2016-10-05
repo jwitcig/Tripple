@@ -42,13 +42,13 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
          print("Sign In Loading.")
     
-        didSignInObserver =  NSNotificationCenter.defaultCenter().addObserverForName(AWSIdentityManagerDidSignInNotification,
-            object: AWSIdentityManager.defaultIdentityManager(),
-            queue: NSOperationQueue.mainQueue(),
-            usingBlock: {(note: NSNotification) -> Void in
+        didSignInObserver =  NotificationCenter.default.addObserver(forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
+            object: AWSIdentityManager.default(),
+            queue: OperationQueue.main,
+            using: {(note: Notification) -> Void in
                 // perform successful login actions here
                 
-                self.performSegueWithIdentifier("LoginSuccess", sender: self)
+                self.performSegue(withIdentifier: "LoginSuccess", sender: self)
         })
 
         // Facebook login permissions can be optionally set, but must be set
@@ -61,7 +61,7 @@ class SignInViewController: UIViewController {
 //        AWSFacebookSignInProvider.sharedInstance().setLoginBehavior(FBSDKLoginBehavior.Web.rawValue)
 
         // Facebook UI Setup
-        facebookButton.addTarget(self, action: #selector(SignInViewController.handleFacebookLogin), forControlEvents: .TouchUpInside)
+        facebookButton.addTarget(self, action: #selector(SignInViewController.handleFacebookLogin), for: .touchUpInside)
 
 //                view.addConstraint(NSLayoutConstraint(item: googleButton, attribute: .Top, relatedBy: .Equal, toItem: anchorViewForGoogle(), attribute: .Bottom, multiplier: 1, constant: 8.0))
 //                customProviderButton.removeFromSuperview()
@@ -76,20 +76,20 @@ class SignInViewController: UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(didSignInObserver)
+        NotificationCenter.default.removeObserver(didSignInObserver)
     }
     
     func dimissController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Utility Methods
     
-    func handleLoginWithSignInProvider(signInProvider: AWSSignInProvider) {
-        AWSIdentityManager.defaultIdentityManager().loginWithSignInProvider(signInProvider) { result, error in
+    func handleLoginWithSignInProvider(_ signInProvider: AWSSignInProvider) {
+        AWSIdentityManager.default().loginWithSign(signInProvider) { result, error in
             // If no error reported by SignInProvider, discard the sign-in view controller.
             if error == nil {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
 
                 }
             }
@@ -97,12 +97,12 @@ class SignInViewController: UIViewController {
         }
     }
 
-    func showErrorDialog(loginProviderName: String, withError error: NSError) {
+    func showErrorDialog(_ loginProviderName: String, withError error: NSError) {
          print("\(loginProviderName) failed to sign in w/ error: \(error)")
-        let alertController = UIAlertController(title: NSLocalizedString("Sign-in Provider Sign-In Error", comment: "Sign-in error for sign-in failure."), message: NSLocalizedString("\(loginProviderName) failed to sign in w/ error: \(error)", comment: "Sign-in message structure for sign-in failure."), preferredStyle: .Alert)
-        let doneAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Label to cancel sign-in failure."), style: .Cancel, handler: nil)
+        let alertController = UIAlertController(title: NSLocalizedString("Sign-in Provider Sign-In Error", comment: "Sign-in error for sign-in failure."), message: NSLocalizedString("\(loginProviderName) failed to sign in w/ error: \(error)", comment: "Sign-in message structure for sign-in failure."), preferredStyle: .alert)
+        let doneAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Label to cancel sign-in failure."), style: .cancel, handler: nil)
         alertController.addAction(doneAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     // MARK: - IBActions

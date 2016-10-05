@@ -52,19 +52,19 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
 
         realmNotificationToken = try! Realm().addNotificationBlock { notification, realm in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.displayData()
             }
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+        guard let userId = AWSIdentityManager.default().identityId else {
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -76,12 +76,12 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
                 realm.delete(realm.objects(LocalPickup.self))
             }
             
-            let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+            let objectMapper = AWSDynamoDBObjectMapper.default()
             
             let pickupsScanExpression = AWSDynamoDBScanExpression()
             pickupsScanExpression.filterExpression = "#userId = :userId"
             pickupsScanExpression.expressionAttributeNames = ["#userId": "userId"]
-            pickupsScanExpression.expressionAttributeValues = [":userId": AWSIdentityManager.defaultIdentityManager().identityId!]
+            pickupsScanExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!]
             
             objectMapper.scan(CloudPickup.self, expression: pickupsScanExpression) { response, error in
                 
@@ -102,10 +102,10 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func displayData() {
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+        guard let userId = AWSIdentityManager.default().identityId else {
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -123,7 +123,7 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
 
         currentPickups.forEach { pickup in
             let pin = pins.filter{$0.id==pickup.pinId}.first
-            let waypoint = waypoints.filter{$0.id==pickup.waypointId}.sort{$0.0.createdDate.compare($0.1.createdDate) == .OrderedDescending}.first
+            let waypoint = waypoints.filter{$0.id==pickup.waypointId}.sorted{$0.0.createdDate.compare($0.1.createdDate) == .orderedDescending}.first
             
             if let pin = pin, let waypoint = waypoint {
                 pickedUpItems.append(ClosedPinItem(pin: pin, currentWaypoint: waypoint, pickup: pickup))
@@ -133,7 +133,7 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         let pickupPinIds = currentPickups.map{$0.pinId}
         let openPins = pins.filter { !pickupPinIds.contains($0.id) }
         openPins.forEach { pin in
-            let waypoint = waypoints.filter{$0.pinId==pin.id}.sort{$0.0.createdDate.compare($0.1.createdDate) == .OrderedDescending}.first
+            let waypoint = waypoints.filter{$0.pinId==pin.id}.sorted{$0.0.createdDate.compare($0.1.createdDate) == .orderedDescending}.first
             
             if let waypoint = waypoint {
                 openItems.append(OpenPinItem(pin: pin, currentWaypoint: waypoint))
@@ -143,11 +143,11 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.reloadData()
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return pickedUpItems.count
@@ -159,18 +159,18 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = UIColor.clear
 
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            let listItem = pickedUpItems[indexPath.row]
+            let listItem = pickedUpItems[(indexPath as NSIndexPath).row]
             cell.textLabel?.text = listItem.pin.title
             
         case 1:
-            let listItem = openItems[indexPath.row]
+            let listItem = openItems[(indexPath as NSIndexPath).row]
             cell.textLabel?.text = listItem.pin.title
 
         default:
@@ -180,7 +180,7 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         switch section {
         case 0:
@@ -193,20 +193,20 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
 
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var pin: Pin!
         
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            pin = pickedUpItems[indexPath.row].pin
+            pin = pickedUpItems[(indexPath as NSIndexPath).row].pin
             
         case 1:
-            pin = openItems[indexPath.row].pin
+            pin = openItems[(indexPath as NSIndexPath).row].pin
             
         default:
             fatalError("Unimplemented section")
@@ -215,12 +215,12 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         let pinId = pin.id
         
         let presentationBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                guard let pinViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PinViewController") as? PinViewController else { return }
+            DispatchQueue.main.async {
+                guard let pinViewController = self.storyboard?.instantiateViewController(withIdentifier: "PinViewController") as? PinViewController else { return }
                 
                 pinViewController.pin = try! Realm().objectForPrimaryKey(LocalPin.self, key: pinId)
                 
-                self.presentViewController(pinViewController, animated: true, completion: nil)
+                self.present(pinViewController, animated: true, completion: nil)
             }
         }
         
@@ -229,7 +229,7 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
             return
         }
         
-        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        let mapper = AWSDynamoDBObjectMapper.default()
         
         let query = AWSDynamoDBScanExpression()
         query.filterExpression = "#pinId = :pinId"

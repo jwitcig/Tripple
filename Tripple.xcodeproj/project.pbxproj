@@ -46,12 +46,12 @@
 		8B4AF3E61D51D41300789047 /* icon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4AF3E31D51D41300789047 /* icon1024.png */; };
 		8B4AF3E71D51D41300789047 /* icon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4AF3E41D51D41300789047 /* icon180.png */; };
 		8B4AF3E81D51D41300789047 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4AF3E51D51D41300789047 /* icon120.png */; };
+		8B592C3A1D9B5AC90051D818 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
+		8B592C3B1D9B5AC90051D818 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
-		8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
 		8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
 		8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
-		8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B85919D1D4EB7FF00BC6EBD /* PinTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD851D4C32B300073E67 /* PinTable.swift */; };
 		8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */; };
 		8B8591A11D4FF46500BC6EBD /* PinStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591A01D4FF46500BC6EBD /* PinStatus.swift */; };
@@ -115,7 +115,7 @@
 			files = (
 				8B37FD691D4C2C8100073E67 /* AWSCore.framework in Embed Frameworks */,
 				8B37FD6D1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Embed Frameworks */,
-				8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */,
+				8B592C3B1D9B5AC90051D818 /* RealmSwift.framework in Embed Frameworks */,
 				8B37FD951D4C464400073E67 /* AWSDynamoDB.framework in Embed Frameworks */,
 				8B37FD6B1D4C2C8100073E67 /* AWSLambda.framework in Embed Frameworks */,
 				8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */,
@@ -207,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B592C3A1D9B5AC90051D818 /* RealmSwift.framework in Frameworks */,
 				8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */,
 				8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */,
 				8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */,
@@ -215,7 +216,6 @@
 				8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */,
 				8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */,
 				8B8591B91D50A01D00BC6EBD /* Bolts.framework in Frameworks */,
-				8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */,
 				8B37FD6A1D4C2C8100073E67 /* AWSLambda.framework in Frameworks */,
 				8B37FD671D4C2C4100073E67 /* GoogleUtilities.framework in Frameworks */,
 				8B37FD681D4C2C8100073E67 /* AWSCore.framework in Frameworks */,
@@ -484,6 +484,7 @@
 					8BD527851D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 349WFX4WJR;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 0;
@@ -492,10 +493,12 @@
 					};
 					8BD5279B1D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8BD527851D3C2CA1004F100E;
 					};
 					8BD527A61D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8BD527851D3C2CA1004F100E;
 					};
 				};
@@ -771,6 +774,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -795,6 +799,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -806,6 +811,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripple.app/Tripple";
 			};
 			name = Debug;
@@ -818,6 +824,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripple.app/Tripple";
 			};
 			name = Release;
@@ -829,6 +836,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Tripple;
 			};
 			name = Debug;
@@ -840,6 +848,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Tripple;
 			};
 			name = Release;

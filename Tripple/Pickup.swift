@@ -23,8 +23,8 @@ protocol Pickup {
     var pinId: String { get set }
     var waypointId: String { get set }
 
-    var createdDate: NSDate { get set }
-    var pickupTime: NSDate { get set }
+    var createdDate: Date { get set }
+    var pickupTime: Date { get set }
 }
 
 protocol LocalPickupModel: Pickup {
@@ -67,16 +67,16 @@ extension LocalPickupModel {
         set { _waypointId = newValue }
     }
     
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
-            return NSDate(timeIntervalSince1970: Double(_timestamp))
+            return Date(timeIntervalSince1970: Double(_timestamp))
         }
         set {
             _timestamp = Int(newValue.timeIntervalSince1970)
         }
     }
     
-    var pickupTime: NSDate {
+    var pickupTime: Date {
         get { return createdDate }
         set { createdDate = newValue }
     }
@@ -84,7 +84,7 @@ extension LocalPickupModel {
 
 extension CloudPickupModel {
     var id: String {
-        get { return _id ?? NSUUID().UUIDString }
+        get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
     var userId: String {
@@ -100,25 +100,25 @@ extension CloudPickupModel {
         set { _waypointId = newValue }
     }
     
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
             if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
+                return Date(timeIntervalSince1970: interval.doubleValue)
             }
-            return NSDate()
+            return Date()
         }
         set {
-            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+            _timestamp = NSNumber(value: newValue.timeIntervalSince1970 as Double)
         }
     }
-    var pickupTime: NSDate {
+    var pickupTime: Date {
         get { return createdDate }
         set { createdDate = newValue }
     }
 }
 
 class LocalPickup: Object, LocalPickupModel {
-    dynamic var _id = NSUUID().UUIDString
+    dynamic var _id = UUID().uuidString
     dynamic var _userId = ""
     dynamic var _pinId = ""
     dynamic var _waypointId = ""
@@ -135,7 +135,7 @@ class LocalPickup: Object, LocalPickupModel {
 
 
 class CloudPickup: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPickupModel {
-    var _id: String? = NSUUID().UUIDString
+    var _id: String? = UUID().uuidString
     var _userId: String?
     var _pinId: String?
     var _waypointId: String?
@@ -156,7 +156,7 @@ class CloudPickup: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPickupModel
         return "_id"
     }
     
-    override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
+    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
             "_id": "id",
             "_pinId" : "pinId",
@@ -176,7 +176,7 @@ class CloudPickup: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPickupModel
         super.init()
     }
     
-    override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
+    override init(dictionary dictionaryValue: [AnyHashable: Any]!, error: ()) throws {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     

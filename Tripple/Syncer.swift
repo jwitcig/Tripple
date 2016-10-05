@@ -19,15 +19,15 @@ struct Syncer {
         
     }
     
-    func writeToLocal<T: Object>(realmClass: T.Type, cloudRepresentations: [AWSDynamoDBObjectModel]) -> [T] {
+    func writeToLocal<T: Object>(_ realmClass: T.Type, cloudRepresentations: [AWSDynamoDBObjectModel]) -> [T] {
         
         let cleanedRepresentations: [AnyObject] = cloudRepresentations.map {
             var cleaned = $0.dictionaryValue
             
-            if let value = cleaned["_timestamp"] as? Double {
-                cleaned["_timestamp"] =  Int(value)
+            if let value = cleaned?["_timestamp"] as? Double {
+                cleaned?["_timestamp"] =  Int(value)
             }
-            return cleaned
+            return cleaned as AnyObject
         }
         
         var localObjects: [T]!

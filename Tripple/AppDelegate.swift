@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CloudWaypoint.dynamoDBTableName(): false
     ] {
         didSet {
-            for (_, fetchComplete) in fetchStatuses {
+            for _, fetchComplete in fetchStatuses {
                 if !fetchComplete {
                     return
                 }
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var fetchData = [String: [AWSDynamoDBObjectModel]]()
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if CacheTransaction.cacheHasExpired(cacheType: .PublicPinStatuses) {
             // if no caches were performed within the expiration interval, update the cache
             
-            let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+            let objectMapper = AWSDynamoDBObjectMapper.default()
             
             let openPinScanExpression = AWSDynamoDBScanExpression()
             openPinScanExpression.limit = 50
@@ -64,12 +64,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.fetchStatuses[CloudPinStatus.dynamoDBTableName()] = true
                 
                 var pinQueryInfo = [String: String]()
-                pinStatuses.map{$0.pinId}.enumerate().forEach {
+                pinStatuses.map{$0.pinId}.enumerated().forEach {
                     pinQueryInfo[":id\($0.index)"] = $0.element
                 }
                 
                 let pinScanExpression = AWSDynamoDBScanExpression()
-                pinScanExpression.filterExpression = "#id IN (\(pinQueryInfo.keys.joinWithSeparator(",")))"
+                pinScanExpression.filterExpression = "#id IN (\(pinQueryInfo.keys.joined(separator: ",")))"
                 pinScanExpression.expressionAttributeNames = ["#id": "id",]
                 pinScanExpression.expressionAttributeValues = pinQueryInfo
                 
@@ -89,12 +89,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 var waypointQueryInfo = [String: String]()
-                pinStatuses.map{$0.waypointId}.enumerate().forEach {
+                pinStatuses.map{$0.waypointId}.enumerated().forEach {
                     waypointQueryInfo[":id\($0.index)"] = $0.element
                 }
                 
                 let waypointScanExpression = AWSDynamoDBScanExpression()
-                waypointScanExpression.filterExpression = "#id IN (\(waypointQueryInfo.keys.joinWithSeparator(",")))"
+                waypointScanExpression.filterExpression = "#id IN (\(waypointQueryInfo.keys.joined(separator: ",")))"
                 waypointScanExpression.expressionAttributeNames = ["#id": "id",]
                 waypointScanExpression.expressionAttributeValues = waypointQueryInfo
                 
@@ -151,31 +151,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let realm = try! Realm()
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
         FBSDKAppEvents.activateApp()
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

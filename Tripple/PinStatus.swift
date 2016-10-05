@@ -61,7 +61,7 @@ extension CloudPinStatusModel {
 }
 
 class LocalPinStatus: Object, LocalPinStatusModel {
-    dynamic var _pinId = NSUUID().UUIDString
+    dynamic var _pinId = UUID().uuidString
     dynamic var _waypointId = ""
     
     override static func primaryKey() -> String? {
@@ -74,7 +74,7 @@ class LocalPinStatus: Object, LocalPinStatusModel {
 }
 
 class CloudPinStatus: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinStatusModel {
-    var _pinId: String? = NSUUID().UUIDString
+    var _pinId: String? = UUID().uuidString
     var _waypointId: String?
     
     class func dynamoDBTableName() -> String {
@@ -87,7 +87,7 @@ class CloudPinStatus: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinStatu
         return "_pinId"
     }
     
-    override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
+    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
                "_pinId" : "pinId",
                "_waypointId" : "waypointId",

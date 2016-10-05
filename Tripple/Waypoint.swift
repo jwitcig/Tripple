@@ -26,7 +26,7 @@ protocol Waypoint {
     var pinId: String { get set }
     var previousWaypointId: String? { get set }
     
-    var createdDate: NSDate { get set }
+    var createdDate: Date { get set }
 }
 
 protocol LocalWaypointModel: Waypoint {
@@ -61,7 +61,7 @@ extension LocalWaypointModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? NSUUID().UUIDString }
+        get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
     var latitude: CLLocationDegrees {
@@ -80,9 +80,9 @@ extension LocalWaypointModel {
         get { return _previousWaypointId }
         set { _previousWaypointId = newValue }
     }
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
-            return NSDate(timeIntervalSince1970: Double(_timestamp))
+            return Date(timeIntervalSince1970: Double(_timestamp))
         }
         set {
             _timestamp = Int(newValue.timeIntervalSince1970)
@@ -96,16 +96,16 @@ extension CloudWaypointModel {
         set { _userId = newValue }
     }
     var id: String {
-        get { return _id ?? NSUUID().UUIDString }
+        get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
     var latitude: CLLocationDegrees {
         get { return _latitude?.doubleValue ?? 0.0 }
-        set { _latitude = newValue }
+        set { _latitude = newValue as NSNumber? }
     }
     var longitude: CLLocationDegrees {
         get { return _longitude?.doubleValue ?? 0.0 }
-        set { _longitude = newValue }
+        set { _longitude = newValue as NSNumber? }
     }
     var pinId: String {
         get { return _pinId ?? "" }
@@ -115,22 +115,22 @@ extension CloudWaypointModel {
         get { return _previousWaypointId }
         set { _previousWaypointId = newValue }
     }
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
             if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
+                return Date(timeIntervalSince1970: interval.doubleValue)
             }
-            return NSDate()
+            return Date()
         }
         set {
-            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+            _timestamp = NSNumber(value: newValue.timeIntervalSince1970 as Double)
         }
     }
 }
 
 class LocalWaypoint: Object, LocalWaypointModel {
     dynamic var _userId = ""
-    dynamic var _id = NSUUID().UUIDString
+    dynamic var _id = UUID().uuidString
     dynamic var _latitude: Double = 0.0
     dynamic var _longitude: Double = 0.0
     dynamic var _pinId = ""
@@ -149,7 +149,7 @@ class LocalWaypoint: Object, LocalWaypointModel {
 class CloudWaypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudWaypointModel {
     
     var _userId: String?
-    var _id: String? = NSUUID().UUIDString
+    var _id: String? = UUID().uuidString
     var _latitude: NSNumber?
     var _longitude: NSNumber?
     var _pinId: String?
@@ -170,7 +170,7 @@ class CloudWaypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudWaypointM
         return "_id"
     }
     
-    override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
+    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
                "_userId" : "userId",
                "_id" : "id",
@@ -193,8 +193,8 @@ class CloudWaypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudWaypointM
             return CLLocation(latitude: latitude, longitude: longitude)
         }
         set {
-            _latitude = NSNumber(double: newValue.coordinate.latitude)
-            _longitude =  NSNumber(double: newValue.coordinate.longitude)
+            _latitude = NSNumber(value: newValue.coordinate.latitude as Double)
+            _longitude =  NSNumber(value: newValue.coordinate.longitude as Double)
         }
     }
     
@@ -202,7 +202,7 @@ class CloudWaypoint: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudWaypointM
         super.init()
     }
     
-    override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
+    override init(dictionary dictionaryValue: [AnyHashable: Any]!, error: ()) throws {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     
