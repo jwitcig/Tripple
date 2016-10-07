@@ -7,66 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B37FD601D4C2C4100073E67 /* Amazon_Software_License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD541D4C2C4100073E67 /* Amazon_Software_License.txt */; };
-		8B37FD611D4C2C4100073E67 /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD551D4C2C4100073E67 /* NOTICE */; };
-		8B37FD621D4C2C4100073E67 /* CheckXcodeVersion.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD561D4C2C4100073E67 /* CheckXcodeVersion.sh */; };
-		8B37FD631D4C2C4100073E67 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD581D4C2C4100073E67 /* GoogleAppUtilities.framework */; };
-		8B37FD641D4C2C4100073E67 /* GoogleAuthUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD591D4C2C4100073E67 /* GoogleAuthUtilities.framework */; };
-		8B37FD651D4C2C4100073E67 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD5A1D4C2C4100073E67 /* GoogleNetworkingUtilities.framework */; };
-		8B37FD661D4C2C4100073E67 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD5B1D4C2C4100073E67 /* GoogleSymbolUtilities.framework */; };
-		8B37FD671D4C2C4100073E67 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD5C1D4C2C4100073E67 /* GoogleUtilities.framework */; };
-		8B37FD681D4C2C8100073E67 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD501D4C2C4100073E67 /* AWSCore.framework */; };
-		8B37FD6A1D4C2C8100073E67 /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD511D4C2C4100073E67 /* AWSLambda.framework */; };
-		8B37FD6C1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD521D4C2C4100073E67 /* AWSMobileAnalytics.framework */; };
-		8B37FD731D4C2CE900073E67 /* AWSMobileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD711D4C2CE900073E67 /* AWSMobileClient.swift */; };
-		8B37FD741D4C2CE900073E67 /* AWSMobileHubHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD721D4C2CE900073E67 /* AWSMobileHubHelper.framework */; };
+		10B41CA14BAD962113181229 /* Pods_Tripple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B44844505DA87AB3CC644FA /* Pods_Tripple.framework */; };
+		14CF7314467E3E0D83916529 /* Pods_TrippleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B440F723FC0C9F89A18CB66C /* Pods_TrippleUITests.framework */; };
+		5C36A68AA6DF157A05AB9C92 /* Pods_TrippleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61EE8F06189A8355DBEE8427 /* Pods_TrippleTests.framework */; };
+		8B27BC071D697EFC00A41C83 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B27BC061D697EFC00A41C83 /* GoogleService-Info-Dev.plist */; };
 		8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */; };
 		8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD791D4C2D5B00073E67 /* libz.tbd */; };
-		8B37FD861D4C32B300073E67 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD7E1D4C32B300073E67 /* NoSQLModelHelpers.swift */; };
-		8B37FD871D4C32B300073E67 /* NoSQLQueryResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD7F1D4C32B300073E67 /* NoSQLQueryResultViewController.swift */; };
-		8B37FD881D4C32B300073E67 /* NoSQLSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD801D4C32B300073E67 /* NoSQLSampleDataGenerator.swift */; };
-		8B37FD8A1D4C32B300073E67 /* NoSQLTableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD821D4C32B300073E67 /* NoSQLTableListViewController.swift */; };
-		8B37FD8B1D4C32B300073E67 /* NoSQLTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD831D4C32B300073E67 /* NoSQLTableViewController.swift */; };
-		8B37FD921D4C37EE00073E67 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD901D4C37EE00073E67 /* Pin.swift */; };
-		8B37FD931D4C37EE00073E67 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD911D4C37EE00073E67 /* Event.swift */; };
-		8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; };
 		8B37FD971D4C54F400073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD961D4C54F400073E67 /* Info.plist */; };
-		8B5816A41D5ED59000AB58A5 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A21D5ED57C00AB58A5 /* AWSDynamoDB.framework */; };
-		8B5816AA1D5ED63400AB58A5 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A61D5ED63400AB58A5 /* AWSCore.framework */; };
-		8B5816AC1D5ED63400AB58A5 /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A81D5ED63400AB58A5 /* AWSLambda.framework */; };
-		8B5816AD1D5ED63400AB58A5 /* AWSMobileAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A91D5ED63400AB58A5 /* AWSMobileAnalytics.framework */; };
-		8B5816AE1D5ED65700AB58A5 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A61D5ED63400AB58A5 /* AWSCore.framework */; };
-		8B5816AF1D5ED65700AB58A5 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A61D5ED63400AB58A5 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B5816B01D5ED65700AB58A5 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A71D5ED63400AB58A5 /* AWSDynamoDB.framework */; };
-		8B5816B11D5ED65700AB58A5 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A71D5ED63400AB58A5 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B5816B21D5ED65700AB58A5 /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A81D5ED63400AB58A5 /* AWSLambda.framework */; };
-		8B5816B31D5ED65700AB58A5 /* AWSLambda.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A81D5ED63400AB58A5 /* AWSLambda.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B5816B41D5ED65700AB58A5 /* AWSMobileAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A91D5ED63400AB58A5 /* AWSMobileAnalytics.framework */; };
-		8B5816B51D5ED65700AB58A5 /* AWSMobileAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A91D5ED63400AB58A5 /* AWSMobileAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B68342D1D5D6C0600E9D79C /* NoSQLTableFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B68342C1D5D6C0600E9D79C /* NoSQLTableFactory.swift */; };
-		8B6834351D5D6EA600E9D79C /* EventTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6834341D5D6EA600E9D79C /* EventTable.swift */; };
-		8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
-		8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
-		8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
-		8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
-		8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B3A10101D6A9FCB006CB486 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B3A100F1D6A9FCB006CB486 /* CoreLocation.framework */; };
+		8B3A10141D6AE257006CB486 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B3A10131D6AE257006CB486 /* MapKit.framework */; };
 		8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */; };
-		8B8591A31D500BC900BC6EBD /* CacheTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */; };
-		8B8591A61D50907000BC6EBD /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */; };
-		8B8591A71D50907000BC6EBD /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591A51D50907000BC6EBD /* GoogleSignIn.framework */; };
-		8B8591B51D509DA300BC6EBD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B21D509DA300BC6EBD /* FBSDKCoreKit.framework */; };
-		8B8591B61D509DA300BC6EBD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B31D509DA300BC6EBD /* FBSDKLoginKit.framework */; };
-		8B8591B71D509DA300BC6EBD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B41D509DA300BC6EBD /* FBSDKShareKit.framework */; };
-		8B8591B91D50A01D00BC6EBD /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591B81D50A01D00BC6EBD /* Bolts.framework */; };
 		8B8591BB1D50A37000BC6EBD /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591BA1D50A37000BC6EBD /* SignInViewController.swift */; };
-		8B8591BD1D50A75200BC6EBD /* FacebookButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8591BC1D50A75200BC6EBD /* FacebookButton.png */; };
-		8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */; };
-		8B882BE81D614798006B8394 /* GeohashKitiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B882BE41D614780006B8394 /* GeohashKitiOS.framework */; };
-		8B882BE91D614798006B8394 /* GeohashKitiOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B882BE41D614780006B8394 /* GeohashKitiOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B882BED1D615D81006B8394 /* PinTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B882BEC1D615D81006B8394 /* PinTable.swift */; };
 		8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6E441D4D99090064819C /* PinListViewController.swift */; };
-		8B8D6E4B1D4D9BB30064819C /* Syncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6E4A1D4D9BB30064819C /* Syncer.swift */; };
 		8BBB46051D515E1C0028099A /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB46041D515E1C0028099A /* AccountViewController.swift */; };
 		8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD527891D3C2CA1004F100E /* AppDelegate.swift */; };
 		8BD5278C1D3C2CA1004F100E /* CreatePinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD5278B1D3C2CA1004F100E /* CreatePinViewController.swift */; };
@@ -98,75 +50,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		8B37FD6E1D4C2C8100073E67 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8B5816B31D5ED65700AB58A5 /* AWSLambda.framework in Embed Frameworks */,
-				8B5816B51D5ED65700AB58A5 /* AWSMobileAnalytics.framework in Embed Frameworks */,
-				8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */,
-				8B882BE91D614798006B8394 /* GeohashKitiOS.framework in Embed Frameworks */,
-				8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */,
-				8B5816B11D5ED65700AB58A5 /* AWSDynamoDB.framework in Embed Frameworks */,
-				8B5816AF1D5ED65700AB58A5 /* AWSCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		8B37FD501D4C2C4100073E67 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = /Users/developer/Documents/Projects/Tripple/Tripple/Sdk/Aws/AWSCore.framework; sourceTree = "<absolute>"; };
-		8B37FD511D4C2C4100073E67 /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSLambda.framework; path = /Users/developer/Documents/Projects/Tripple/Tripple/Sdk/Aws/AWSLambda.framework; sourceTree = "<absolute>"; };
-		8B37FD521D4C2C4100073E67 /* AWSMobileAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSMobileAnalytics.framework; path = /Users/developer/Documents/Projects/Tripple/Tripple/Sdk/Aws/AWSMobileAnalytics.framework; sourceTree = "<absolute>"; };
-		8B37FD541D4C2C4100073E67 /* Amazon_Software_License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Amazon_Software_License.txt; sourceTree = "<group>"; };
-		8B37FD551D4C2C4100073E67 /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
-		8B37FD561D4C2C4100073E67 /* CheckXcodeVersion.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = CheckXcodeVersion.sh; sourceTree = "<group>"; };
-		8B37FD581D4C2C4100073E67 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
-		8B37FD591D4C2C4100073E67 /* GoogleAuthUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAuthUtilities.framework; sourceTree = "<group>"; };
-		8B37FD5A1D4C2C4100073E67 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
-		8B37FD5B1D4C2C4100073E67 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
-		8B37FD5C1D4C2C4100073E67 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
-		8B37FD711D4C2CE900073E67 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
-		8B37FD721D4C2CE900073E67 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
+		5F07A78EB7AEBF3B76F49329 /* Pods-Tripple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripple.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripple/Pods-Tripple.debug.xcconfig"; sourceTree = "<group>"; };
+		61EE8F06189A8355DBEE8427 /* Pods_TrippleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		635B8E04222BB6593B38BDA8 /* Pods-TrippleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrippleTests/Pods-TrippleTests.release.xcconfig"; sourceTree = "<group>"; };
+		6B44844505DA87AB3CC644FA /* Pods_Tripple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B27BC061D697EFC00A41C83 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8B37FD791D4C2D5B00073E67 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSDynamoDB.framework; path = /Users/developer/Documents/Projects/Tripple/Tripple/Sdk/Aws/AWSDynamoDB.framework; sourceTree = "<absolute>"; };
-		8B37FD7E1D4C32B300073E67 /* NoSQLModelHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLModelHelpers.swift; sourceTree = "<group>"; };
-		8B37FD7F1D4C32B300073E67 /* NoSQLQueryResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLQueryResultViewController.swift; sourceTree = "<group>"; };
-		8B37FD801D4C32B300073E67 /* NoSQLSampleDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLSampleDataGenerator.swift; sourceTree = "<group>"; };
-		8B37FD821D4C32B300073E67 /* NoSQLTableListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLTableListViewController.swift; sourceTree = "<group>"; };
-		8B37FD831D4C32B300073E67 /* NoSQLTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLTableViewController.swift; sourceTree = "<group>"; };
-		8B37FD901D4C37EE00073E67 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
-		8B37FD911D4C37EE00073E67 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		8B37FD961D4C54F400073E67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B5816A21D5ED57C00AB58A5 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSDynamoDB.framework; path = /Users/developer/Documents/Projects/Tripple/Tripple/Sdk/Aws/AWSDynamoDB.framework; sourceTree = "<absolute>"; };
-		8B5816A61D5ED63400AB58A5 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
-		8B5816A71D5ED63400AB58A5 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSDynamoDB.framework; sourceTree = "<group>"; };
-		8B5816A81D5ED63400AB58A5 /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
-		8B5816A91D5ED63400AB58A5 /* AWSMobileAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileAnalytics.framework; sourceTree = "<group>"; };
-		8B68342C1D5D6C0600E9D79C /* NoSQLTableFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLTableFactory.swift; sourceTree = "<group>"; };
-		8B6834341D5D6EA600E9D79C /* EventTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTable.swift; sourceTree = "<group>"; };
-		8B8591951D4E980600BC6EBD /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		8B8591961D4E980600BC6EBD /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		8B3A10081D6A9986006CB486 /* Tripple-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tripple-Bridging-Header.h"; sourceTree = "<group>"; };
+		8B3A100F1D6A9FCB006CB486 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8B3A10131D6AE257006CB486 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
-		8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTransaction.swift; sourceTree = "<group>"; };
-		8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
-		8B8591A51D50907000BC6EBD /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
-		8B8591B21D509DA300BC6EBD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		8B8591B31D509DA300BC6EBD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		8B8591B41D509DA300BC6EBD /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		8B8591B81D50A01D00BC6EBD /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		8B8591BA1D50A37000BC6EBD /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		8B8591BC1D50A75200BC6EBD /* FacebookButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FacebookButton.png; sourceTree = "<group>"; };
-		8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		8B882BE41D614780006B8394 /* GeohashKitiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GeohashKitiOS.framework; sourceTree = "<group>"; };
-		8B882BEC1D615D81006B8394 /* PinTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTable.swift; sourceTree = "<group>"; };
 		8B8D6E441D4D99090064819C /* PinListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinListViewController.swift; sourceTree = "<group>"; };
-		8B8D6E4A1D4D9BB30064819C /* Syncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Syncer.swift; sourceTree = "<group>"; };
 		8BBB46041D515E1C0028099A /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		8BD527861D3C2CA1004F100E /* Tripple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD527891D3C2CA1004F100E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +83,11 @@
 		8BD527BB1D3C491D004F100E /* Tripple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tripple.entitlements; sourceTree = "<group>"; };
 		8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointAnnotationView.swift; sourceTree = "<group>"; };
 		8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointAnnotation.swift; sourceTree = "<group>"; };
+		99BB4CB7955EF008426F5CEE /* Pods-TrippleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrippleTests/Pods-TrippleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A653322F5F6A8769B60CB6A0 /* Pods-TrippleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrippleUITests/Pods-TrippleUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B440F723FC0C9F89A18CB66C /* Pods_TrippleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBCC576203283ECF46BB2F96 /* Pods-TrippleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippleUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrippleUITests/Pods-TrippleUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F65A6951822DB4210345B63B /* Pods-Tripple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripple.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripple/Pods-Tripple.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,37 +95,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B5816B21D5ED65700AB58A5 /* AWSLambda.framework in Frameworks */,
-				8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */,
-				8B882BE81D614798006B8394 /* GeohashKitiOS.framework in Frameworks */,
-				8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */,
-				8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */,
-				8B5816AC1D5ED63400AB58A5 /* AWSLambda.framework in Frameworks */,
-				8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */,
+				8B3A10141D6AE257006CB486 /* MapKit.framework in Frameworks */,
+				8B3A10101D6A9FCB006CB486 /* CoreLocation.framework in Frameworks */,
 				8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */,
-				8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */,
 				8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */,
-				8B8591B91D50A01D00BC6EBD /* Bolts.framework in Frameworks */,
-				8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */,
-				8B37FD6A1D4C2C8100073E67 /* AWSLambda.framework in Frameworks */,
-				8B37FD671D4C2C4100073E67 /* GoogleUtilities.framework in Frameworks */,
-				8B37FD681D4C2C8100073E67 /* AWSCore.framework in Frameworks */,
-				8B8591B71D509DA300BC6EBD /* FBSDKShareKit.framework in Frameworks */,
-				8B37FD741D4C2CE900073E67 /* AWSMobileHubHelper.framework in Frameworks */,
-				8B8591A71D50907000BC6EBD /* GoogleSignIn.framework in Frameworks */,
-				8B8591B61D509DA300BC6EBD /* FBSDKLoginKit.framework in Frameworks */,
-				8B37FD651D4C2C4100073E67 /* GoogleNetworkingUtilities.framework in Frameworks */,
-				8B5816B41D5ED65700AB58A5 /* AWSMobileAnalytics.framework in Frameworks */,
-				8B5816AA1D5ED63400AB58A5 /* AWSCore.framework in Frameworks */,
-				8B5816AD1D5ED63400AB58A5 /* AWSMobileAnalytics.framework in Frameworks */,
-				8B37FD661D4C2C4100073E67 /* GoogleSymbolUtilities.framework in Frameworks */,
-				8B37FD631D4C2C4100073E67 /* GoogleAppUtilities.framework in Frameworks */,
-				8B37FD6C1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Frameworks */,
-				8B5816A41D5ED59000AB58A5 /* AWSDynamoDB.framework in Frameworks */,
-				8B8591B51D509DA300BC6EBD /* FBSDKCoreKit.framework in Frameworks */,
-				8B37FD641D4C2C4100073E67 /* GoogleAuthUtilities.framework in Frameworks */,
-				8B5816B01D5ED65700AB58A5 /* AWSDynamoDB.framework in Frameworks */,
-				8B5816AE1D5ED65700AB58A5 /* AWSCore.framework in Frameworks */,
+				10B41CA14BAD962113181229 /* Pods_Tripple.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C36A68AA6DF157A05AB9C92 /* Pods_TrippleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,80 +115,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14CF7314467E3E0D83916529 /* Pods_TrippleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8B37FD4E1D4C2C4100073E67 /* Sdk */ = {
+		13000931F11837016759F475 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8B37FD4F1D4C2C4100073E67 /* Aws */,
-				8B37FD561D4C2C4100073E67 /* CheckXcodeVersion.sh */,
-				8B37FD571D4C2C4100073E67 /* Google */,
+				8B3A10131D6AE257006CB486 /* MapKit.framework */,
+				8B3A100F1D6A9FCB006CB486 /* CoreLocation.framework */,
+				6B44844505DA87AB3CC644FA /* Pods_Tripple.framework */,
+				61EE8F06189A8355DBEE8427 /* Pods_TrippleTests.framework */,
+				B440F723FC0C9F89A18CB66C /* Pods_TrippleUITests.framework */,
 			);
-			path = Sdk;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8B37FD4F1D4C2C4100073E67 /* Aws */ = {
+		84E12200D53576C8A9F1C197 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8B5816A61D5ED63400AB58A5 /* AWSCore.framework */,
-				8B5816A71D5ED63400AB58A5 /* AWSDynamoDB.framework */,
-				8B5816A81D5ED63400AB58A5 /* AWSLambda.framework */,
-				8B5816A91D5ED63400AB58A5 /* AWSMobileAnalytics.framework */,
-				8B37FD531D4C2C4100073E67 /* extras */,
+				5F07A78EB7AEBF3B76F49329 /* Pods-Tripple.debug.xcconfig */,
+				F65A6951822DB4210345B63B /* Pods-Tripple.release.xcconfig */,
+				99BB4CB7955EF008426F5CEE /* Pods-TrippleTests.debug.xcconfig */,
+				635B8E04222BB6593B38BDA8 /* Pods-TrippleTests.release.xcconfig */,
+				A653322F5F6A8769B60CB6A0 /* Pods-TrippleUITests.debug.xcconfig */,
+				DBCC576203283ECF46BB2F96 /* Pods-TrippleUITests.release.xcconfig */,
 			);
-			path = Aws;
-			sourceTree = "<group>";
-		};
-		8B37FD531D4C2C4100073E67 /* extras */ = {
-			isa = PBXGroup;
-			children = (
-				8B37FD541D4C2C4100073E67 /* Amazon_Software_License.txt */,
-				8B37FD551D4C2C4100073E67 /* NOTICE */,
-			);
-			path = extras;
-			sourceTree = "<group>";
-		};
-		8B37FD571D4C2C4100073E67 /* Google */ = {
-			isa = PBXGroup;
-			children = (
-				8B37FD581D4C2C4100073E67 /* GoogleAppUtilities.framework */,
-				8B37FD591D4C2C4100073E67 /* GoogleAuthUtilities.framework */,
-				8B37FD5A1D4C2C4100073E67 /* GoogleNetworkingUtilities.framework */,
-				8B37FD5B1D4C2C4100073E67 /* GoogleSymbolUtilities.framework */,
-				8B37FD5C1D4C2C4100073E67 /* GoogleUtilities.framework */,
-			);
-			path = Google;
-			sourceTree = "<group>";
-		};
-		8B37FD701D4C2CE900073E67 /* AmazonAws */ = {
-			isa = PBXGroup;
-			children = (
-				8B37FD711D4C2CE900073E67 /* AWSMobileClient.swift */,
-				8B37FD721D4C2CE900073E67 /* AWSMobileHubHelper.framework */,
-			);
-			path = AmazonAws;
-			sourceTree = "<group>";
-		};
-		8B37FD7D1D4C329500073E67 /* AWS Code */ = {
-			isa = PBXGroup;
-			children = (
-				8B37FD7E1D4C32B300073E67 /* NoSQLModelHelpers.swift */,
-				8B37FD7F1D4C32B300073E67 /* NoSQLQueryResultViewController.swift */,
-				8B37FD801D4C32B300073E67 /* NoSQLSampleDataGenerator.swift */,
-				8B68342C1D5D6C0600E9D79C /* NoSQLTableFactory.swift */,
-				8B37FD821D4C32B300073E67 /* NoSQLTableListViewController.swift */,
-				8B37FD831D4C32B300073E67 /* NoSQLTableViewController.swift */,
-				8B37FD901D4C37EE00073E67 /* Pin.swift */,
-				8B37FD911D4C37EE00073E67 /* Event.swift */,
-				8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */,
-				8B882BEC1D615D81006B8394 /* PinTable.swift */,
-				8B6834341D5D6EA600E9D79C /* EventTable.swift */,
-			);
-			name = "AWS Code";
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		8BD5277D1D3C2CA1004F100E = {
@@ -322,6 +156,8 @@
 				8BD5279F1D3C2CA1004F100E /* TrippleTests */,
 				8BD527AA1D3C2CA1004F100E /* TrippleUITests */,
 				8BD527871D3C2CA1004F100E /* Products */,
+				84E12200D53576C8A9F1C197 /* Pods */,
+				13000931F11837016759F475 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,36 +174,23 @@
 		8BD527881D3C2CA1004F100E /* Tripple */ = {
 			isa = PBXGroup;
 			children = (
-				8B882BE41D614780006B8394 /* GeohashKitiOS.framework */,
-				8B8591951D4E980600BC6EBD /* Realm.framework */,
-				8B8591961D4E980600BC6EBD /* RealmSwift.framework */,
-				8B874C451D4D7BD600AEF8A1 /* GoogleMobileAds.framework */,
-				8B8591B21D509DA300BC6EBD /* FBSDKCoreKit.framework */,
-				8B8591B31D509DA300BC6EBD /* FBSDKLoginKit.framework */,
-				8B8591B41D509DA300BC6EBD /* FBSDKShareKit.framework */,
-				8B8591B81D50A01D00BC6EBD /* Bolts.framework */,
-				8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */,
-				8B8591A51D50907000BC6EBD /* GoogleSignIn.framework */,
-				8B37FD701D4C2CE900073E67 /* AmazonAws */,
-				8B37FD4E1D4C2C4100073E67 /* Sdk */,
-				8B37FD7D1D4C329500073E67 /* AWS Code */,
 				8BD527BB1D3C491D004F100E /* Tripple.entitlements */,
 				8BD527891D3C2CA1004F100E /* AppDelegate.swift */,
 				8BD5278B1D3C2CA1004F100E /* CreatePinViewController.swift */,
-				8B8D6E4A1D4D9BB30064819C /* Syncer.swift */,
 				8BD5278D1D3C2CA1004F100E /* PinMapViewController.swift */,
 				8B8D6E441D4D99090064819C /* PinListViewController.swift */,
+				8BD527B91D3C3CE8004F100E /* Models.swift */,
 				8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */,
 				8BBB46041D515E1C0028099A /* AccountViewController.swift */,
-				8B8591BC1D50A75200BC6EBD /* FacebookButton.png */,
 				8B8591BA1D50A37000BC6EBD /* SignInViewController.swift */,
-				8BD527B91D3C3CE8004F100E /* Models.swift */,
 				8BD5278F1D3C2CA1004F100E /* Main.storyboard */,
 				8BDC18061D3F07BE00D3E305 /* WaypointAnnotationView.swift */,
 				8BDC180C1D3F21C900D3E305 /* WaypointAnnotation.swift */,
+				8B27BC061D697EFC00A41C83 /* GoogleService-Info-Dev.plist */,
 				8B37FD961D4C54F400073E67 /* Info.plist */,
 				8BD527921D3C2CA1004F100E /* Assets.xcassets */,
 				8BD527941D3C2CA1004F100E /* LaunchScreen.storyboard */,
+				8B3A10081D6A9986006CB486 /* Tripple-Bridging-Header.h */,
 			);
 			path = Tripple;
 			sourceTree = "<group>";
@@ -397,11 +220,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BD527B01D3C2CA1004F100E /* Build configuration list for PBXNativeTarget "Tripple" */;
 			buildPhases = (
+				8127B7BA2CF3FFD0769F4807 /* [CP] Check Pods Manifest.lock */,
 				8BD527821D3C2CA1004F100E /* Sources */,
 				8BD527831D3C2CA1004F100E /* Frameworks */,
 				8BD527841D3C2CA1004F100E /* Resources */,
-				8B37FD6E1D4C2C8100073E67 /* Embed Frameworks */,
-				8B37FD6F1D4C2CA600073E67 /* ShellScript */,
+				01576CC3A5B4B76562E3FBF4 /* [CP] Embed Pods Frameworks */,
+				4E741B46E4D3472EFC317BD2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -416,9 +240,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BD527B31D3C2CA1004F100E /* Build configuration list for PBXNativeTarget "TrippleTests" */;
 			buildPhases = (
+				2B1E8A3C6C99AFAA362BAB6C /* [CP] Check Pods Manifest.lock */,
 				8BD527981D3C2CA1004F100E /* Sources */,
 				8BD527991D3C2CA1004F100E /* Frameworks */,
 				8BD5279A1D3C2CA1004F100E /* Resources */,
+				63F4D3035ECDED6B047A5A56 /* [CP] Embed Pods Frameworks */,
+				45DE79CE16C54CA46A8FFA10 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -434,9 +261,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BD527B61D3C2CA1004F100E /* Build configuration list for PBXNativeTarget "TrippleUITests" */;
 			buildPhases = (
+				3F302E39622990C866090113 /* [CP] Check Pods Manifest.lock */,
 				8BD527A31D3C2CA1004F100E /* Sources */,
 				8BD527A41D3C2CA1004F100E /* Frameworks */,
 				8BD527A51D3C2CA1004F100E /* Resources */,
+				9460B1A97B2A03CF09B72464 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -502,14 +331,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B8591BD1D50A75200BC6EBD /* FacebookButton.png in Resources */,
-				8B37FD601D4C2C4100073E67 /* Amazon_Software_License.txt in Resources */,
-				8B8591A61D50907000BC6EBD /* GoogleSignIn.bundle in Resources */,
-				8B37FD611D4C2C4100073E67 /* NOTICE in Resources */,
 				8BD527931D3C2CA1004F100E /* Assets.xcassets in Resources */,
 				8BD527911D3C2CA1004F100E /* Main.storyboard in Resources */,
+				8B27BC071D697EFC00A41C83 /* GoogleService-Info-Dev.plist in Resources */,
 				8B37FD971D4C54F400073E67 /* Info.plist in Resources */,
-				8B37FD621D4C2C4100073E67 /* CheckXcodeVersion.sh in Resources */,
 				8BFB8A991D51DD5A006F09C9 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,18 +356,125 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8B37FD6F1D4C2CA600073E67 /* ShellScript */ = {
+		01576CC3A5B4B76562E3FBF4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework/strip-frameworks.sh\"\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripple/Pods-Tripple-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2B1E8A3C6C99AFAA362BAB6C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3F302E39622990C866090113 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		45DE79CE16C54CA46A8FFA10 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrippleTests/Pods-TrippleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4E741B46E4D3472EFC317BD2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripple/Pods-Tripple-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63F4D3035ECDED6B047A5A56 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrippleTests/Pods-TrippleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8127B7BA2CF3FFD0769F4807 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9460B1A97B2A03CF09B72464 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrippleUITests/Pods-TrippleUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -551,27 +483,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B37FD921D4C37EE00073E67 /* Pin.swift in Sources */,
 				8BBB46051D515E1C0028099A /* AccountViewController.swift in Sources */,
 				8BD527BA1D3C3CE8004F100E /* Models.swift in Sources */,
 				8BD5278E1D3C2CA1004F100E /* PinMapViewController.swift in Sources */,
-				8B37FD931D4C37EE00073E67 /* Event.swift in Sources */,
-				8B37FD731D4C2CE900073E67 /* AWSMobileClient.swift in Sources */,
-				8B37FD861D4C32B300073E67 /* NoSQLModelHelpers.swift in Sources */,
-				8B6834351D5D6EA600E9D79C /* EventTable.swift in Sources */,
-				8B8D6E4B1D4D9BB30064819C /* Syncer.swift in Sources */,
 				8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */,
 				8BDC18071D3F07BE00D3E305 /* WaypointAnnotationView.swift in Sources */,
-				8B68342D1D5D6C0600E9D79C /* NoSQLTableFactory.swift in Sources */,
-				8B37FD8B1D4C32B300073E67 /* NoSQLTableViewController.swift in Sources */,
-				8B37FD881D4C32B300073E67 /* NoSQLSampleDataGenerator.swift in Sources */,
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
 				8BD5278C1D3C2CA1004F100E /* CreatePinViewController.swift in Sources */,
-				8B882BED1D615D81006B8394 /* PinTable.swift in Sources */,
-				8B37FD8A1D4C32B300073E67 /* NoSQLTableListViewController.swift in Sources */,
-				8B8591A31D500BC900BC6EBD /* CacheTransaction.swift in Sources */,
 				8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */,
-				8B37FD871D4C32B300073E67 /* NoSQLQueryResultViewController.swift in Sources */,
 				8B8591BB1D50A37000BC6EBD /* SignInViewController.swift in Sources */,
 				8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */,
 			);
@@ -715,54 +634,98 @@
 		};
 		8BD527B11D3C2CA1004F100E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F07A78EB7AEBF3B76F49329 /* Pods-Tripple.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Tripple/Sdk/Aws",
-					"$(PROJECT_DIR)/Tripple/Sdk/Google",
-					"$(PROJECT_DIR)/Tripple/AmazonAws",
 					"$(PROJECT_DIR)/Tripple",
+					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks/frameworks",
+				);
+				GOOGLE_SERVICES_FILE = "GoogleService-Info-Dev";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/Analytics/Sources",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuth\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCrash\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google-Mobile-Ads-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleInterchangeUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleNetworkingUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleParsingUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = Tripple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tripple/Tripple-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		8BD527B21D3C2CA1004F100E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F65A6951822DB4210345B63B /* Pods-Tripple.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Tripple/Sdk/Aws",
-					"$(PROJECT_DIR)/Tripple/Sdk/Google",
-					"$(PROJECT_DIR)/Tripple/AmazonAws",
 					"$(PROJECT_DIR)/Tripple",
+					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
+					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks/frameworks",
+				);
+				GOOGLE_SERVICES_FILE = "GoogleService-Info";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/Analytics/Sources",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuth\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCrash\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google-Mobile-Ads-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleInterchangeUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleNetworkingUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleParsingUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = Tripple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tripple/Tripple-Bridging-Header.h";
 			};
 			name = Release;
 		};
 		8BD527B41D3C2CA1004F100E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99BB4CB7955EF008426F5CEE /* Pods-TrippleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TrippleTests/Info.plist;
@@ -775,6 +738,7 @@
 		};
 		8BD527B51D3C2CA1004F100E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 635B8E04222BB6593B38BDA8 /* Pods-TrippleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TrippleTests/Info.plist;
@@ -787,6 +751,7 @@
 		};
 		8BD527B71D3C2CA1004F100E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A653322F5F6A8769B60CB6A0 /* Pods-TrippleUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TrippleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -798,6 +763,7 @@
 		};
 		8BD527B81D3C2CA1004F100E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBCC576203283ECF46BB2F96 /* Pods-TrippleUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = TrippleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

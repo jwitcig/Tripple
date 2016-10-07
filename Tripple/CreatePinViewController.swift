@@ -11,8 +11,10 @@ import CoreLocation
 import MapKit
 import UIKit
 
-import AWSDynamoDB
-import AWSMobileHubHelper
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
+import GeoFire
 
 class CreatePinViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
 
@@ -199,125 +201,40 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
             return
         }
         
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
+        guard let userID = FIRAuth.auth()?.currentUser?.uid else {
             let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
             return
         }
         
-        var pin = CloudPin()
-        pin.userId = userId
-        pin.createdDate = NSDate()
-        pin.title = nameView.pinName ?? "none"
-        pin.message = messageView.pinMessage
+        let databaseRef = FIRDatabase.database().reference()
+        let pinsRef = databaseRef.child("pins")
         
-        var event = CloudEvent()
-        event.userId = userId
-        event.createdDate = NSDate()
-        event.pinId = pin.id
-        event.location = location
-        event.type = EventType.Pickup.rawValue
-        
-        pin.pinStatus = event.type
-        pin.geohash = event.geohash
-        pin.setCurrentEvent(event)
-        
-        let successBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                let actionMessage = event.type == EventType.Drop.rawValue ? "dropping" : "picking up"
-                let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        }
-        
-        let eventUserIdValue = AWSDynamoDBAttributeValue()
-        eventUserIdValue.S = event.userId
-        let eventTimestampValue = AWSDynamoDBAttributeValue()
-        eventTimestampValue.N = "\(Int(event.createdDate.timeIntervalSince1970))"
-        let eventPinIdValue = AWSDynamoDBAttributeValue()
-        eventPinIdValue.S = event.pinId
-        let eventTypeValue = AWSDynamoDBAttributeValue()
-        eventTypeValue.S = event.type
-        let eventLatitudeValue = AWSDynamoDBAttributeValue()
-        eventLatitudeValue.N = "\(event.latitude)"
-        let eventLongitudeValue = AWSDynamoDBAttributeValue()
-        eventLongitudeValue.N = "\(event.longitude)"
-        let eventGeohashValue = AWSDynamoDBAttributeValue()
-        eventGeohashValue.S = event.geohash
+        let newPinRef = pinsRef.childByAutoId()
 
-        let eventRequest = AWSDynamoDBPutRequest()
-        eventRequest.item = [
-            "userId": eventUserIdValue,
-            "timestamp": eventTimestampValue,
-            "pinId": eventPinIdValue,
-            "type": eventTypeValue,
-            "latitude": eventLatitudeValue,
-            "longitude": eventLongitudeValue,
-            "geohash": eventGeohashValue,
-        ]
-    
-        let pinUserIdValue = AWSDynamoDBAttributeValue()
-        pinUserIdValue.S = pin.userId
-        let pinTimestampValue = AWSDynamoDBAttributeValue()
-        pinTimestampValue.N = "\(Int(pin.createdDate.timeIntervalSince1970))"
-        let pinTitleValue = AWSDynamoDBAttributeValue()
-        pinTitleValue.S = pin.title
-        let pinMessageValue = AWSDynamoDBAttributeValue()
-        pinMessageValue.S = pin.message
-        let pinStatusValue = AWSDynamoDBAttributeValue()
-        pinStatusValue.S = pin.pinStatus
-        let pinGeohashValue = AWSDynamoDBAttributeValue()
-        pinGeohashValue.S = pin.geohash
-        let pinCurrentEventValue = AWSDynamoDBAttributeValue()
-        let pinCurrentEventIdValue = AWSDynamoDBAttributeValue()
-        pinCurrentEventIdValue.S = event.id
-        pinCurrentEventValue.M = ["id": pinCurrentEventIdValue]
-        let pinRequest = AWSDynamoDBPutRequest()
-        pinRequest.item = [
-            "userId": pinUserIdValue,
-            "timestamp": pinTimestampValue,
-            "title": pinTitleValue,
-            "pinStatus": pinStatusValue,
-            "geohash": pinGeohashValue,
-            "currentEvent": pinCurrentEventValue,
-        ]
+        let newEventRef = databaseRef.child("events/\(newPinRef.key)").childByAutoId()
         
-        pinRequest.item?["message"] = pin.message != "" ? pinMessageValue : nil
+        let event = Event(id: newEventRef.key, pinID: newPinRef.key, location: location, type: EventType.Pickup.rawValue, userID: userID)
         
+        let pin = Pin(id: newPinRef.key,
+                      userID: userID,
+                      currentEvent: event,
+                      title: nameView.pinName ?? "none",
+                      message: messageView.pinMessage)
         
-        let pinWrite = AWSDynamoDBWriteRequest()
-        pinWrite.putRequest = pinRequest
+        newPinRef.setValue(pin.dictionary)
+        newEventRef.setValue(pin.currentEvent.dictionary)
         
-        let eventWrite = AWSDynamoDBWriteRequest()
-        eventWrite.putRequest = eventRequest
+        GeoFire(firebaseRef: databaseRef.child("geofire")).setLocation(location, forKey: newPinRef.key)
+        GeoFire(firebaseRef: newEventRef).setLocation(location, forKey: "location")
+
+        self.tabBarController?.selectedIndex = 1
         
-        let batchWrite = AWSDynamoDBBatchWriteItemInput()
-        batchWrite.requestItems = [
-            CloudPin.dynamoDBTableName(): [pinWrite],
-            CloudEvent.dynamoDBTableName(): [eventWrite]
-        ]
-        
-        let dynamo = AWSDynamoDB.defaultDynamoDB()
-        dynamo.batchWriteItem(batchWrite) { response, error in
-            
-            guard error == nil else {
-                let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-                mapper.remove(pin)
-                mapper.remove(event)
-                print("error creating items: \(error!)")
-                return
-            }
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tabBarController?.selectedIndex = 1
-            }
-            
-            let syncer = Syncer()
-            syncer.writeToLocal(LocalPin.self, cloudRepresentations: [pin])
-            syncer.writeToLocal(LocalEvent.self, cloudRepresentations: [event])
-        }
+        let actionMessage = pin.currentEvent.type == EventType.Drop.rawValue ? "dropping" : "picking up"
+        let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

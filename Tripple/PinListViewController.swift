@@ -8,15 +8,16 @@
 
 import UIKit
 
-import AWSDynamoDB
-import AWSMobileHubHelper
-import RealmSwift
+import Firebase
+import FirebaseDatabase
 
 struct PinItem {
-    var pin: LocalPin
-    
-    init(pin: LocalPin) {
+    let pin: Pin
+    let events: [Event]
+   
+    init(pin: Pin, events: [Event]) {
         self.pin = pin
+        self.events = events
     }
 }
 
@@ -24,29 +25,26 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
 
     @IBOutlet weak var tableView: UITableView!
     
-    var pinItems = [PinItem]() {
+    var pins = [Pin]() {
         didSet {
-            pickedUpItems = pinItems.filter { $0.pin.currentEvent?.type == EventType.Pickup.rawValue }
-            droppedItems = pinItems.filter { $0.pin.currentEvent?.type == EventType.Drop.rawValue }
+            pickedUpPins = pins.filter { $0.currentEvent.type == EventType.Pickup.rawValue }
+            droppedPins = pins.filter { $0.currentEvent.type == EventType.Drop.rawValue }
         }
     }
-    var pickedUpItems = [PinItem]()
-    var droppedItems = [PinItem]()
-    
-    var realmNotificationToken: NotificationToken?
+    var pickedUpPins = [Pin]()
+    var droppedPins = [Pin]()
     
     var locationHandler = LocationHandler()
     
-    let pins = try! Realm().objects(LocalPin.self)
-   
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        realmNotificationToken = pins.addNotificationBlock { change in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.updateList()
-            }
-        }
+        let pinsRef = FIRDatabase.database().reference().child("pins")
+        pinsRef.observeEventType(.Value, withBlock: { snapshot in
+            
+            self.pins = snapshot.children.map{Pin(snapshot: $0 as! FIRDataSnapshot)}
+            self.updateList()
+        })
         
         locationHandler.executionBlock = { location, error in
             guard error == nil else { return }
@@ -64,9 +62,7 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         updateList()
     }
     
-    func updateList() {
-        pinItems = pins.map(PinItem.init)
-        
+    func updateList() {        
         tableView.reloadData()
     }
     
@@ -77,9 +73,9 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return pickedUpItems.count
+            return pickedUpPins.count
         case 1:
-            return droppedItems.count
+            return droppedPins.count
             
         default: fatalError("Unimplemented section")
         }        
@@ -90,22 +86,22 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = UITableViewCell(style: .Value1, reuseIdentifier: nil)
         cell.backgroundColor = UIColor.clearColor()
         
-        var listItem: PinItem?
+        var pin: Pin?
         
         switch indexPath.section {
         case 0:
-            listItem = pickedUpItems[indexPath.row]
-            cell.textLabel?.text = listItem?.pin.title
+            pin = pickedUpPins[indexPath.row]
+            cell.textLabel?.text = pin?.title
             
         case 1:
-            listItem = droppedItems[indexPath.row]
-            cell.textLabel?.text = listItem?.pin.title
+            pin = droppedPins[indexPath.row]
+            cell.textLabel?.text = pin?.title
 
         default:
             fatalError("Unimplemented section")
         }
         
-        if let currentLocation = locationHandler.location, let previousEventLocation = listItem?.pin.currentEvent?.location {
+        if let currentLocation = locationHandler.location, let previousEventLocation = pin?.currentEvent.location {
             
             // distance in miles
             let distance = currentLocation.distanceFromLocation(previousEventLocation) * 0.000621371
@@ -116,12 +112,11 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         switch section {
         case 0:
-            return pickedUpItems.count > 0 ? "You're Carrying [\(pickedUpItems.count)]" : nil
+            return pickedUpPins.count > 0 ? "You're Carrying [\(pickedUpPins.count)]" : nil
         case 1:
-            return droppedItems.count > 0 ? "Open Pins [\(droppedItems.count)]" : nil
+            return droppedPins.count > 0 ? "Open Pins [\(droppedPins.count)]" : nil
         default:
             fatalError("Unimplemented section")
         }
@@ -138,21 +133,20 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         
         switch indexPath.section {
         case 0:
-            pin = pickedUpItems[indexPath.row].pin
+            pin = pickedUpPins[indexPath.row]
             
         case 1:
-            pin = droppedItems[indexPath.row].pin
+            pin = droppedPins[indexPath.row]
             
         default:
             fatalError("Unimplemented section")
         }
         
-        let pinId = pin.id
         
         guard let pinViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PinViewController") as? PinViewController else { return }
         
-        pinViewController.pinId = pinId
-        
+        pinViewController.pinID = pin.id
+
         self.presentViewController(pinViewController, animated: true, completion: nil)
     }
     

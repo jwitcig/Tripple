@@ -196,7 +196,7 @@
                                                             <action selector="dropPinPressed:" destination="67m-Cx-NjR" eventType="touchUpInside" id="NUl-qv-ZUI"/>
                                                         </connections>
                                                     </button>
-                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75w-hC-Ze1">
+                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75w-hC-Ze1">
                                                         <rect key="frame" x="0.0" y="180" width="560" height="200"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="200" id="vDq-E3-wpa"/>
@@ -668,21 +668,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gm6-yV-SaM">
-                                <rect key="frame" x="156" y="419" width="288" height="62"/>
-                                <state key="normal" image="FacebookButton"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Gm6-yV-SaM" firstAttribute="centerY" secondItem="nwg-1A-ZVo" secondAttribute="centerY" multiplier="1.5" id="2RE-Sw-urt"/>
                             <constraint firstItem="Yvc-N4-7Zz" firstAttribute="centerX" secondItem="nwg-1A-ZVo" secondAttribute="centerX" id="KVc-Me-cfc"/>
                             <constraint firstItem="Yvc-N4-7Zz" firstAttribute="centerY" secondItem="nwg-1A-ZVo" secondAttribute="centerY" multiplier="0.5" id="jcq-bT-iL6"/>
-                            <constraint firstItem="Gm6-yV-SaM" firstAttribute="centerX" secondItem="nwg-1A-ZVo" secondAttribute="centerX" id="wZP-bn-Okr"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="facebookButton" destination="Gm6-yV-SaM" id="g9C-sU-XPf"/>
                         <outlet property="view" destination="nwg-1A-ZVo" id="eTG-LO-78P"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="LoginSuccess" id="ScX-ju-bMj"/>
                     </connections>
@@ -693,7 +686,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="FacebookButton" width="288" height="62"/>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>

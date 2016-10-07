@@ -9,74 +9,26 @@
 import MapKit
 import UIKit
 
-import AWSDynamoDB
-import AWSMobileHubHelper
-import FBSDKCoreKit
-import GeohashKitiOS
-import RealmSwift
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    override init() {
+        let servicesFileName = NSBundle.mainBundle().infoDictionary!["Google Services File"] as! String
         
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
-        handleRealmMigrations()
-        
-        let serviceInfo = AWSInfo.defaultAWSInfo().defaultServiceInfo("DynamoDBObjectMapper")
-        
-        if let credentialsProvider = serviceInfo?.cognitoCredentialsProvider {
-            // takes credentials provider info from mobile hub configuration to setup the low level clients' auth
-            AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialsProvider)
-        }
-                
-        return AWSMobileClient.sharedInstance.didFinishLaunching(application, withOptions: launchOptions)
+        let options = FIROptions(contentsOfFile: NSBundle.mainBundle().pathForResource(servicesFileName, ofType: "plist"))
+        FIRApp.configureWithOptions(options)
     }
     
-    func handleRealmMigrations() {
-        
-        let config = Realm.Configuration(
-            schemaVersion: 4,
-            
-            migrationBlock: { migration, oldSchemaVersion in
-                
-                if oldSchemaVersion < 1 {
-                    migration.enumerate(LocalEvent.className()) { oldObject, newObject in
-                        guard let latitude = oldObject?["_latitude"] as? Double,
-                            let longitude = oldObject?["_longitude"] as? Double
-                            else { return }
-                        
-                        let location = CLLocation(latitude: latitude, longitude: longitude)
-                        newObject?["_geohash"] = Geohash.encode(location: location, 12)
-                    }
-                }
-                
-                if oldSchemaVersion < 2 {
-                   
-                }
-                
-                if oldSchemaVersion < 3 {
-                    
-                }
-                
-                if oldSchemaVersion < 4 {
-                    migration.renamePropertyForClass(LocalPin.className(), oldName: "_status", newName: "_pinStatus")
-                }
-        })
-        
-        // Tell Realm to use this new configuration object for the default Realm
-        Realm.Configuration.defaultConfiguration = config
-        
-        // Now that we've told Realm how to handle the schema change, opening the file
-        // will automatically perform the migration
-        _ = try! Realm()
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        return true
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -95,8 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
-        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(application: UIApplication) {

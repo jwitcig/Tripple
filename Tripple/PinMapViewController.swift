@@ -9,25 +9,26 @@
 import MapKit
 import UIKit
 
-import AWSDynamoDB
-import AWSMobileHubHelper
-import GeohashKitiOS
-import GoogleMobileAds
-import RealmSwift
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
+import GeoFire
 
 struct MapItem {
-    let pin: Pin
-    let currentEvent: Event
+    let pin: Pin?
+    let pinID: String
+    let location: CLLocation
     let annotation: MKPointAnnotation
     
-    init (pin: Pin, event: Event, annotation: MKPointAnnotation) {
+    init (pinID: String, location: CLLocation, pin: Pin? = nil, annotation: MKPointAnnotation) {
+        self.pinID = pinID
+        self.location = location
         self.pin = pin
-        self.currentEvent = event
         self.annotation = annotation
     }
 }
 
-class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GADBannerViewDelegate {
+class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -37,13 +38,10 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     @IBOutlet weak var adBannerHolder: UIView!
     
-    var adBannerView: GADBannerView?
-    var adBannerViewHeightConstraint: NSLayoutConstraint!
+//    var adBannerViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var pinInfoView: PinInfoView!
-    
-    var realmNotificationToken: NotificationToken?
-    
+        
     let locationManager = CLLocationManager()
     
     let locationHandler = LocationHandler()
@@ -55,6 +53,20 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         locationHandler.executionBlock = {
             self.pinInfoView?.location = $0.location
+            
+            
+            let databaseRef = FIRDatabase.database().reference()
+            let droppedPinsRef = databaseRef.child("pins")
+                .queryOrderedByChild("type")
+                .queryEqualToValue(EventType.Drop.rawValue)
+            
+            let geofire = GeoFire(firebaseRef: databaseRef.child("geofire"))
+            
+            let query = geofire.queryAtLocation($0.location, withRadius: 20.0)
+            query.observeEventType(.KeyEntered, withBlock: { key, location in
+                self.addMapItem(pinID: key, location: location)
+            })
+
         }
         locationHandler.requestLocation()
         
@@ -77,146 +89,46 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
-        realmNotificationToken = try! Realm().addNotificationBlock { notification, realm in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.updateMap()
-            }
-        }
-        
-        updateMap()
-    
-        adBannerView = createAdBannerView()
-        
-        if CacheTransaction.cacheHasExpired(cacheType: .PublicPins) {
-            // if no caches were performed within the expiration interval, update the cache
-            
-            updateCache()
-        }
+      
+//        adBannerView = createAdBannerView()
     }
     
-    func updateCache(geohashes geohashes: [String]? = nil) {
-        var sortKeyComparisons: String?
-        if let neighbors = geohashes {
-            sortKeyComparisons = neighbors.enumerate().reduce(" AND (", combine: { (construction, enumeration) -> String in
-                let index = enumeration.index
-                let neighbor = enumeration.element
-                
-                var newString = construction + "begins_with (geohash, neighbor)"
-                if index < neighbors.count - 1 {
-                    newString += " OR "
-                }
-                
-                return newString
-                
-            })
-            sortKeyComparisons! += ")"
-        }
-        
-        
-        let expression = AWSDynamoDBQueryExpression()
-//        expression.limit = geohashes == nil ? 50 : nil
-        expression.indexName = "Status-Geohash-Index"
-        expression.keyConditionExpression = "(pinStatus = :status)" + (sortKeyComparisons ?? "")
-        expression.expressionAttributeValues = [
-            ":status": EventType.Drop.rawValue,
-        ]
-        let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        mapper.query(CloudPin.self, expression: expression) { response, error in
-            
-            
-            
-            // need to get pins for multiple grid spaces around the center of the map, user batch queries to get pins for all grids
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            guard let response = response else {
-                print("no response: \(error)")
-                return
-            }
-            
-            guard let pins = response.items as? [CloudPin] else {
-                return
-            }
-            
-            var eventQueryInfo = [String: String]()
-            pins.enumerate().forEach {
-                eventQueryInfo[":id\($0.index)"] = $0.element.id
-            }
-            
-            let eventExpression = AWSDynamoDBScanExpression()
-            eventExpression.filterExpression = "#pinId IN (\(eventQueryInfo.keys.joinWithSeparator(",")))"
-            eventExpression.expressionAttributeNames = ["#pinId": "pinId",]
-            eventExpression.expressionAttributeValues = eventQueryInfo
-            mapper.scan(CloudEvent.self, expression: eventExpression) { response, error in
-                
-                guard let response = response else {
-                    print("no response: \(error)")
-                    return
-                }
-                
-                guard let events = response.items as? [CloudEvent] else {
-                    return
-                }
-                
-                let syncer = Syncer()
-                syncer.writeToLocal(LocalPin.self, cloudRepresentations: pins)
-                syncer.writeToLocal(LocalEvent.self, cloudRepresentations: events)
-                CacheTransaction.markCacheUpdated(cacheType: .PublicPins)
-            }
-        }
-    }
+    func addMapItem(pinID pinID: String, location: CLLocation) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location.coordinate
     
-    func updateMap() {
-        self.mapView.removeAnnotations(self.mapView.annotations)
+        let newMapItem = MapItem(pinID: pinID, location: location, annotation: annotation)
         
-        let realm = try! Realm()
-        let pins = realm.objects(LocalPin)
+        self.mapItems.append(newMapItem)
+        
+        self.mapView.addAnnotation(newMapItem.annotation)
+    }
 
-        let pinItems = pins.map(PinItem.init).filter{$0.pin.currentEvent != nil}
-        
-        self.mapItems = pinItems.map {
-            let event = $0.pin.currentEvent!
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)
-            return MapItem(pin: $0.pin, event: event, annotation: annotation)
-        }
-        
-        self.mapView.addAnnotations(self.mapItems.map{$0.annotation})
-    }
-    
-    func createAdBannerView() -> GADBannerView {
-        let adView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-        adView.adUnitID = "ca-app-pub-0507224597790106/4302627325"
-        adView.delegate = self
-        adView.rootViewController = self
-        let request = GADRequest()
-        request.testDevices = [kGADSimulatorID, "8dba35d6e5470a34c709123c81ec85c1"]
-        adView.loadRequest(request)
-        
-        adBannerHolder.addSubview(adView)
-        adBannerHolder.hidden = true
-        return adView
-    }
-    
-    func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        UIView.animateWithDuration(0.8) {
-            self.adBannerHolder.hidden = false
-        }
-    }
-    
-    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
-        UIView.animateWithDuration(0.8) {
-            self.adBannerHolder.hidden = true
-        }
-    }
+//    func createAdBannerView() -> GADBannerView {
+//        let adView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+//        adView.adUnitID = "ca-app-pub-0507224597790106/4302627325"
+//        adView.delegate = self
+//        adView.rootViewController = self
+//        let request = GADRequest()
+//        request.testDevices = [kGADSimulatorID, "8dba35d6e5470a34c709123c81ec85c1"]
+//        adView.loadRequest(request)
+//        
+//        adBannerHolder.addSubview(adView)
+//        adBannerHolder.hidden = true
+//        return adView
+//    }
+//    
+//    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+//        UIView.animateWithDuration(0.8) {
+//            self.adBannerHolder.hidden = false
+//        }
+//    }
+//    
+//    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+//        UIView.animateWithDuration(0.8) {
+//            self.adBannerHolder.hidden = true
+//        }
+//    }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -259,11 +171,12 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         guard let mapItem = selectedMapItem else { return }
         
         guard let pinViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PinViewController") as? PinViewController else { return }
-        
-        pinViewController.pinId = mapItem.pin.id
-        
-        self.presentViewController(pinViewController, animated: true, completion: nil)
     
+        pinViewController.pinID = mapItem.pinID
+        self.presentViewController(pinViewController, animated: true, completion: {
+            self.mapView.deselectAnnotation(view.annotation, animated: false)
+        })
+
         return
         
         if !self.view.subviews.contains(pinInfoView) {
@@ -293,18 +206,17 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
         pinInfoView.mapItem = mapItem
         
-        pinInfoView.titleLabel.text = mapItem.pin.title
-        pinInfoView.messageLabel.text = mapItem.pin.message
+        pinInfoView.titleLabel.text = mapItem.pin?.title
+        pinInfoView.messageLabel.text = mapItem.pin?.message
         pinInfoView.peek()
         
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        let targetGeohash = Geohash.encode(coordinate: mapView.centerCoordinate, 6)
-        
+//        let targetGeohash = Geohash.encode(coordinate: mapView.centerCoordinate, 6)
+        let targetGeohash = ""
 //        updateCache(geohashes: Geohash.neighbors(targetGeohash))
-        updateCache()
     }
     
 }
@@ -387,39 +299,39 @@ class PinInfoView: UIView {
         offerMoreInfo = !offerMoreInfo
     }
     
-    @IBAction func pickUpPinPressed(sender: UIButton) {
-        // TODO: implement user info
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            print("missing user information")
-            return
-        }
-        
-        guard let location = location else {
-            print("missing location information")
-            return
-        }
-        
-        var pickup = CloudEvent()
-        pickup.pinId = mapItem.pin.id
-        pickup.userId = userId
-        pickup.location = location
-        pickup.createdDate = NSDate()
-        pickup.type = EventType.Pickup.rawValue
-        
-        AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper().save(pickup) { error in
-            guard error == nil else {
-                print("Error creating pickup: \(error!)")
-                return
-            }
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.pickupSuccessBlock(pin: self.mapItem.pin, event: pickup)
-            }
-            
-            Syncer().writeToLocal(LocalEvent.self, cloudRepresentations: [pickup])
-        }
-        
-    }
+//    @IBAction func pickUpPinPressed(sender: UIButton) {
+//        // TODO: implement user info
+//        guard let userID = FIRAuth.auth()?.currentUser?.uid else {
+//            print("missing user information")
+//            return
+//        }
+//        
+//        guard let location = location else {
+//            print("missing location information")
+//            return
+//        }
+//        
+//        var pickup = Event(pinID: mapItem.pin.id, location: location, type: EventType.Pickup.rawValue, userID: userID)
+//        
+//       
+//
+//        let databaseRef = FIRDatabase.database().reference()
+//        let newEventRef = databaseRef.child("events/\(mapItem.pin.id)")
+//        newEventRef.setValue(pickup)
+//
+//
+//            guard error == nil else {
+//                print("Error creating pickup: \(error!)")
+//                return
+//            }
+//            
+//            dispatch_async(dispatch_get_main_queue()) {
+//                self.pickupSuccessBlock(pin: self.mapItem.pin, event: pickup)
+//            }
+//            
+//        }
+//        
+//    }
     
     @IBAction func viewDragged(sender: UIPanGestureRecognizer) {
         return
