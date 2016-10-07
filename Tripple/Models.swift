@@ -12,8 +12,6 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 
-import GeoFire
-
 class Pin: Equatable, Hashable {
     
     var hashValue: Int {
@@ -27,7 +25,7 @@ class Pin: Equatable, Hashable {
     
     var currentEvent: Event
 
-    var timestamp = NSDate()
+    var timestamp = Date()
     
     var userID: String
     
@@ -44,14 +42,17 @@ class Pin: Equatable, Hashable {
     
     init(snapshot: FIRDataSnapshot) {
         self.id = snapshot.key
-        self.title = snapshot.value!["title"] as! String
-        self.message = snapshot.value!["message"] as? String
-        self.timestamp = NSDate(timeIntervalSince1970: snapshot.value!["timestamp"] as! Double)
-        self.userID = snapshot.value!["userID"] as! String
-        self.currentEvent = Event(snapshot: snapshot.childSnapshotForPath("currentEvent"))
+        
+        guard let value = snapshot.value as? NSDictionary else { fatalError() }
+        
+        self.title = value["title"] as! String
+        self.message = value["message"] as? String
+        self.timestamp = Date(timeIntervalSince1970: value["timestamp"] as! Double)
+        self.userID = value["userID"] as! String
+        self.currentEvent = Event(snapshot: snapshot.childSnapshot(forPath: "currentEvent"))
     }
     
-    init(id: String = NSUUID().UUIDString, userID: String, currentEvent: Event, title: String, message: String? = nil) {
+    init(id: String = UUID().uuidString, userID: String, currentEvent: Event, title: String, message: String? = nil) {
         self.id = id
         self.userID = userID
         self.title = title
@@ -71,7 +72,7 @@ class Event {
     
     var location: CLLocation
 
-    let timestamp = NSDate()
+    var createdDate = Date()
 
     var type: String
     
@@ -80,7 +81,7 @@ class Event {
     var dictionary: NSDictionary {
         let dictionaryRepresentation: NSMutableDictionary = [
 //            "location": location,
-            "timestamp": timestamp.timeIntervalSince1970,
+            "createdDate": createdDate.timeIntervalSince1970,
             "type": type,
             "userID": userID,
         ]
@@ -91,17 +92,20 @@ class Event {
     init(snapshot: FIRDataSnapshot) {
         self.id = snapshot.key
         
-        if let location = snapshot.value!["location"] as? CLLocation {
+        guard let value = snapshot.value as? NSDictionary else { fatalError() }
+        
+        if let location = value["location"] as? CLLocation {
             self.location = location
         } else {
             self.location = CLLocation()
         }
-        self.previousEventID = snapshot.value?["previousEventID"] as? String
-        self.type = snapshot.value!["type"] as! String
-        self.userID = snapshot.value!["userID"] as! String
+        self.createdDate = Date(timeIntervalSince1970: value["createdDate"] as! TimeInterval)
+        self.previousEventID = value["previousEventID"] as? String
+        self.type = value["type"] as! String
+        self.userID = value["userID"] as! String
     }
     
-    init(id: String = NSUUID().UUIDString, pinID: String, location: CLLocation, type: String, userID: String, previousEventID: String? = nil) {
+    init(id: String = UUID().uuidString, pinID: String, location: CLLocation, type: String, userID: String, previousEventID: String? = nil) {
         self.id = id
         self.location = location
         self.type = type

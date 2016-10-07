@@ -22,14 +22,14 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FIRAuth.auth()?.signInAnonymouslyWithCompletion({ (user, error) in
+        FIRAuth.auth()?.signInAnonymously(completion: { (user, error) in
             guard error == nil else { return }
             
-            self.performSegueWithIdentifier("LoginSuccess", sender: self)
+            self.performSegue(withIdentifier: "LoginSuccess", sender: self)
         })
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         

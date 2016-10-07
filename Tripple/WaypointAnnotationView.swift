@@ -18,18 +18,18 @@ class PinAnnotationView: MKAnnotationView {
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(NSBundle.mainBundle().loadNibNamed("PinAnnotationView", owner: self, options: nil).first! as! UIView)
+        self.addSubview(Bundle.main.loadNibNamed("PinAnnotationView", owner: self, options: nil)?.first! as! UIView)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.addSubview(NSBundle.mainBundle().loadNibNamed("PinAnnotationView", owner: self, options: nil).first! as! UIView)
+        self.addSubview(Bundle.main.loadNibNamed("PinAnnotationView", owner: self, options: nil)?.first! as! UIView)
     }
     
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
     
     }
 

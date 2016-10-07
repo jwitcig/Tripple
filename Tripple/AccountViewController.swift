@@ -23,9 +23,9 @@ class AccountViewController: UIViewController {
         super.viewDidLoad()
         
         guard let userId = FIRAuth.auth()?.currentUser?.uid else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
 //        
@@ -52,13 +52,13 @@ class AccountViewController: UIViewController {
     
     }
     
-    @IBAction func signOutPressed(sender: AnyObject) {
-        let alert = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Sign Out", style: .Destructive) { action in
+    @IBAction func signOutPressed(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Sign Out", style: .destructive) { action in
             self.signOut()
         })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func signOut() {

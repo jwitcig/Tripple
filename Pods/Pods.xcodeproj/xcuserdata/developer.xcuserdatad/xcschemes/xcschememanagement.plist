@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>GeoFire.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Tripple.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,17 +22,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0056A089693D9AACCA4341BE9A447347</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>05CC1FDBB3A47CA25D395F47EDAB33AF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7908849B370564D3342427B24CCD92B7</key>
+		<key>6D53EC724B7CF414C3BF5D1E151CB2C9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

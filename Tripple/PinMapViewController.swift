@@ -12,7 +12,8 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
-import GeoFire
+
+
 
 struct MapItem {
     let pin: Pin?
@@ -52,15 +53,15 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         super.viewDidLoad()
         
         locationHandler.executionBlock = {
-            self.pinInfoView?.location = $0.location
-            
+            self.pinInfoView?.location = $0.0
             
             let databaseRef = FIRDatabase.database().reference()
             let droppedPinsRef = databaseRef.child("pins")
-                .queryOrderedByChild("type")
-                .queryEqualToValue(EventType.Drop.rawValue)
+                .queryOrdered(byChild: "type")
+                .queryEqual(toValue: EventType.Drop.rawValue)
             
-            let geofire = GeoFire(firebaseRef: databaseRef.child("geofire"))
+            
+            let geofire = GeoFire(firebaseRef: databaseRef.child("geofire"))!
             
             let query = geofire.queryAtLocation($0.location, withRadius: 20.0)
             query.observeEventType(.KeyEntered, withBlock: { key, location in
@@ -70,8 +71,8 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
         locationHandler.requestLocation()
         
-        navigationBar.translucent = true
-        navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBar.isTranslucent = true
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         
@@ -85,15 +86,15 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             let title = "You picked up \(pin.title)"
             let message = "You have 24 hours to carry the message wherever you like! Hurry!"
             
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
-            alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
       
 //        adBannerView = createAdBannerView()
     }
     
-    func addMapItem(pinID pinID: String, location: CLLocation) {
+    func addMapItem(pinID: String, location: CLLocation) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = location.coordinate
     
@@ -130,21 +131,21 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 //        }
 //    }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         guard let location = locations.first else { return }
 
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error updating location: \(error)")
     }
 
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
         let id = PinAnnotationView.reuseIdentifier!
         
-        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(id)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: id)
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: id)
@@ -160,7 +161,7 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         return annotationView
     }
     
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let selectedMapItem = mapItems.filter {
             if let annotation = view.annotation as? MKPointAnnotation {
                 return $0.annotation == annotation
@@ -170,10 +171,10 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         guard let mapItem = selectedMapItem else { return }
         
-        guard let pinViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PinViewController") as? PinViewController else { return }
+        guard let pinViewController = self.storyboard?.instantiateViewController(withIdentifier: "PinViewController") as? PinViewController else { return }
     
         pinViewController.pinID = mapItem.pinID
-        self.presentViewController(pinViewController, animated: true, completion: {
+        self.present(pinViewController, animated: true, completion: {
             self.mapView.deselectAnnotation(view.annotation, animated: false)
         })
 
@@ -184,21 +185,21 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             self.view.addSubview(pinInfoView)
             
             pinInfoView.peekConstraints = [
-                pinInfoView.topAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: -200),
+                pinInfoView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -200),
             ]
             
             pinInfoView.showConstraints = [
-                pinInfoView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor),
+                pinInfoView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             ]
             
             pinInfoView.hideConstraints = [
-                pinInfoView.topAnchor.constraintEqualToAnchor(self.view.bottomAnchor),
+                pinInfoView.topAnchor.constraint(equalTo: self.view.bottomAnchor),
             ]
   
-            NSLayoutConstraint.activateConstraints([
-                pinInfoView.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor, constant: 0),
-                pinInfoView.trailingAnchor.constraintEqualToAnchor(self.view.trailingAnchor, constant: 0),
-                pinInfoView.heightAnchor.constraintEqualToAnchor(self.view.heightAnchor, constant: -20)
+            NSLayoutConstraint.activate([
+                pinInfoView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+                pinInfoView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+                pinInfoView.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: -20)
             ] + pinInfoView.hideConstraints)
             
             pinInfoView.layoutIfNeeded()
@@ -213,7 +214,7 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
 //        let targetGeohash = Geohash.encode(coordinate: mapView.centerCoordinate, 6)
         let targetGeohash = ""
 //        updateCache(geohashes: Geohash.neighbors(targetGeohash))
@@ -241,59 +242,59 @@ class PinInfoView: UIView {
     let verticalLimit : CGFloat = -10
     var totalTranslation : CGFloat = -200
     
-    var pickupSuccessBlock: ((pin: Pin, event: Event)->())!
+    var pickupSuccessBlock: ((_ pin: Pin, _ event: Event)->())!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    @IBAction func closeInfoView(sender: AnyObject) {
+    @IBAction func closeInfoView(_ sender: AnyObject) {
         hide()
     }
     
     func peek() {
-        NSLayoutConstraint.deactivateConstraints(self.showConstraints)
-        NSLayoutConstraint.deactivateConstraints(self.hideConstraints)
-        NSLayoutConstraint.activateConstraints(self.peekConstraints)
+        NSLayoutConstraint.deactivate(self.showConstraints)
+        NSLayoutConstraint.deactivate(self.hideConstraints)
+        NSLayoutConstraint.activate(self.peekConstraints)
         
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.layoutIfNeeded()
-        }) { (finished) in
+        }, completion: { (finished) in
             self.messageLabel.scrollRangeToVisible(NSRange(location: 0, length: 0))
-        }
+        }) 
     }
     
     func show() {
-        NSLayoutConstraint.deactivateConstraints(self.peekConstraints)
-        NSLayoutConstraint.deactivateConstraints(self.hideConstraints)
-        NSLayoutConstraint.activateConstraints(self.showConstraints)
+        NSLayoutConstraint.deactivate(self.peekConstraints)
+        NSLayoutConstraint.deactivate(self.hideConstraints)
+        NSLayoutConstraint.activate(self.showConstraints)
         
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.layoutIfNeeded()
-        }) { (finished) in
+        }, completion: { (finished) in
             self.messageLabel.scrollRangeToVisible(NSRange(location: 0, length: 0))
-        }
+        }) 
     }
     
     func hide() {
-        NSLayoutConstraint.deactivateConstraints(self.peekConstraints)
-        NSLayoutConstraint.deactivateConstraints(self.showConstraints)
-        NSLayoutConstraint.activateConstraints(self.hideConstraints)
+        NSLayoutConstraint.deactivate(self.peekConstraints)
+        NSLayoutConstraint.deactivate(self.showConstraints)
+        NSLayoutConstraint.activate(self.hideConstraints)
 
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.layoutIfNeeded()
-        }) { (finished) in
+        }, completion: { (finished) in
             self.messageLabel.scrollRangeToVisible(NSRange(location: 0, length: 0))
-        }
+        }) 
     }
     
-    @IBAction func moreInfoPressed(sender: UIButton) {
+    @IBAction func moreInfoPressed(_ sender: UIButton) {
         if offerMoreInfo {
             show()
-            infoToggleButton.setTitle("less info", forState: .Normal)
+            infoToggleButton.setTitle("less info", for: UIControlState())
         } else {
             peek()
-            infoToggleButton.setTitle("more info", forState: .Normal)
+            infoToggleButton.setTitle("more info", for: UIControlState())
         }
         
         offerMoreInfo = !offerMoreInfo
@@ -333,26 +334,26 @@ class PinInfoView: UIView {
 //        
 //    }
     
-    @IBAction func viewDragged(sender: UIPanGestureRecognizer) {
+    @IBAction func viewDragged(_ sender: UIPanGestureRecognizer) {
         return
         
-        let yTranslation = sender.translationInView(self).y
+        let yTranslation = sender.translation(in: self).y
         
         let topViewConstraint = showConstraints[0]
         
         if topViewConstraint.hasExceeded(verticalLimit) {
             totalTranslation += yTranslation
             topViewConstraint.constant = logConstraintValueForYPosition(totalTranslation)
-            if sender.state == .Ended {
+            if sender.state == .ended {
                 animateViewBackToLimit()
             }
         } else {
             topViewConstraint.constant += yTranslation
         }
-        sender.setTranslation(CGPointZero, inView: self)
+        sender.setTranslation(CGPoint.zero, in: self)
     }
     
-    func logConstraintValueForYPosition(yPosition : CGFloat) -> CGFloat {
+    func logConstraintValueForYPosition(_ yPosition : CGFloat) -> CGFloat {
         return verticalLimit * (1 + log10(yPosition/verticalLimit))
     }
     
@@ -361,7 +362,7 @@ class PinInfoView: UIView {
         
         topViewConstraint.constant = 0
 
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 10, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 10, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
             self.layoutIfNeeded()
             self.totalTranslation = -300
             }, completion: nil)
@@ -370,7 +371,7 @@ class PinInfoView: UIView {
 }
 
 private extension NSLayoutConstraint {
-    func hasExceeded(verticalLimit: CGFloat) -> Bool {
+    func hasExceeded(_ verticalLimit: CGFloat) -> Bool {
         return self.constant < verticalLimit
     }
 }

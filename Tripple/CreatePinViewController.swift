@@ -14,7 +14,6 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
-import GeoFire
 
 class CreatePinViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
 
@@ -71,13 +70,13 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         }
         locationHandler.requestLocation()
         
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
 
         setupProcessViews()
         updateProcessControls(proceedEnabled: false)
     }
     
-    func processFormUpdate(form form: ProcessView) {
+    func processFormUpdate(form: ProcessView) {
         updateProcessControls(proceedEnabled: form.formComplete)
     }
     
@@ -85,46 +84,46 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         processViewItems = [nameView, messageView, viewCompletePinView].map {
             guard var processView = $0 as? ProcessView else { fatalError() }
             
-            $0.translatesAutoresizingMaskIntoConstraints = false
+            ($0 as! UIView).translatesAutoresizingMaskIntoConstraints = false
             
             processView.formDelegate = self
             
-            stackView.addArrangedSubview($0)
+            stackView.addArrangedSubview($0 as! UIView)
             
-            NSLayoutConstraint.activateConstraints([
-                $0.widthAnchor.constraintEqualToAnchor(scrollView.widthAnchor),
+            NSLayoutConstraint.activate([
+                ($0 as AnyObject).widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             ])
-            return ProcessViewItem(view: $0)
+            return ProcessViewItem(view: $0 as! UIView)
         }
     }
     
     let animationDuration = 0.8
-    func updateProcessControls(proceedEnabled proceedEnabled: Bool? = nil) {
+    func updateProcessControls(proceedEnabled: Bool? = nil) {
         
         // back button
         if currentItemIndex == 0 {
-            UIView.animateWithDuration(animationDuration) {
-                self.backButton.enabled = false
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.backButton.isEnabled = false
                 self.backButton.alpha = 0
-            }
+            }) 
         } else {
-            UIView.animateWithDuration(animationDuration) {
-                self.backButton.enabled = true
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.backButton.isEnabled = true
                 self.backButton.alpha = 1
-            }
+            }) 
         }
         
         // next button
         if currentItemIndex == processViewItems.count - 1 {
-            self.nextButton.setTitle("drop", forState: .Normal)
-            self.nextButton.setTitle("drop", forState: .Selected)
+            self.nextButton.setTitle("drop", for: UIControlState())
+            self.nextButton.setTitle("drop", for: .selected)
         } else {
-            self.nextButton.setTitle("next", forState: .Normal)
-            self.nextButton.setTitle("next", forState: .Selected)
+            self.nextButton.setTitle("next", for: UIControlState())
+            self.nextButton.setTitle("next", for: .selected)
         }
         
         if let enabled = proceedEnabled {
-            self.nextButton.enabled = enabled
+            self.nextButton.isEnabled = enabled
             
             if enabled {
                 self.nextButton.alpha = 1
@@ -134,12 +133,12 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         }
     }
     
-    func slideToItem(item: ProcessViewItem) {
+    func slideToItem(_ item: ProcessViewItem) {
         processViewItems.forEach {
             ($0.view as? ProcessView)?.dismissKeyboard()
         }
         
-        guard let itemIndex = (processViewItems.map{$0.view}).indexOf(item.view) else { return }
+        guard let itemIndex = (processViewItems.map{$0.view}).index(of: item.view) else { return }
         
         let processView = item.view as! ProcessView
         
@@ -160,16 +159,16 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
             print("Unimplemented view: 'slideToItem:'")
         }
         
-        self.scrollView.scrollEnabled = true
-        self.scrollView.userInteractionEnabled = false
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.isUserInteractionEnabled = false
 
-        UIView.animateWithDuration(slideAnimationTime, animations: {
+        UIView.animate(withDuration: slideAnimationTime, animations: {
             self.scrollView.contentOffset = CGPoint(x: self.scrollView.frame.width*CGFloat(itemIndex), y: 0)
             
-        }) { (finished) in
-            self.scrollView.scrollEnabled = false
-            self.scrollView.userInteractionEnabled = true
-        }
+        }, completion: { (finished) in
+            self.scrollView.isScrollEnabled = false
+            self.scrollView.isUserInteractionEnabled = true
+        }) 
     }
     
     let slideAnimationTime = 0.6
@@ -181,11 +180,11 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
        currentItemIndex -= 1
     }
     
-    @IBAction func nextPressed(sender: AnyObject) {
+    @IBAction func nextPressed(_ sender: AnyObject) {
         slideRight()
     }
     
-    @IBAction func backPressed(sender: AnyObject) {
+    @IBAction func backPressed(_ sender: AnyObject) {
         slideLeft()
     }
     
@@ -202,9 +201,9 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         }
         
         guard let userID = FIRAuth.auth()?.currentUser?.uid else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -232,22 +231,22 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         self.tabBarController?.selectedIndex = 1
         
         let actionMessage = pin.currentEvent.type == EventType.Drop.rawValue ? "dropping" : "picking up"
-        let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
     
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location Failed: \(error)")
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 
 }
@@ -261,14 +260,14 @@ protocol ProcessView {
 }
 
 protocol ProcessViewDelegate {
-    func processFormUpdate(form form: ProcessView)
+    func processFormUpdate(form: ProcessView)
 }
 
 class CreatePinNameView: UIView, ProcessView {
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
-            textField?.addTarget(self, action: #selector(CreatePinNameView.textFieldTextDidChange(_:)), forControlEvents: .EditingChanged)
+            textField?.addTarget(self, action: #selector(CreatePinNameView.textFieldTextDidChange(_:)), for: .editingChanged)
         }
     }
     
@@ -284,7 +283,7 @@ class CreatePinNameView: UIView, ProcessView {
         get { return textField.text }
     }
     
-    func textFieldTextDidChange(notification: NSNotification) {
+    func textFieldTextDidChange(_ notification: Notification) {
         if textField.text?.characters.count == 0 {
             formComplete = false
         } else {
@@ -296,7 +295,7 @@ class CreatePinNameView: UIView, ProcessView {
         textField?.resignFirstResponder()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismissKeyboard()
     }
     
@@ -319,18 +318,18 @@ class CreatePinMessageView: UIView, ProcessView, UITextViewDelegate {
         get { return textView.text }
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        placeholderLabel.hidden = true
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = true
         textView.recalculateVerticalAlignment()
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
-        placeholderLabel.hidden = textView.hasText()
+    func textViewDidEndEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = textView.hasText
         textView.recalculateVerticalAlignment()
     }
     
-    func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = textView.hasText()
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = textView.hasText
         textView.recalculateVerticalAlignment()
 
         formComplete = true
@@ -340,7 +339,7 @@ class CreatePinMessageView: UIView, ProcessView, UITextViewDelegate {
         textView?.resignFirstResponder()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismissKeyboard()
     }
 
@@ -382,7 +381,7 @@ class ViewNewPinView: UIView, ProcessView, MKMapViewDelegate {
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.mapView.addAnnotation(annotation)
             }
         }
@@ -390,11 +389,11 @@ class ViewNewPinView: UIView, ProcessView, MKMapViewDelegate {
     
     func dismissKeyboard() { }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let id = PinAnnotationView.reuseIdentifier!
         
-        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(id)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: id)
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: id)
@@ -425,7 +424,7 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
     
     var location: CLLocation?
     
-    var executionBlock: ((location: CLLocation?, error: NSError?)->())?
+    var executionBlock: ((_ location: CLLocation?, _ error: NSError?)->())?
     
     override init() {
         super.init()
@@ -439,15 +438,15 @@ class LocationHandler: NSObject, CLLocationManagerDelegate {
         locationManager.requestLocation()
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        executionBlock?(location: locations.first, error: nil)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        executionBlock?(locations.first, nil)
         executionBlock = nil
         
         location = locations.first
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        executionBlock?(location: nil, error: error)
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        executionBlock?(nil, error as NSError?)
     }
     
 }

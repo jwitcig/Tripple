@@ -40,7 +40,7 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
 
         let pinsRef = FIRDatabase.database().reference().child("pins")
-        pinsRef.observeEventType(.Value, withBlock: { snapshot in
+        pinsRef.observe(.value, with: { snapshot in
             
             self.pins = snapshot.children.map{Pin(snapshot: $0 as! FIRDataSnapshot)}
             self.updateList()
@@ -49,14 +49,14 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         locationHandler.executionBlock = { location, error in
             guard error == nil else { return }
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
         locationHandler.requestLocation()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         updateList()
@@ -66,11 +66,11 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.reloadData()
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return pickedUpPins.count
@@ -81,20 +81,20 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         }        
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: .Value1, reuseIdentifier: nil)
-        cell.backgroundColor = UIColor.clearColor()
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        cell.backgroundColor = UIColor.clear
         
         var pin: Pin?
         
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            pin = pickedUpPins[indexPath.row]
+            pin = pickedUpPins[(indexPath as NSIndexPath).row]
             cell.textLabel?.text = pin?.title
             
         case 1:
-            pin = droppedPins[indexPath.row]
+            pin = droppedPins[(indexPath as NSIndexPath).row]
             cell.textLabel?.text = pin?.title
 
         default:
@@ -104,14 +104,14 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         if let currentLocation = locationHandler.location, let previousEventLocation = pin?.currentEvent.location {
             
             // distance in miles
-            let distance = currentLocation.distanceFromLocation(previousEventLocation) * 0.000621371
+            let distance = currentLocation.distance(from: previousEventLocation) * 0.000621371
             cell.detailTextLabel?.text = String(format: "%.2f", distance) + " mi"
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
             return pickedUpPins.count > 0 ? "You're Carrying [\(pickedUpPins.count)]" : nil
@@ -123,31 +123,31 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
 
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var pin: Pin!
         
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            pin = pickedUpPins[indexPath.row]
+            pin = pickedUpPins[(indexPath as NSIndexPath).row]
             
         case 1:
-            pin = droppedPins[indexPath.row]
+            pin = droppedPins[(indexPath as NSIndexPath).row]
             
         default:
             fatalError("Unimplemented section")
         }
         
         
-        guard let pinViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PinViewController") as? PinViewController else { return }
+        guard let pinViewController = self.storyboard?.instantiateViewController(withIdentifier: "PinViewController") as? PinViewController else { return }
         
         pinViewController.pinID = pin.id
 
-        self.presentViewController(pinViewController, animated: true, completion: nil)
+        self.present(pinViewController, animated: true, completion: nil)
     }
     
 }

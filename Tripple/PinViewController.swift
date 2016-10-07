@@ -52,14 +52,14 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             let databaseRef = FIRDatabase.database().reference()
             
             let pinRef = databaseRef.child("pins/\(pinID)")
-            pinRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            pinRef.observeSingleEvent(of: .value, with: { snapshot in
                 self.pin = Pin(snapshot: snapshot)
                 self.setupPinItem()
                 self.updateUI()
             })
 
             let pinsEventsRef = databaseRef.child("events/\(pinID)")
-            pinsEventsRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            pinsEventsRef.observeSingleEvent(of: .value, with: { snapshot in
                 self.events = snapshot.children.map{Event(snapshot: $0 as! FIRDataSnapshot)}
                 self.setupPinItem()
                 self.updateUI()
@@ -67,10 +67,10 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    private var pin: Pin!
-    private var events: [Event]!
+    fileprivate var pin: Pin!
+    fileprivate var events: [Event]!
 
-    private var pinItem: PinItem!
+    fileprivate var pinItem: PinItem!
     
     func setupPinItem() {
         guard let pin = self.pin, let events = self.events else { return }
@@ -87,16 +87,16 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationBar.translucent = true
-        navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBar.isTranslucent = true
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.backgroundColor = topColor.backgroundColor
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.pickupPinButton.hidden = true
+        self.pickupPinButton.isHidden = true
         
         locationHandler.executionBlock = { location, error in
             guard let usersLocation = location else {
@@ -108,25 +108,25 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         locationHandler.requestLocation()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         messageView?.scrollRangeToVisible(NSRange(location: 0,length: 0))
     }
     
-    func locationUpdated(location location: CLLocation) {
+    func locationUpdated(location: CLLocation) {
         guard let pinItem = pinItem else { return }
         let pinLocation = pinItem.pin.currentEvent.location
         
-        let distance = location.distanceFromLocation(pinLocation) * 0.000621371 // in miles
-        dispatch_async(dispatch_get_main_queue()) {
+        let distance = location.distance(from: pinLocation) * 0.000621371 // in miles
+        DispatchQueue.main.async {
             if distance <= 0.25 {
-                self.pickupPinButton.hidden = self.userHoldsPin
+                self.pickupPinButton.isHidden = self.userHoldsPin
             } else {
-                self.pickupPinButton.hidden = true
+                self.pickupPinButton.isHidden = true
             }
         }
     }
     
-    func setupMap(coordinate coordinate: CLLocationCoordinate2D) {
+    func setupMap(coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
@@ -135,10 +135,10 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     }
     
     // Fetches GPS information for events (city names, distances, etc.)
-    func fetchEventInformation(events events: [Event]) {
+    func fetchEventInformation(events: [Event]) {
         eventInfoList = []
         
-        let descendingEvents = events.sort{$0.0.timestamp.compare($0.1.timestamp) == .OrderedDescending}
+        let descendingEvents = events.sorted{$0.0.createdDate.compare($0.1.createdDate as Date) == .orderedDescending}
         
         let geocoder = CLGeocoder()
         descendingEvents.forEach { event in
@@ -157,21 +157,21 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func displayEventInfoList(eventInfoList: [EventInfo]) {
+    func displayEventInfoList(_ eventInfoList: [EventInfo]) {
         previousLocationsStackView.arrangedSubviews.forEach{$0.removeFromSuperview()}
         
-        let sortedEvents = eventInfoList.sort{$0.0.event.timestamp.compare($0.1.event.timestamp) == .OrderedDescending}
+        let sortedEvents = eventInfoList.sorted{$0.0.event.createdDate.compare($0.1.event.createdDate as Date) == .orderedDescending}
         
-        sortedEvents.enumerate().forEach { index, eventInfo in
+        sortedEvents.enumerated().forEach { index, eventInfo in
             var distanceText: String?
             if index > 0 {
                 let previousEvent = sortedEvents[index-1]
                 
-                let distanceFromPrevious = previousEvent.event.location.distanceFromLocation(eventInfo.event.location)
+                let distanceFromPrevious = previousEvent.event.location.distance(from: eventInfo.event.location)
                 
-                let formatter = NSNumberFormatter()
+                let formatter = NumberFormatter()
                 formatter.maximumFractionDigits = 1
-                let formattedNumber = formatter.stringFromNumber(distanceFromPrevious * 0.000621371192)
+                let formattedNumber = formatter.string(from: NSNumber(value: distanceFromPrevious * 0.000621371192))
                 distanceText = formattedNumber != nil ? "\(formattedNumber!) mi" : nil
             }
             
@@ -179,9 +179,9 @@ class PinViewController: UIViewController, MKMapViewDelegate {
             cityLabel.text = (eventInfo.cityName ?? "Unknown City") + (distanceText != nil ? " [\(distanceText!)]" : "")
             
             let stackView = UIStackView(arrangedSubviews: [cityLabel])
-            stackView.axis = .Vertical
-            stackView.alignment = .Leading
-            stackView.distribution = .EqualSpacing
+            stackView.axis = .vertical
+            stackView.alignment = .leading
+            stackView.distribution = .equalSpacing
             stackView.spacing = 5
             previousLocationsStackView.addArrangedSubview(stackView)
         }
@@ -204,48 +204,48 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         fetchEventInformation(events: pinItem.events)
         
         if userHoldsPin {
-            dropPinButton.hidden = false
+            dropPinButton.isHidden = false
         } else {
-            dropPinButton.hidden = true
+            dropPinButton.isHidden = true
         }
     }
     
-    @IBAction func pickupPressed(sender: AnyObject) {
+    @IBAction func pickupPressed(_ sender: AnyObject) {
         let successHandler: (CLLocation
             , Event)->() = { location, event in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.pickupPinButton.hidden = true
-                self.dropPinButton.hidden = false
+            DispatchQueue.main.async {
+                self.pickupPinButton.isHidden = true
+                self.dropPinButton.isHidden = false
                 
-                UIView.animateWithDuration(0.8) {
+                UIView.animate(withDuration: 0.8, animations: {
                     self.pickupPinButton.layoutIfNeeded()
                     self.dropPinButton.layoutIfNeeded()
-                }
+                }) 
                 
-                let alert = UIAlertController(title: "You picked up \(self.pinItem.pin.title)!", message: "Take it as far as you can!", preferredStyle: .ActionSheet)
-                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "You picked up \(self.pinItem.pin.title)!", message: "Take it as far as you can!", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
         
         createEvent(type: EventType.Pickup, successHandler: successHandler)
     }
     
-    @IBAction func dropPinPressed(sender: AnyObject) {
+    @IBAction func dropPinPressed(_ sender: AnyObject) {
         let successHandler: (CLLocation
             , Event)->() = { location, event in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.pickupPinButton.hidden = false
-                self.dropPinButton.hidden = true
+            DispatchQueue.main.async {
+                self.pickupPinButton.isHidden = false
+                self.dropPinButton.isHidden = true
                 
-                UIView.animateWithDuration(0.8) {
+                UIView.animate(withDuration: 0.8, animations: {
                     self.pickupPinButton.layoutIfNeeded()
                     self.dropPinButton.layoutIfNeeded()
-                }
+                }) 
                 
-                let alert = UIAlertController(title: "You dropped \(self.pinItem.pin.title)!", message: "Be sure to check back and see where it goes next!", preferredStyle: .ActionSheet)
-                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "You dropped \(self.pinItem.pin.title)!", message: "Be sure to check back and see where it goes next!", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
                 
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 let newAnnotation = MKPointAnnotation()
@@ -259,11 +259,11 @@ class PinViewController: UIViewController, MKMapViewDelegate {
         createEvent(type: EventType.Drop, successHandler: successHandler)
     }
     
-    func createEvent(type type: EventType, successHandler: ((location: CLLocation, event: Event)->())) {
+    func createEvent(type: EventType, successHandler: @escaping ((_ location: CLLocation, _ event: Event)->())) {
         guard let userID = FIRAuth.auth()?.currentUser?.uid else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -273,14 +273,14 @@ class PinViewController: UIViewController, MKMapViewDelegate {
                 guard location != nil else {
                     print("error getting location: \(error)")
                     
-                    dispatch_async(dispatch_get_main_queue()) {
-                        let alert = UIAlertController(title: "Oops", message: "We couldnt find your location!", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Oops", message: "We couldnt find your location!", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
                     }
                     return
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.createEvent(type: type, successHandler: successHandler)
                 }
             }
@@ -298,19 +298,19 @@ class PinViewController: UIViewController, MKMapViewDelegate {
 
         let errorBlock = {
             let actionMessage = event.type == EventType.Drop.rawValue ? "dropping" : "picking up"
-            let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
         pinRef.updateChildValues(["currentEvent": event.dictionary])
         newEventRef.setValue(event.dictionary)
         
-        successHandler(location: location, event: event)
+        successHandler(location, event)
     }
     
-    @IBAction func backPressed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backPressed(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

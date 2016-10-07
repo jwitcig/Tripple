@@ -11,6 +11,11 @@
 		14CF7314467E3E0D83916529 /* Pods_TrippleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B440F723FC0C9F89A18CB66C /* Pods_TrippleUITests.framework */; };
 		5C36A68AA6DF157A05AB9C92 /* Pods_TrippleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61EE8F06189A8355DBEE8427 /* Pods_TrippleTests.framework */; };
 		8B27BC071D697EFC00A41C83 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B27BC061D697EFC00A41C83 /* GoogleService-Info-Dev.plist */; };
+		8B2D33111DA7741100AB3DCD /* GeoFire.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D33041DA7741100AB3DCD /* GeoFire.m */; };
+		8B2D33121DA7741100AB3DCD /* GFBase32Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D33061DA7741100AB3DCD /* GFBase32Utils.m */; };
+		8B2D33131DA7741100AB3DCD /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D33091DA7741100AB3DCD /* GFGeoHash.m */; };
+		8B2D33141DA7741100AB3DCD /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D330B1DA7741100AB3DCD /* GFGeoHashQuery.m */; };
+		8B2D33151DA7741100AB3DCD /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D330E1DA7741100AB3DCD /* GFQuery.m */; };
 		8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */; };
 		8B37FD7A1D4C2D5B00073E67 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD791D4C2D5B00073E67 /* libz.tbd */; };
 		8B37FD971D4C54F400073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD961D4C54F400073E67 /* Info.plist */; };
@@ -56,6 +61,22 @@
 		635B8E04222BB6593B38BDA8 /* Pods-TrippleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrippleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrippleTests/Pods-TrippleTests.release.xcconfig"; sourceTree = "<group>"; };
 		6B44844505DA87AB3CC644FA /* Pods_Tripple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B27BC061D697EFC00A41C83 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		8B2D32341DA7594200AB3DCD /* GeoFire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GeoFire.framework; path = "../../Library/Developer/Xcode/DerivedData/Tripple-aubbqibgjiszjndnsjltjzqkitnj/Build/Products/Debug-iphonesimulator/GeoFire.framework"; sourceTree = "<group>"; };
+		8B2D32CD1DA7630400AB3DCD /* GeoFire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GeoFire.framework; path = "../../Library/Developer/Xcode/DerivedData/Tripple-aubbqibgjiszjndnsjltjzqkitnj/Build/Products/Debug-iphonesimulator/GeoFire/GeoFire.framework"; sourceTree = "<group>"; };
+		8B2D33021DA7741100AB3DCD /* GeoFire+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GeoFire+Private.h"; sourceTree = "<group>"; };
+		8B2D33031DA7741100AB3DCD /* GeoFire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoFire.h; sourceTree = "<group>"; };
+		8B2D33041DA7741100AB3DCD /* GeoFire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoFire.m; sourceTree = "<group>"; };
+		8B2D33051DA7741100AB3DCD /* GFBase32Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBase32Utils.h; sourceTree = "<group>"; };
+		8B2D33061DA7741100AB3DCD /* GFBase32Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBase32Utils.m; sourceTree = "<group>"; };
+		8B2D33071DA7741100AB3DCD /* GFCircleQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFCircleQuery.h; sourceTree = "<group>"; };
+		8B2D33081DA7741100AB3DCD /* GFGeoHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFGeoHash.h; sourceTree = "<group>"; };
+		8B2D33091DA7741100AB3DCD /* GFGeoHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFGeoHash.m; sourceTree = "<group>"; };
+		8B2D330A1DA7741100AB3DCD /* GFGeoHashQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFGeoHashQuery.h; sourceTree = "<group>"; };
+		8B2D330B1DA7741100AB3DCD /* GFGeoHashQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFGeoHashQuery.m; sourceTree = "<group>"; };
+		8B2D330C1DA7741100AB3DCD /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
+		8B2D330D1DA7741100AB3DCD /* GFQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFQuery.h; sourceTree = "<group>"; };
+		8B2D330E1DA7741100AB3DCD /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
+		8B2D330F1DA7741100AB3DCD /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
 		8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8B37FD791D4C2D5B00073E67 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8B37FD961D4C54F400073E67 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -125,6 +146,8 @@
 		13000931F11837016759F475 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B2D32CD1DA7630400AB3DCD /* GeoFire.framework */,
+				8B2D32341DA7594200AB3DCD /* GeoFire.framework */,
 				8B3A10131D6AE257006CB486 /* MapKit.framework */,
 				8B3A100F1D6A9FCB006CB486 /* CoreLocation.framework */,
 				6B44844505DA87AB3CC644FA /* Pods_Tripple.framework */,
@@ -147,9 +170,32 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8B2D33101DA7741100AB3DCD /* GeoFire */ = {
+			isa = PBXGroup;
+			children = (
+				8B2D33021DA7741100AB3DCD /* GeoFire+Private.h */,
+				8B2D33031DA7741100AB3DCD /* GeoFire.h */,
+				8B2D33041DA7741100AB3DCD /* GeoFire.m */,
+				8B2D33051DA7741100AB3DCD /* GFBase32Utils.h */,
+				8B2D33061DA7741100AB3DCD /* GFBase32Utils.m */,
+				8B2D33071DA7741100AB3DCD /* GFCircleQuery.h */,
+				8B2D33081DA7741100AB3DCD /* GFGeoHash.h */,
+				8B2D33091DA7741100AB3DCD /* GFGeoHash.m */,
+				8B2D330A1DA7741100AB3DCD /* GFGeoHashQuery.h */,
+				8B2D330B1DA7741100AB3DCD /* GFGeoHashQuery.m */,
+				8B2D330C1DA7741100AB3DCD /* GFQuery+Private.h */,
+				8B2D330D1DA7741100AB3DCD /* GFQuery.h */,
+				8B2D330E1DA7741100AB3DCD /* GFQuery.m */,
+				8B2D330F1DA7741100AB3DCD /* GFRegionQuery.h */,
+			);
+			name = GeoFire;
+			path = "geofire-objc/GeoFire/GeoFire";
+			sourceTree = "<group>";
+		};
 		8BD5277D1D3C2CA1004F100E = {
 			isa = PBXGroup;
 			children = (
+				8B2D33101DA7741100AB3DCD /* GeoFire */,
 				8B37FD791D4C2D5B00073E67 /* libz.tbd */,
 				8B37FD771D4C2D5200073E67 /* libsqlite3.tbd */,
 				8BD527881D3C2CA1004F100E /* Tripple */,
@@ -290,6 +336,7 @@
 					8BD527851D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 349WFX4WJR;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 0;
@@ -298,10 +345,12 @@
 					};
 					8BD5279B1D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8BD527851D3C2CA1004F100E;
 					};
 					8BD527A61D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8BD527851D3C2CA1004F100E;
 					};
 				};
@@ -484,12 +533,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BBB46051D515E1C0028099A /* AccountViewController.swift in Sources */,
+				8B2D33111DA7741100AB3DCD /* GeoFire.m in Sources */,
 				8BD527BA1D3C3CE8004F100E /* Models.swift in Sources */,
+				8B2D33151DA7741100AB3DCD /* GFQuery.m in Sources */,
 				8BD5278E1D3C2CA1004F100E /* PinMapViewController.swift in Sources */,
 				8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */,
 				8BDC18071D3F07BE00D3E305 /* WaypointAnnotationView.swift in Sources */,
 				8BD5278A1D3C2CA1004F100E /* AppDelegate.swift in Sources */,
 				8BD5278C1D3C2CA1004F100E /* CreatePinViewController.swift in Sources */,
+				8B2D33131DA7741100AB3DCD /* GFGeoHash.m in Sources */,
+				8B2D33141DA7741100AB3DCD /* GFGeoHashQuery.m in Sources */,
+				8B2D33121DA7741100AB3DCD /* GFBase32Utils.m in Sources */,
 				8B8D6E451D4D99090064819C /* PinListViewController.swift in Sources */,
 				8B8591BB1D50A37000BC6EBD /* SignInViewController.swift in Sources */,
 				8BDC180D1D3F21C900D3E305 /* WaypointAnnotation.swift in Sources */,
@@ -646,6 +700,7 @@
 					"$(PROJECT_DIR)/Tripple",
 					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
 					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks/frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GOOGLE_SERVICES_FILE = "GoogleService-Info-Dev";
 				HEADER_SEARCH_PATHS = (
@@ -675,6 +730,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tripple/Tripple-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -692,6 +748,7 @@
 					"$(PROJECT_DIR)/Tripple",
 					"$(PROJECT_DIR)/Pods/FirebaseDatabase/Frameworks",
 					"$(PROJECT_DIR)/Pods/FirebaseAnalytics/Frameworks/frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GOOGLE_SERVICES_FILE = "GoogleService-Info";
 				HEADER_SEARCH_PATHS = (
@@ -720,6 +777,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tripple/Tripple-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -732,6 +790,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripple.app/Tripple";
 			};
 			name = Debug;
@@ -745,6 +804,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripple.app/Tripple";
 			};
 			name = Release;
@@ -757,6 +817,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Tripple;
 			};
 			name = Debug;
@@ -769,6 +830,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Tripple;
 			};
 			name = Release;

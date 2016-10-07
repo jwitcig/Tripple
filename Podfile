@@ -13,7 +13,7 @@ target 'Tripple' do
   pod 'Firebase/Crash'
   pod 'Firebase/Database'
 
-  pod 'GeoFire', :path => "/Users/developer/Documents/Projects/geofire-objc"
+  # pod 'GeoFire', :path => "/Users/developer/Projects/Tripple/geofire-objc"
 
   target 'TrippleTests' do
     inherit! :search_paths
