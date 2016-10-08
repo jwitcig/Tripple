@@ -19,34 +19,27 @@ import RealmSwift
 
 protocol Pin {
     var userId: String { get set }
-    var id: String { get }
+    var id: String { get set }
     var message: String? { get set }
     var title: String { get set }
-    var pinStatus: String { get set }
-    var geohash: String { get set }
     
     var createdDate: Date { get set }
 }
 
 protocol LocalPinModel: Pin {
     var _userId: String { get set }
+    var _id: String { get set }
     var _message: String? { get set }
     var _title: String { get set }
     var _timestamp: Int { get set }
-    var _pinStatus: String { get set }
-    var _geohash: String { get set }
 }
 
 protocol CloudPinModel: Pin {
     var _userId: String? { get set }
+    var _id: String? { get set }
     var _message: String? { get set }
     var _title: String? { get set }
     var _timestamp: NSNumber? { get set }
-    var _pinStatus: String? { get set }
-    var _geohash: String? { get set }
-    var _currentEvent: NSDictionary? { get set }
-    
-    func setCurrentEvent(currentEvent: Event)
 }
 
 extension Pin {
@@ -59,47 +52,29 @@ extension Pin {
         self.title = title
         self.message = message
     }
-    
-    var id: String {
-        return "[\(userId)]\(Int(createdDate.timeIntervalSince1970))"
-    }
 }
 
 extension LocalPinModel {
+    
     var userId: String {
-        get { return _userId }
+        get { return _userId ?? "" }
         set { _userId = newValue }
     }
-<<<<<<< HEAD
-=======
     var id: String {
         get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     var message: String? {
         get { return _message }
         set { _message = newValue }
     }
     var title: String {
-        get { return _title }
+        get { return _title ?? "" }
         set { _title = newValue }
     }
-    var pinStatus: String {
-        get { return _pinStatus }
-        set { _pinStatus = newValue }
-    }
-    var geohash: String {
-        get { return _geohash }
-        set { _geohash = newValue }
-    }
 
-<<<<<<< HEAD
-    var createdDate: NSDate {
-=======
     
     var createdDate: Date {
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         get {
             return Date(timeIntervalSince1970: Double(_timestamp))
         }
@@ -114,13 +89,10 @@ extension CloudPinModel {
         get { return _userId ?? "" }
         set { _userId = newValue }
     }
-<<<<<<< HEAD
-=======
     var id: String {
         get { return _id ?? UUID().uuidString }
         set { _id = newValue }
     }
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     var message: String? {
         get { return _message }
         set { _message = newValue }
@@ -128,14 +100,6 @@ extension CloudPinModel {
     var title: String {
         get { return _title ?? "" }
         set { _title = newValue }
-    }
-    var pinStatus: String {
-        get { return _pinStatus ?? "" }
-        set { _pinStatus = newValue }
-    }
-    var geohash: String {
-        get { return _geohash ?? "" }
-        set { _geohash = newValue }
     }
     
     var createdDate: Date {
@@ -152,94 +116,55 @@ extension CloudPinModel {
 }
 
 class LocalPin: Object, LocalPinModel {
-<<<<<<< HEAD
-    dynamic var _id = ""
-    dynamic var _userId = "" {
-        didSet { updateId() }
-    }
-    dynamic var _timestamp = 0 {
-        didSet { updateId() }
-    }
-=======
     dynamic var _userId = ""
     dynamic var _id = UUID().uuidString
     dynamic var _message: String?
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     dynamic var _title = ""
-    dynamic var _message: String?
-    dynamic var _pinStatus = ""
-    dynamic var _geohash = ""
-    
-    var events: Results<LocalEvent> {
-        return realm!.objects(LocalEvent).filter("_pinId == %@", id)
-    }
-    var currentEvent: Event? {
-        get {
-            return events.sorted("_timestamp", ascending: false).first
-        }
-        set { }
-    }
-    
-    func updateId() {
-        _id = id
-    }
+    dynamic var _timestamp = 0
     
     override static func primaryKey() -> String? {
         return "_id"
     }
     
     override static func ignoredProperties() -> [String] {
-        return ["userId", "message", "title", "timestamp", "pinStatus", "geohash", "currentEvent"]
+        return ["userId", "id", "message", "title", "timestamp"]
     }
 }
 
 class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
     var _userId: String?
-<<<<<<< HEAD
-=======
     var _id: String? = UUID().uuidString
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     var _message: String?
     var _title: String?
-    var _timestamp: NSNumber? {
-        didSet { _timestamp = NSNumber(integer: _timestamp!.integerValue) }
-    }
-    var _pinStatus: String?
-    var _geohash: String?
-    var _currentEvent: NSDictionary?
+    var _timestamp: NSNumber?
     
     class func dynamoDBTableName() -> String {
+
         return "tripple-mobilehub-1169331636-Pin"
     }
     
     class func hashKeyAttribute() -> String {
+
         return "_userId"
     }
     
     class func rangeKeyAttribute() -> String {
-        return "_timestamp"
+
+        return "_id"
     }
     
     override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
                "_userId" : "userId",
+               "_id" : "id",
                "_message" : "message",
                "_title" : "title",
                "_timestamp" : "timestamp",
-               "_pinStatus": "pinStatus",
-               "_geohash": "geohash",
-               "_currentEvent": "currentEvent",
         ]
     }
     
     static func ignoreAttributes() -> [String] {
-        return ["createdDate", "id"]
-    }
-        
-    func setCurrentEvent(currentEvent: Event) {
-        _currentEvent = [
-            "id": currentEvent.id
-        ]
+        return ["createdDate"]
     }
     
     // additions

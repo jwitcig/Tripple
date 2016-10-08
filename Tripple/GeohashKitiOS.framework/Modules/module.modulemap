@@ -1,3 +1,0 @@
-framework module GeohashKitiOS {
-    header "GeohashKitiOS-Swift.h"
-}

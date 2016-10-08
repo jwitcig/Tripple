@@ -1,5 +1,5 @@
 //
-//  CloudPinTable.swift
+//  PinTable.swift
 //  MySampleApp
 //
 //
@@ -16,7 +16,7 @@ import UIKit
 import AWSDynamoDB
 import AWSMobileHubHelper
 
-class CloudPinTable: NSObject, Table {
+class PinTable: NSObject, Table {
     
     var tableName: String
     var partitionKeyName: String
@@ -30,7 +30,7 @@ class CloudPinTable: NSObject, Table {
     }
     var tableDisplayName: String {
 
-        return "CloudPin"
+        return "Pin"
     }
     
     override init() {
@@ -42,13 +42,13 @@ class CloudPinTable: NSObject, Table {
         partitionKeyType = "String"
         indexes = [
 
-            CloudPinPrimaryIndex(),
+            PinPrimaryIndex(),
 
-            CloudPinStatusGeohashIndex(),
+            PinTitle(),
         ]
         if (model.classForCoder.responds(to: #selector(AWSDynamoDBModeling.rangeKeyAttribute))) {
             sortKeyName = model.classForCoder.rangeKeyAttribute!()
-            sortKeyType = "Number"
+            sortKeyType = "String"
         }
         super.init()
     }
@@ -65,16 +65,6 @@ class CloudPinTable: NSObject, Table {
     }
     
     func getItemDescription() -> String {
-<<<<<<< HEAD
-        return "Find Item with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!) and timestamp = \(1111500000)."
-    }
-    
-    func getItemWithCompletionHandler(completionHandler: (response: AWSDynamoDBObjectModel?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        objectMapper.load(CloudPin.self, hashKey: AWSIdentityManager.defaultIdentityManager().identityId!, rangeKey: 1111500000, completionHandler: {(response: AWSDynamoDBObjectModel?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
-=======
         return "Find Item with userId = \(AWSIdentityManager.default().identityId!) and id = \("demo-id-500000")."
     }
     
@@ -83,7 +73,6 @@ class CloudPinTable: NSObject, Table {
         objectMapper.load(CloudPin.self, hashKey: AWSIdentityManager.default().identityId!, rangeKey: "demo-id-500000", completionHandler: {(response: AWSDynamoDBObjectModel?, error: NSError?) -> Void in
             DispatchQueue.main.async(execute: {
                 completionHandler(response, error)
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
             })
         })
     }
@@ -105,16 +94,16 @@ class CloudPinTable: NSObject, Table {
     }
     
     func scanWithFilterDescription() -> String {
-        return "Find all items with geohash < \("demo-geohash-500000")."
+        return "Find all items with message < \("demo-message-500000")."
     }
     
     func scanWithFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
         
-        scanExpression.filterExpression = "#geohash < :geohash"
-        scanExpression.expressionAttributeNames = ["#geohash": "geohash" ,]
-        scanExpression.expressionAttributeValues = [":geohash": "demo-geohash-500000" ,]
+        scanExpression.filterExpression = "#message < :message"
+        scanExpression.expressionAttributeNames = ["#message": "message" ,]
+        scanExpression.expressionAttributeValues = [":message": "demo-message-500000" ,]
 
         objectMapper.scan(CloudPin.self, expression: scanExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             DispatchQueue.main.async(execute: {
@@ -132,19 +121,11 @@ class CloudPinTable: NSObject, Table {
 
         let itemForGet = CloudPin()
         
-<<<<<<< HEAD
-        itemForGet._userId = AWSIdentityManager.defaultIdentityManager().identityId!
-        itemForGet._timestamp = 1111500000
-        itemForGet._currentEvent = NoSQLSampleDataGenerator.randomSampleMap()
-        itemForGet._geohash = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("geohash")
-=======
         itemForGet._userId = AWSIdentityManager.default().identityId!
         itemForGet._id = "demo-id-500000"
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         itemForGet._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
-        itemForGet._pinStatus = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("pinStatus")
-        itemForGet._title = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("title")
-        
+        itemForGet._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
+    
         
         group.enter()
         
@@ -161,18 +142,10 @@ class CloudPinTable: NSObject, Table {
         for _ in 1..<numberOfObjects {
 
             let item: CloudPin = CloudPin()
-<<<<<<< HEAD
-            item._userId = AWSIdentityManager.defaultIdentityManager().identityId!
-            item._timestamp = NoSQLSampleDataGenerator.randomSampleNumber()
-            item._currentEvent = NoSQLSampleDataGenerator.randomSampleMap()
-            item._geohash = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("geohash")
-=======
             item._userId = AWSIdentityManager.default().identityId!
             item._id = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("id")
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
             item._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
-            item._pinStatus = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("pinStatus")
-            item._title = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("title")
+            item._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
             
             group.enter()
             
@@ -240,11 +213,8 @@ class CloudPinTable: NSObject, Table {
 
         let itemToUpdate: CloudPin = item as! CloudPin
         
-        itemToUpdate._currentEvent = NoSQLSampleDataGenerator.randomSampleMap()
-        itemToUpdate._geohash = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("geohash")
         itemToUpdate._message = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("message")
-        itemToUpdate._pinStatus = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("pinStatus")
-        itemToUpdate._title = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("title")
+        itemToUpdate._title = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("title")
         
         objectMapper.save(itemToUpdate, completionHandler: {(error: NSError?) -> Void in
             DispatchQueue.main.async(execute: {
@@ -264,7 +234,7 @@ class CloudPinTable: NSObject, Table {
     }
 }
 
-class CloudPinPrimaryIndex: NSObject, Index {
+class PinPrimaryIndex: NSObject, Index {
     
     var indexName: String? {
         return nil
@@ -299,11 +269,7 @@ class CloudPinPrimaryIndex: NSObject, Index {
     }
     
     func queryWithPartitionKeyAndFilterDescription() -> String {
-<<<<<<< HEAD
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!) and geohash > \("demo-geohash-500000")."
-=======
         return "Find all items with userId = \(AWSIdentityManager.default().identityId!) and message > \("demo-message-500000")."
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     }
     
     func queryWithPartitionKeyAndFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
@@ -311,19 +277,14 @@ class CloudPinPrimaryIndex: NSObject, Index {
         let queryExpression = AWSDynamoDBQueryExpression()
         
         queryExpression.keyConditionExpression = "#userId = :userId"
-        queryExpression.filterExpression = "#geohash > :geohash"
+        queryExpression.filterExpression = "#message > :message"
         queryExpression.expressionAttributeNames = [
             "#userId": "userId",
-            "#geohash": "geohash",
+            "#message": "message",
         ]
         queryExpression.expressionAttributeValues = [
-<<<<<<< HEAD
-            ":userId": AWSIdentityManager.defaultIdentityManager().identityId!,
-            ":geohash": "demo-geohash-500000",
-=======
             ":userId": AWSIdentityManager.default().identityId!,
             ":message": "demo-message-500000",
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         ]
         
 
@@ -335,30 +296,21 @@ class CloudPinPrimaryIndex: NSObject, Index {
     }
     
     func queryWithPartitionKeyAndSortKeyDescription() -> String {
-<<<<<<< HEAD
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!) and timestamp < \(1111500000)."
-=======
         return "Find all items with userId = \(AWSIdentityManager.default().identityId!) and id < \("demo-id-500000")."
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     }
     
     func queryWithPartitionKeyAndSortKeyWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
-        queryExpression.keyConditionExpression = "#userId = :userId AND #timestamp < :timestamp"
+        queryExpression.keyConditionExpression = "#userId = :userId AND #id < :id"
         queryExpression.expressionAttributeNames = [
             "#userId": "userId",
-            "#timestamp": "timestamp",
+            "#id": "id",
         ]
         queryExpression.expressionAttributeValues = [
-<<<<<<< HEAD
-            ":userId": AWSIdentityManager.defaultIdentityManager().identityId!,
-            ":timestamp": 1111500000,
-=======
             ":userId": AWSIdentityManager.default().identityId!,
             ":id": "demo-id-500000",
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         ]
         
 
@@ -370,34 +322,24 @@ class CloudPinPrimaryIndex: NSObject, Index {
     }
     
     func queryWithPartitionKeyAndSortKeyAndFilterDescription() -> String {
-<<<<<<< HEAD
-        return "Find all items with userId = \(AWSIdentityManager.defaultIdentityManager().identityId!), timestamp < \(1111500000), and geohash > \("demo-geohash-500000")."
-=======
         return "Find all items with userId = \(AWSIdentityManager.default().identityId!), id < \("demo-id-500000"), and message > \("demo-message-500000")."
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     }
     
     func queryWithPartitionKeyAndSortKeyAndFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
-        queryExpression.keyConditionExpression = "#userId = :userId AND #timestamp < :timestamp"
-        queryExpression.filterExpression = "#geohash > :geohash"
+        queryExpression.keyConditionExpression = "#userId = :userId AND #id < :id"
+        queryExpression.filterExpression = "#message > :message"
         queryExpression.expressionAttributeNames = [
             "#userId": "userId",
-            "#timestamp": "timestamp",
-            "#geohash": "geohash",
+            "#id": "id",
+            "#message": "message",
         ]
         queryExpression.expressionAttributeValues = [
-<<<<<<< HEAD
-            ":userId": AWSIdentityManager.defaultIdentityManager().identityId!,
-            ":timestamp": 1111500000,
-            ":geohash": "demo-geohash-500000",
-=======
             ":userId": AWSIdentityManager.default().identityId!,
             ":id": "demo-id-500000",
             ":message": "demo-message-500000",
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         ]
         
 
@@ -409,24 +351,22 @@ class CloudPinPrimaryIndex: NSObject, Index {
     }
 }
 
-class CloudPinStatusGeohashIndex: NSObject, Index {
+class PinTitle: NSObject, Index {
     
     var indexName: String? {
 
-        return "Status-Geohash-Index"
+        return "title"
     }
     
     func supportedOperations() -> [String] {
         return [
             QueryWithPartitionKey,
             QueryWithPartitionKeyAndFilter,
-            QueryWithPartitionKeyAndSortKey,
-            QueryWithPartitionKeyAndSortKeyAndFilter,
         ]
     }
     
     func queryWithPartitionKeyDescription() -> String {
-        return "Find all items with CloudPinStatus = \("demo-CloudPinStatus-3")."
+        return "Find all items with title = \("demo-title-3")."
     }
     
     func queryWithPartitionKeyWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
@@ -434,10 +374,10 @@ class CloudPinStatusGeohashIndex: NSObject, Index {
         let queryExpression = AWSDynamoDBQueryExpression()
         
 
-        queryExpression.indexName = "Status-Geohash-Index"
-        queryExpression.keyConditionExpression = "#CloudPinStatus = :CloudPinStatus"
-        queryExpression.expressionAttributeNames = ["#CloudPinStatus": "CloudPinStatus",]
-        queryExpression.expressionAttributeValues = [":CloudPinStatus": "demo-CloudPinStatus-3",]
+        queryExpression.indexName = "title"
+        queryExpression.keyConditionExpression = "#title = :title"
+        queryExpression.expressionAttributeNames = ["#title": "title",]
+        queryExpression.expressionAttributeValues = [":title": "demo-title-3",]
 
         objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
             DispatchQueue.main.async(execute: {
@@ -447,7 +387,7 @@ class CloudPinStatusGeohashIndex: NSObject, Index {
     }
     
     func queryWithPartitionKeyAndFilterDescription() -> String {
-        return "Find all items with CloudPinStatus = \("demo-CloudPinStatus-3") and timestamp > \(1111500000)."
+        return "Find all items with title = \("demo-title-3") and id > \("demo-id-500000")."
     }
     
     func queryWithPartitionKeyAndFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
@@ -455,16 +395,16 @@ class CloudPinStatusGeohashIndex: NSObject, Index {
         let queryExpression = AWSDynamoDBQueryExpression()
         
 
-        queryExpression.indexName = "Status-Geohash-Index"
-        queryExpression.keyConditionExpression = "#CloudPinStatus = :CloudPinStatus"
-        queryExpression.filterExpression = "#timestamp > :timestamp"
+        queryExpression.indexName = "title"
+        queryExpression.keyConditionExpression = "#title = :title"
+        queryExpression.filterExpression = "#id > :id"
         queryExpression.expressionAttributeNames = [
-            "#CloudPinStatus": "CloudPinStatus",
-            "#timestamp": "timestamp",
+            "#title": "title",
+            "#id": "id",
         ]
         queryExpression.expressionAttributeValues = [
-            ":CloudPinStatus": "demo-CloudPinStatus-3",
-            ":timestamp": 1111500000,
+            ":title": "demo-title-3",
+            ":id": "demo-id-500000",
         ]
         
 
@@ -475,62 +415,4 @@ class CloudPinStatusGeohashIndex: NSObject, Index {
         })
     }
     
-    func queryWithPartitionKeyAndSortKeyDescription() -> String {
-        return "Find all items with CloudPinStatus = \("demo-CloudPinStatus-3") and geohash < \("demo-geohash-500000")."
-    }
-    
-    func queryWithPartitionKeyAndSortKeyWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        let queryExpression = AWSDynamoDBQueryExpression()
-        
-
-        queryExpression.indexName = "Status-Geohash-Index"
-        queryExpression.keyConditionExpression = "#CloudPinStatus = :CloudPinStatus AND #geohash < :geohash"
-        queryExpression.expressionAttributeNames = [
-            "#CloudPinStatus": "CloudPinStatus",
-            "#geohash": "geohash",
-        ]
-        queryExpression.expressionAttributeValues = [
-            ":CloudPinStatus": "demo-CloudPinStatus-3",
-            ":geohash": "demo-geohash-500000",
-        ]
-        
-
-        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
-            })
-        })
-    }
-    
-    func queryWithPartitionKeyAndSortKeyAndFilterDescription() -> String {
-        return "Find all items with CloudPinStatus = \("demo-CloudPinStatus-3"), geohash < \("demo-geohash-500000"), and timestamp > \(1111500000)."
-    }
-    
-    func queryWithPartitionKeyAndSortKeyAndFilterWithCompletionHandler(completionHandler: (response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void) {
-        let objectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-        let queryExpression = AWSDynamoDBQueryExpression()
-        
-
-        queryExpression.indexName = "Status-Geohash-Index"
-        queryExpression.keyConditionExpression = "#CloudPinStatus = :CloudPinStatus AND #geohash < :geohash"
-        queryExpression.filterExpression = "#timestamp > :timestamp"
-        queryExpression.expressionAttributeNames = [
-            "#CloudPinStatus": "CloudPinStatus",
-            "#geohash": "geohash",
-            "#timestamp": "timestamp",
-        ]
-        queryExpression.expressionAttributeValues = [
-            ":CloudPinStatus": "demo-CloudPinStatus-3",
-            ":geohash": "demo-geohash-500000",
-            ":timestamp": 1111500000,
-        ]
-        
-
-        objectMapper.query(CloudPin.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(response: response, error: error)
-            })
-        })
-    }
 }

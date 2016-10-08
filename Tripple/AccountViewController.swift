@@ -8,9 +8,8 @@
 
 import UIKit
 
-import AWSMobileHubHelper
-import FBSDKLoginKit
-import RealmSwift
+import Firebase
+import FirebaseAuth
 
 class AccountViewController: UIViewController {
     
@@ -23,38 +22,34 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+        guard let userId = FIRAuth.auth()?.currentUser?.uid else {
+            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
+//        
+//        
+//        let createdPinsCount = realm.objects(LocalPin).filter("_userId == %@", userId).count
+//        
+//        let dropsCount = realm.objects(LocalEvent).filter("_userId == %@", userId).filter("_type == %@", EventType.Drop.rawValue).count
+//        
+//        pinsCreatedLabel.text = createdPinsCount == 1 ? "\(createdPinsCount) Pin created" : "\(createdPinsCount) Pins created"
+//        carriesLabel.text = dropsCount == 1 ? "\(dropsCount) carry" : "\(dropsCount) carries"
         
-        let realm = try! Realm()
-        
-        let createdPinsCount = realm.objects(LocalPin).filter("_userId == %@", userId).count
-        
-        let dropsCount = realm.objects(LocalEvent).filter("_userId == %@", userId).filter("_type == %@", EventType.Drop.rawValue).count
-        
-        pinsCreatedLabel.text = createdPinsCount == 1 ? "\(createdPinsCount) Pin created" : "\(createdPinsCount) Pins created"
-        carriesLabel.text = dropsCount == 1 ? "\(dropsCount) carry" : "\(dropsCount) carries"
-        
-        usernameLabel.text = AWSFacebookSignInProvider.sharedInstance().userName
+        usernameLabel.text = userId
 
-        if let imageURL = AWSFacebookSignInProvider.sharedInstance().imageURL {
-            if let imageData = NSData(contentsOfURL: imageURL) {
-                imageView.image = UIImage(data: imageData)
-            }
-            
-            
-            imageView.clipsToBounds = false
-            imageView.layer.shadowColor = UIColor.blackColor().CGColor
-            imageView.layer.shadowOffset = CGSize(width: 5, height: 10)
-            imageView.layer.shadowOpacity = 0.5
-        }
-        
-        
-        
+//        if let imageURL = AWSFacebookSignInProvider.sharedInstance().imageURL {
+//            if let imageData = NSData(contentsOfURL: imageURL) {
+//                imageView.image = UIImage(data: imageData)
+//            }
+//            
+//            imageView.clipsToBounds = false
+//            imageView.layer.shadowColor = UIColor.blackColor().CGColor
+//            imageView.layer.shadowOffset = CGSize(width: 5, height: 10)
+//            imageView.layer.shadowOpacity = 0.5
+//        }
+    
     }
     
     @IBAction func signOutPressed(_ sender: AnyObject) {
@@ -67,23 +62,12 @@ class AccountViewController: UIViewController {
     }
     
     func signOut() {
-<<<<<<< HEAD
-        AWSIdentityManager.defaultIdentityManager().logoutWithCompletionHandler { result, error in
-=======
-        AWSIdentityManager.default().logout { result, error in
-            
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
-            guard error == nil else {
-                print("Error signing out: \(error!)")
-                return
-            }
-<<<<<<< HEAD
-            self.tabBarController?.dismissViewControllerAnimated(true, completion: nil)
-=======
-            
-            self.tabBarController?.dismiss(animated: true, completion: nil)
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch {
+            print("Error signing out")
         }
+        
     }
 
 }

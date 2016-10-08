@@ -11,8 +11,9 @@ import CoreLocation
 import MapKit
 import UIKit
 
-import AWSDynamoDB
-import AWSMobileHubHelper
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class CreatePinViewController: UIViewController, CLLocationManagerDelegate, ProcessViewDelegate {
 
@@ -82,8 +83,7 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
     func setupProcessViews() {
         processViewItems = [nameView, messageView, viewCompletePinView].map {
             guard var processView = $0 as? ProcessView else { fatalError() }
-            
-            ($0 as AnyObject).translatesAutoresizingMaskIntoConstraints = false
+            ($0 as! UIView).translatesAutoresizingMaskIntoConstraints = false
             
             processView.formDelegate = self
             
@@ -199,189 +199,35 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
             return
         }
         
-        guard let userId = AWSIdentityManager.default().identityId else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        
-        var pin = CloudPin()
-        pin.userId = userId
-        pin.createdDate = NSDate()
-        pin.title = nameView.pinName ?? "none"
-        pin.message = messageView.pinMessage
-<<<<<<< HEAD
-=======
-        pin.createdDate = Date()
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
-        
-        var event = CloudEvent()
-        event.userId = userId
-        event.createdDate = NSDate()
-        event.pinId = pin.id
-        event.location = location
-        event.type = EventType.Pickup.rawValue
-        
-        pin.pinStatus = event.type
-        pin.geohash = event.geohash
-        pin.setCurrentEvent(event)
-        
-        let successBlock = {
-            dispatch_async(dispatch_get_main_queue()) {
-                let actionMessage = event.type == EventType.Drop.rawValue ? "dropping" : "picking up"
-                let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "okay", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        }
-        
-<<<<<<< HEAD
-        let eventUserIdValue = AWSDynamoDBAttributeValue()
-        eventUserIdValue.S = event.userId
-        let eventTimestampValue = AWSDynamoDBAttributeValue()
-        eventTimestampValue.N = "\(Int(event.createdDate.timeIntervalSince1970))"
-        let eventPinIdValue = AWSDynamoDBAttributeValue()
-        eventPinIdValue.S = event.pinId
-        let eventTypeValue = AWSDynamoDBAttributeValue()
-        eventTypeValue.S = event.type
-        let eventLatitudeValue = AWSDynamoDBAttributeValue()
-        eventLatitudeValue.N = "\(event.latitude)"
-        let eventLongitudeValue = AWSDynamoDBAttributeValue()
-        eventLongitudeValue.N = "\(event.longitude)"
-        let eventGeohashValue = AWSDynamoDBAttributeValue()
-        eventGeohashValue.S = event.geohash
-=======
-        let objectMapper = AWSDynamoDBObjectMapper.default()
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
+        guard let userID = FIRAuth.auth()?.currentUser?.uid else { return }
 
-        let eventRequest = AWSDynamoDBPutRequest()
-        eventRequest.item = [
-            "userId": eventUserIdValue,
-            "timestamp": eventTimestampValue,
-            "pinId": eventPinIdValue,
-            "type": eventTypeValue,
-            "latitude": eventLatitudeValue,
-            "longitude": eventLongitudeValue,
-            "geohash": eventGeohashValue,
-        ]
-    
-        let pinUserIdValue = AWSDynamoDBAttributeValue()
-        pinUserIdValue.S = pin.userId
-        let pinTimestampValue = AWSDynamoDBAttributeValue()
-        pinTimestampValue.N = "\(Int(pin.createdDate.timeIntervalSince1970))"
-        let pinTitleValue = AWSDynamoDBAttributeValue()
-        pinTitleValue.S = pin.title
-        let pinMessageValue = AWSDynamoDBAttributeValue()
-        pinMessageValue.S = pin.message
-        let pinStatusValue = AWSDynamoDBAttributeValue()
-        pinStatusValue.S = pin.pinStatus
-        let pinGeohashValue = AWSDynamoDBAttributeValue()
-        pinGeohashValue.S = pin.geohash
-        let pinCurrentEventValue = AWSDynamoDBAttributeValue()
-        let pinCurrentEventIdValue = AWSDynamoDBAttributeValue()
-        pinCurrentEventIdValue.S = event.id
-        pinCurrentEventValue.M = ["id": pinCurrentEventIdValue]
-        let pinRequest = AWSDynamoDBPutRequest()
-        pinRequest.item = [
-            "userId": pinUserIdValue,
-            "timestamp": pinTimestampValue,
-            "title": pinTitleValue,
-            "pinStatus": pinStatusValue,
-            "geohash": pinGeohashValue,
-            "currentEvent": pinCurrentEventValue,
-        ]
+        let databaseRef = FIRDatabase.database().reference()
+        let pinsRef = databaseRef.child("pins")
         
-        pinRequest.item?["message"] = pin.message != "" ? pinMessageValue : nil
-        
-        
-        let pinWrite = AWSDynamoDBWriteRequest()
-        pinWrite.putRequest = pinRequest
-        
-        let eventWrite = AWSDynamoDBWriteRequest()
-        eventWrite.putRequest = eventRequest
-        
-        let batchWrite = AWSDynamoDBBatchWriteItemInput()
-        batchWrite.requestItems = [
-            CloudPin.dynamoDBTableName(): [pinWrite],
-            CloudEvent.dynamoDBTableName(): [eventWrite]
-        ]
-        
-        let dynamo = AWSDynamoDB.defaultDynamoDB()
-        dynamo.batchWriteItem(batchWrite) { response, error in
-            
-            guard error == nil else {
-                let mapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
-                mapper.remove(pin)
-                mapper.remove(event)
-                print("error creating items: \(error!)")
-                return
-            }
-            
-<<<<<<< HEAD
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tabBarController?.selectedIndex = 1
-=======
-            var waypoint = CloudWaypoint()
-            waypoint.pinId = pin.id
-            waypoint.dropLocation = location
-            waypoint.userId = userId
-            waypoint.createdDate = Date()
-            
-            let waypointId = waypoint.id
-            
-            objectMapper.save(waypoint) { error in
-                guard error == nil else {
-                    print(error)
-                    
-                    objectMapper.remove(pin)
+        let newPinRef = pinsRef.childByAutoId()
 
-                    return
-                }
-                
-                var pinStatus = CloudPinStatus()
-                pinStatus?.pinId = pinId
-                pinStatus?.waypointId = waypoint.id
-                objectMapper.save(pinStatus!) { error in
-                    guard error == nil else {
-                        print(error)
-                        
-                        objectMapper.remove(waypoint)
+        let newEventRef = databaseRef.child("events/\(newPinRef.key)").childByAutoId()
+        
+        let event = Event(id: newEventRef.key, pinID: newPinRef.key, location: location, type: EventType.Pickup.rawValue, userID: userID)
+        
+        let pin = Pin(id: newPinRef.key,
+                      userID: userID,
+                      currentEvent: event,
+                      title: nameView.pinName ?? "none",
+                      message: messageView.pinMessage)
+        
+        newPinRef.setValue(pin.dictionary)
+        newEventRef.setValue(pin.currentEvent.dictionary)
+        
+        GeoFire(firebaseRef: databaseRef.child("geofire")).setLocation(location, forKey: newPinRef.key)
+        GeoFire(firebaseRef: newEventRef).setLocation(location, forKey: "location")
 
-                        return
-                    }
-                    
-                    
-                    var pickup = CloudPickup()
-                    pickup.userId = userId
-                    pickup.pinId = pinId
-                    pickup.waypointId = waypointId
-                    pickup.createdDate = Date()
-                    objectMapper.save(pickup) { error in
-                        guard error == nil else {
-                            print(error)
-                            
-                            objectMapper.remove(pinStatus!)
-                            
-                            return
-                        }
-                        
-                        let syncer = Syncer()
-                        syncer.writeToLocal(LocalPin.self, cloudRepresentations: [pin])
-                        syncer.writeToLocal(LocalWaypoint.self, cloudRepresentations: [waypoint])
-                        syncer.writeToLocal(LocalPinStatus.self, cloudRepresentations: [pinStatus])
-                        syncer.writeToLocal(LocalPickup.self, cloudRepresentations: [pickup])
-                    }
-                
-                }
-                
->>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
-            }
-            
-            let syncer = Syncer()
-            syncer.writeToLocal(LocalPin.self, cloudRepresentations: [pin])
-            syncer.writeToLocal(LocalEvent.self, cloudRepresentations: [event])
-        }
+        self.tabBarController?.selectedIndex = 1
+        
+        let actionMessage = pin.currentEvent.type == EventType.Drop.rawValue ? "dropping" : "picking up"
+        let alert = UIAlertController(title: "Something went wrong", message: "There was an error while \(actionMessage) the pin!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -393,7 +239,7 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         print("Location Failed: \(error)")
     }
     
-    override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 

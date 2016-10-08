@@ -1,0 +1,870 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1AEEA2B37490F98917106FB11EB00B2A /* Pods-Tripple-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB495B41F2C10B28AC60EF3CDEC6F8D /* Pods-Tripple-dummy.m */; };
+		207C47707240C3C395287A2FDEF34274 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		20A9951FFCB6F1F7048866F0732903FB /* Pods-Tripple-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A61A0F6E3E0DD883863AB06227D15DA /* Pods-Tripple-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		31722AC8770E0D2CAE3A56B83EEF24A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		8994A67C193A4ED2AF16D81F3E87B058 /* Pods-TrippleUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A34B878ED440A1FF56A67FC227E1FB /* Pods-TrippleUITests-dummy.m */; };
+		A3E53579497ADE3D0E7BF8E38FEBE534 /* Pods-TrippleTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DCD974AA486B4C401054FEEC37E1D7D /* Pods-TrippleTests-dummy.m */; };
+		A3ED2C16DCD2C6606403D5F9D416FC0D /* Pods-TrippleUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 863B4E78459B6C863DE50A2EE3174B04 /* Pods-TrippleUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E8C75D93F01C91DD0AD709B03E14C23D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		F16AF9AF2F952422A16646EEDE6F598B /* Pods-TrippleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EB27428476C2B6D4EE6DFD41405135B /* Pods-TrippleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		051EB1224E7862011A1334DC8243853D /* FirebaseCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCrash.framework; path = Frameworks/frameworks/FirebaseCrash.framework; sourceTree = "<group>"; };
+		060AF03F78E7FD9018F32E0CD3C8C32B /* Pods-TrippleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TrippleTests.release.xcconfig"; sourceTree = "<group>"; };
+		0A61A0F6E3E0DD883863AB06227D15DA /* Pods-Tripple-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Tripple-umbrella.h"; sourceTree = "<group>"; };
+		1B90152F0C65B893B27AD13DA1FBB875 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseDatabase.framework; path = Frameworks/FirebaseDatabase.framework; sourceTree = "<group>"; };
+		24B051CDCE5FCDA8C8D73558A1A8FBC0 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
+		2D7C42FDBB180D5236A8918F3D46548F /* Pods-Tripple-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tripple-frameworks.sh"; sourceTree = "<group>"; };
+		2DF97E66D5EA9FED9DAAFFF994A3660F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E38739DF0290DD015495C8037922599 /* Pods-TrippleTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TrippleTests-resources.sh"; sourceTree = "<group>"; };
+		3B6ADA87CBD851FFBF436A24AFC2F534 /* Pods-TrippleTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TrippleTests-frameworks.sh"; sourceTree = "<group>"; };
+		4AC99B6203C2FD16C62E7E539FA9A85E /* Pods-TrippleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TrippleUITests.release.xcconfig"; sourceTree = "<group>"; };
+		4DCD974AA486B4C401054FEEC37E1D7D /* Pods-TrippleTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TrippleTests-dummy.m"; sourceTree = "<group>"; };
+		4FB495B41F2C10B28AC60EF3CDEC6F8D /* Pods-Tripple-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Tripple-dummy.m"; sourceTree = "<group>"; };
+		50927C5F4FF36376FB9D96B3B277B351 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Frameworks/frameworks/GoogleUtilities.framework; sourceTree = "<group>"; };
+		55AE6358E8B043D4AA72E210075CBD5C /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Frameworks/frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
+		560E0E4AAFC0B27004E08995633FAA4B /* Pods_TrippleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B1A350E6844EF1ED01F97A33A0F7284 /* Pods-Tripple.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Tripple.modulemap"; sourceTree = "<group>"; };
+		5E8975BBE8654BA0CEA45EC373D2C1D4 /* Pods-Tripple-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Tripple-acknowledgements.markdown"; sourceTree = "<group>"; };
+		5EB27428476C2B6D4EE6DFD41405135B /* Pods-TrippleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TrippleTests-umbrella.h"; sourceTree = "<group>"; };
+		61EAE54F7A7CD3C7B57957B0E0018EC0 /* Pods-TrippleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TrippleUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		74A34B878ED440A1FF56A67FC227E1FB /* Pods-TrippleUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TrippleUITests-dummy.m"; sourceTree = "<group>"; };
+		7B54BCFD6FABD564862D6C32135ACDE7 /* Pods-Tripple-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Tripple-acknowledgements.plist"; sourceTree = "<group>"; };
+		7C363D77AB111A77A3BA00582502D55F /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInterchangeUtilities.framework; path = Frameworks/frameworks/GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
+		863B4E78459B6C863DE50A2EE3174B04 /* Pods-TrippleUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TrippleUITests-umbrella.h"; sourceTree = "<group>"; };
+		86F9D8D762CE8CC3B16C99CD1F51AC73 /* Pods-TrippleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TrippleTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		8F751B858A60F2BADE8B9869045ED745 /* Pods-TrippleUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TrippleUITests-resources.sh"; sourceTree = "<group>"; };
+		91D014583848B7B925D9C62CEFA07573 /* Pods-TrippleUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TrippleUITests-frameworks.sh"; sourceTree = "<group>"; };
+		930017D3AA9C29C14AD1773BF4F4D4C4 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		9365082ECCEF4960889A941D67752B56 /* Pods-TrippleUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-TrippleUITests.modulemap"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93DCC5CF5224E9C43F629DA2D31A08CA /* Pods-TrippleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TrippleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9AB4A542D180701AE89B2787F8FC5069 /* Pods-TrippleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-TrippleTests.modulemap"; sourceTree = "<group>"; };
+		A51AA84FAB8B8B7A39962218344A1AB3 /* Pods-TrippleUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TrippleUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		AA9031C029233CEEEDC96B3EF79E4AD2 /* Pods-Tripple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tripple.release.xcconfig"; sourceTree = "<group>"; };
+		AFBD7B4BD8D66FFC978BCA8B9D0EC9D9 /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Core/Sources/Firebase.h; sourceTree = "<group>"; };
+		B0575AB9158B77BB3033D3ECB07C1C41 /* Pods-TrippleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TrippleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B4194CCA87EEFA45FC15100B6A3FBAEB /* Pods-TrippleUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TrippleUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C07D68AD96CA16CE562A8361C211AAD7 /* Pods-Tripple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Tripple.debug.xcconfig"; sourceTree = "<group>"; };
+		C76686517A034ECA351330557961DA73 /* Pods_TrippleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrippleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA6BE367016F0CED715F2AB9B771D148 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleNetworkingUtilities.framework; path = Frameworks/frameworks/GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
+		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D4B7F740A60576E48481D9FDB2985542 /* FIRInstanceID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceID.h; path = Sources/FIRInstanceID.h; sourceTree = "<group>"; };
+		D4D9813804D911EA9E0B388E2355E86D /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		D64EE32F4A086E7CC0834C4C392BB194 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		DA496870B70483D4F3709E3F808A41EB /* Pods_Tripple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC8AA089C23831604E2D414A95F50F08 /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAuth.framework; path = Frameworks/frameworks/FirebaseAuth.framework; sourceTree = "<group>"; };
+		F0F95768D1EACC385527441C5AAB247C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F18B0192C4F5BF5C2833B4EC756CE9A6 /* Pods-Tripple-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tripple-resources.sh"; sourceTree = "<group>"; };
+		FDAF317563E54C8455D3EBE0B345723F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4308F238F6B8B785BDFFCB8500115364 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8C75D93F01C91DD0AD709B03E14C23D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C328E3A8C0F5D917377706C9168412 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31722AC8770E0D2CAE3A56B83EEF24A1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA77935E73A2B78025AB7E6773015923 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				207C47707240C3C395287A2FDEF34274 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02B1806A0D974DE8435381EE70AC4151 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4D9813804D911EA9E0B388E2355E86D /* GoogleSymbolUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DD1ED345F3596D801BDFE6DD329F887 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AFBD7B4BD8D66FFC978BCA8B9D0EC9D9 /* Firebase.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		328F0E80617C7E681312EED18D3FD3FB /* GoogleNetworkingUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				6DD387EFBEBCE05FD6F660625033A132 /* Frameworks */,
+			);
+			path = GoogleNetworkingUtilities;
+			sourceTree = "<group>";
+		};
+		3811BCEAB24D0D811B169F4E5C6E0970 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50927C5F4FF36376FB9D96B3B277B351 /* GoogleUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		384E1BE222A4F382EBD1FBEC88E849CF /* Pods-Tripple */ = {
+			isa = PBXGroup;
+			children = (
+				F0F95768D1EACC385527441C5AAB247C /* Info.plist */,
+				5B1A350E6844EF1ED01F97A33A0F7284 /* Pods-Tripple.modulemap */,
+				5E8975BBE8654BA0CEA45EC373D2C1D4 /* Pods-Tripple-acknowledgements.markdown */,
+				7B54BCFD6FABD564862D6C32135ACDE7 /* Pods-Tripple-acknowledgements.plist */,
+				4FB495B41F2C10B28AC60EF3CDEC6F8D /* Pods-Tripple-dummy.m */,
+				2D7C42FDBB180D5236A8918F3D46548F /* Pods-Tripple-frameworks.sh */,
+				F18B0192C4F5BF5C2833B4EC756CE9A6 /* Pods-Tripple-resources.sh */,
+				0A61A0F6E3E0DD883863AB06227D15DA /* Pods-Tripple-umbrella.h */,
+				C07D68AD96CA16CE562A8361C211AAD7 /* Pods-Tripple.debug.xcconfig */,
+				AA9031C029233CEEEDC96B3EF79E4AD2 /* Pods-Tripple.release.xcconfig */,
+			);
+			name = "Pods-Tripple";
+			path = "Target Support Files/Pods-Tripple";
+			sourceTree = "<group>";
+		};
+		3AEB7E79775413A443DCDA04C4651107 /* GoogleSymbolUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				02B1806A0D974DE8435381EE70AC4151 /* Frameworks */,
+			);
+			path = GoogleSymbolUtilities;
+			sourceTree = "<group>";
+		};
+		3B47E60ABD37403E773F2C51982E50FA /* GoogleUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				3811BCEAB24D0D811B169F4E5C6E0970 /* Frameworks */,
+			);
+			path = GoogleUtilities;
+			sourceTree = "<group>";
+		};
+		3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		54F455F5D5518943128D494840797D56 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D64EE32F4A086E7CC0834C4C392BB194 /* FirebaseAnalytics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55730EDE0A292663069EE1D0E1A855AC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D531010329E6F2B4A8C7A970C080A8E7 /* Firebase */,
+				934CBF033E24218DE647D5936B92104D /* FirebaseAnalytics */,
+				7B3FCAB21DBA48BC3660E4864992F7A5 /* FirebaseAuth */,
+				A7035B5E0FBEEC9E4B3E5D225062068F /* FirebaseCore */,
+				6D69B3F4480F24638B6CF9CBB0FF05EF /* FirebaseCrash */,
+				CA6738B2FC91103D303B16A7DB673F21 /* FirebaseDatabase */,
+				867FBA7B82AB1BDF3E8FDD01BCB08DD9 /* FirebaseInstanceID */,
+				7D7FD55A017E66FD9B398878A6183DFB /* Google-Mobile-Ads-SDK */,
+				98FC226317988EA538DE017145966A3F /* GoogleInterchangeUtilities */,
+				328F0E80617C7E681312EED18D3FD3FB /* GoogleNetworkingUtilities */,
+				3AEB7E79775413A443DCDA04C4651107 /* GoogleSymbolUtilities */,
+				3B47E60ABD37403E773F2C51982E50FA /* GoogleUtilities */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5B637996F11A04095FFA569126DA0644 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				930017D3AA9C29C14AD1773BF4F4D4C4 /* FirebaseInstanceID.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5DF2219B3349F16B50E60A472EC5E425 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1B90152F0C65B893B27AD13DA1FBB875 /* FirebaseDatabase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		643927536501E9AF3D236B4364B6A3F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				051EB1224E7862011A1334DC8243853D /* FirebaseCrash.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6652AEE0753D7B1019F64834888D3635 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55AE6358E8B043D4AA72E210075CBD5C /* FirebaseCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6C81316D265AA677A019925A4B31EBFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				24B051CDCE5FCDA8C8D73558A1A8FBC0 /* GoogleMobileAds.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6D69B3F4480F24638B6CF9CBB0FF05EF /* FirebaseCrash */ = {
+			isa = PBXGroup;
+			children = (
+				643927536501E9AF3D236B4364B6A3F7 /* Frameworks */,
+			);
+			path = FirebaseCrash;
+			sourceTree = "<group>";
+		};
+		6DD387EFBEBCE05FD6F660625033A132 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA6BE367016F0CED715F2AB9B771D148 /* GoogleNetworkingUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6F2A8594B1D92A8E325711AAB6D244D4 /* Pods-TrippleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FDAF317563E54C8455D3EBE0B345723F /* Info.plist */,
+				9365082ECCEF4960889A941D67752B56 /* Pods-TrippleUITests.modulemap */,
+				B4194CCA87EEFA45FC15100B6A3FBAEB /* Pods-TrippleUITests-acknowledgements.markdown */,
+				A51AA84FAB8B8B7A39962218344A1AB3 /* Pods-TrippleUITests-acknowledgements.plist */,
+				74A34B878ED440A1FF56A67FC227E1FB /* Pods-TrippleUITests-dummy.m */,
+				91D014583848B7B925D9C62CEFA07573 /* Pods-TrippleUITests-frameworks.sh */,
+				8F751B858A60F2BADE8B9869045ED745 /* Pods-TrippleUITests-resources.sh */,
+				863B4E78459B6C863DE50A2EE3174B04 /* Pods-TrippleUITests-umbrella.h */,
+				61EAE54F7A7CD3C7B57957B0E0018EC0 /* Pods-TrippleUITests.debug.xcconfig */,
+				4AC99B6203C2FD16C62E7E539FA9A85E /* Pods-TrippleUITests.release.xcconfig */,
+			);
+			name = "Pods-TrippleUITests";
+			path = "Target Support Files/Pods-TrippleUITests";
+			sourceTree = "<group>";
+		};
+		7B3FCAB21DBA48BC3660E4864992F7A5 /* FirebaseAuth */ = {
+			isa = PBXGroup;
+			children = (
+				9971BC398940AF4698D87EA448A10A2C /* Frameworks */,
+			);
+			path = FirebaseAuth;
+			sourceTree = "<group>";
+		};
+		7D7FD55A017E66FD9B398878A6183DFB /* Google-Mobile-Ads-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				6C81316D265AA677A019925A4B31EBFC /* Frameworks */,
+			);
+			path = "Google-Mobile-Ads-SDK";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				55730EDE0A292663069EE1D0E1A855AC /* Pods */,
+				D48CF4AE9D1066CD2293D82CA8C3A009 /* Products */,
+				945F3621933FCB1B2FA5533465935BBD /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		867FBA7B82AB1BDF3E8FDD01BCB08DD9 /* FirebaseInstanceID */ = {
+			isa = PBXGroup;
+			children = (
+				D4B7F740A60576E48481D9FDB2985542 /* FIRInstanceID.h */,
+				5B637996F11A04095FFA569126DA0644 /* Frameworks */,
+			);
+			path = FirebaseInstanceID;
+			sourceTree = "<group>";
+		};
+		88653FFAE6F2FB0AA47FE22A4817277A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7C363D77AB111A77A3BA00582502D55F /* GoogleInterchangeUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		934CBF033E24218DE647D5936B92104D /* FirebaseAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				54F455F5D5518943128D494840797D56 /* Frameworks */,
+			);
+			path = FirebaseAnalytics;
+			sourceTree = "<group>";
+		};
+		945F3621933FCB1B2FA5533465935BBD /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				384E1BE222A4F382EBD1FBEC88E849CF /* Pods-Tripple */,
+				D5A855BF51B08E055C63832821773902 /* Pods-TrippleTests */,
+				6F2A8594B1D92A8E325711AAB6D244D4 /* Pods-TrippleUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		98FC226317988EA538DE017145966A3F /* GoogleInterchangeUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				88653FFAE6F2FB0AA47FE22A4817277A /* Frameworks */,
+			);
+			path = GoogleInterchangeUtilities;
+			sourceTree = "<group>";
+		};
+		9971BC398940AF4698D87EA448A10A2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC8AA089C23831604E2D414A95F50F08 /* FirebaseAuth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A7035B5E0FBEEC9E4B3E5D225062068F /* FirebaseCore */ = {
+			isa = PBXGroup;
+			children = (
+				6652AEE0753D7B1019F64834888D3635 /* Frameworks */,
+			);
+			path = FirebaseCore;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CA6738B2FC91103D303B16A7DB673F21 /* FirebaseDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				5DF2219B3349F16B50E60A472EC5E425 /* Frameworks */,
+			);
+			path = FirebaseDatabase;
+			sourceTree = "<group>";
+		};
+		D48CF4AE9D1066CD2293D82CA8C3A009 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA496870B70483D4F3709E3F808A41EB /* Pods_Tripple.framework */,
+				560E0E4AAFC0B27004E08995633FAA4B /* Pods_TrippleTests.framework */,
+				C76686517A034ECA351330557961DA73 /* Pods_TrippleUITests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D531010329E6F2B4A8C7A970C080A8E7 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				2DD1ED345F3596D801BDFE6DD329F887 /* Core */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		D5A855BF51B08E055C63832821773902 /* Pods-TrippleTests */ = {
+			isa = PBXGroup;
+			children = (
+				2DF97E66D5EA9FED9DAAFFF994A3660F /* Info.plist */,
+				9AB4A542D180701AE89B2787F8FC5069 /* Pods-TrippleTests.modulemap */,
+				B0575AB9158B77BB3033D3ECB07C1C41 /* Pods-TrippleTests-acknowledgements.markdown */,
+				86F9D8D762CE8CC3B16C99CD1F51AC73 /* Pods-TrippleTests-acknowledgements.plist */,
+				4DCD974AA486B4C401054FEEC37E1D7D /* Pods-TrippleTests-dummy.m */,
+				3B6ADA87CBD851FFBF436A24AFC2F534 /* Pods-TrippleTests-frameworks.sh */,
+				2E38739DF0290DD015495C8037922599 /* Pods-TrippleTests-resources.sh */,
+				5EB27428476C2B6D4EE6DFD41405135B /* Pods-TrippleTests-umbrella.h */,
+				93DCC5CF5224E9C43F629DA2D31A08CA /* Pods-TrippleTests.debug.xcconfig */,
+				060AF03F78E7FD9018F32E0CD3C8C32B /* Pods-TrippleTests.release.xcconfig */,
+			);
+			name = "Pods-TrippleTests";
+			path = "Target Support Files/Pods-TrippleTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5906AEC5A8B720E07186A4F447B43F01 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20A9951FFCB6F1F7048866F0732903FB /* Pods-Tripple-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649F21D4F552CF5F2F380ED8EF61A38B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3ED2C16DCD2C6606403D5F9D416FC0D /* Pods-TrippleUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A78C386AC54FD4C464DB4FBC390241CC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F16AF9AF2F952422A16646EEDE6F598B /* Pods-TrippleTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		05CC1FDBB3A47CA25D395F47EDAB33AF /* Pods-TrippleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89A051AA6A010F41EE642AE83A0374F1 /* Build configuration list for PBXNativeTarget "Pods-TrippleTests" */;
+			buildPhases = (
+				1342BB037C0AFA923493EFE533F72711 /* Sources */,
+				BA77935E73A2B78025AB7E6773015923 /* Frameworks */,
+				A78C386AC54FD4C464DB4FBC390241CC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-TrippleTests";
+			productName = "Pods-TrippleTests";
+			productReference = 560E0E4AAFC0B27004E08995633FAA4B /* Pods_TrippleTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		6D53EC724B7CF414C3BF5D1E151CB2C9 /* Pods-Tripple */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE074B13E8BD2A73028010AD284E5757 /* Build configuration list for PBXNativeTarget "Pods-Tripple" */;
+			buildPhases = (
+				D0FE624EEAD4B299415253E8B026DADD /* Sources */,
+				A7C328E3A8C0F5D917377706C9168412 /* Frameworks */,
+				5906AEC5A8B720E07186A4F447B43F01 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-Tripple";
+			productName = "Pods-Tripple";
+			productReference = DA496870B70483D4F3709E3F808A41EB /* Pods_Tripple.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BA2D1CEC8706E12768126EB8EFD3EF56 /* Pods-TrippleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A95A2C221D597359137584BE48F3AD6 /* Build configuration list for PBXNativeTarget "Pods-TrippleUITests" */;
+			buildPhases = (
+				55A989F7ED6A668304A94DA11EEF2075 /* Sources */,
+				4308F238F6B8B785BDFFCB8500115364 /* Frameworks */,
+				649F21D4F552CF5F2F380ED8EF61A38B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-TrippleUITests";
+			productName = "Pods-TrippleUITests";
+			productReference = C76686517A034ECA351330557961DA73 /* Pods_TrippleUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = D48CF4AE9D1066CD2293D82CA8C3A009 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6D53EC724B7CF414C3BF5D1E151CB2C9 /* Pods-Tripple */,
+				05CC1FDBB3A47CA25D395F47EDAB33AF /* Pods-TrippleTests */,
+				BA2D1CEC8706E12768126EB8EFD3EF56 /* Pods-TrippleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1342BB037C0AFA923493EFE533F72711 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3E53579497ADE3D0E7BF8E38FEBE534 /* Pods-TrippleTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55A989F7ED6A668304A94DA11EEF2075 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8994A67C193A4ED2AF16D81F3E87B058 /* Pods-TrippleUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0FE624EEAD4B299415253E8B026DADD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1AEEA2B37490F98917106FB11EB00B2A /* Pods-Tripple-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3FA451D268613890FA8A5A03801E11D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4D5ACFE7AD9A10E51643AB6FCC39A3FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C07D68AD96CA16CE562A8361C211AAD7 /* Pods-Tripple.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Tripple/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Tripple/Pods-Tripple.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Tripple;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		6DCA55E462CFC335320BCA24A713B431 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA9031C029233CEEEDC96B3EF79E4AD2 /* Pods-Tripple.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Tripple/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Tripple/Pods-Tripple.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Tripple;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		76538E1DF9B2C276BE099AC8F346CCA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 93DCC5CF5224E9C43F629DA2D31A08CA /* Pods-TrippleTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-TrippleTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TrippleTests/Pods-TrippleTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_TrippleTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8A42DEF7464ABECAA16B55F57B318AE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 61EAE54F7A7CD3C7B57957B0E0018EC0 /* Pods-TrippleUITests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-TrippleUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TrippleUITests/Pods-TrippleUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_TrippleUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D43913B4B57E50C85F079D35A8B55B9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 060AF03F78E7FD9018F32E0CD3C8C32B /* Pods-TrippleTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-TrippleTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TrippleTests/Pods-TrippleTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_TrippleTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FE45238C21EC6BF7D74CF5B77911EA82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AC99B6203C2FD16C62E7E539FA9A85E /* Pods-TrippleUITests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-TrippleUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-TrippleUITests/Pods-TrippleUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_TrippleUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */,
+				3FA451D268613890FA8A5A03801E11D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5A95A2C221D597359137584BE48F3AD6 /* Build configuration list for PBXNativeTarget "Pods-TrippleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A42DEF7464ABECAA16B55F57B318AE4 /* Debug */,
+				FE45238C21EC6BF7D74CF5B77911EA82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89A051AA6A010F41EE642AE83A0374F1 /* Build configuration list for PBXNativeTarget "Pods-TrippleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76538E1DF9B2C276BE099AC8F346CCA0 /* Debug */,
+				D43913B4B57E50C85F079D35A8B55B9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE074B13E8BD2A73028010AD284E5757 /* Build configuration list for PBXNativeTarget "Pods-Tripple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D5ACFE7AD9A10E51643AB6FCC39A3FB /* Debug */,
+				6DCA55E462CFC335320BCA24A713B431 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

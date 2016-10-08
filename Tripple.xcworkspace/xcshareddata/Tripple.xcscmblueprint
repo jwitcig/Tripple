@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7727A1726E96EBC797E46ED1527108BBC1825F84",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7727A1726E96EBC797E46ED1527108BBC1825F84" : 0,
+    "78BC981234DC9ACF745E820B97CE28D46F6D69E7" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "946DD844-389E-405E-AF88-4F12548685D1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7727A1726E96EBC797E46ED1527108BBC1825F84" : "Tripple\/",
+    "78BC981234DC9ACF745E820B97CE28D46F6D69E7" : "Tripple\/geofire-objc\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Tripple",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Tripple.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/jwitcig\/tripple",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7727A1726E96EBC797E46ED1527108BBC1825F84"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/firebase\/geofire-objc.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "78BC981234DC9ACF745E820B97CE28D46F6D69E7"
+    }
+  ]
+}
