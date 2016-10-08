@@ -83,7 +83,6 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
     func setupProcessViews() {
         processViewItems = [nameView, messageView, viewCompletePinView].map {
             guard var processView = $0 as? ProcessView else { fatalError() }
-            
             ($0 as! UIView).translatesAutoresizingMaskIntoConstraints = false
             
             processView.formDelegate = self
@@ -200,13 +199,8 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
             return
         }
         
-        guard let userID = FIRAuth.auth()?.currentUser?.uid else {
-            let alert = UIAlertController(title: "Sign In Error", message: "User account could not be verified, try logging in again.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        
+        guard let userID = FIRAuth.auth()?.currentUser?.uid else { return }
+
         let databaseRef = FIRDatabase.database().reference()
         let pinsRef = databaseRef.child("pins")
         
@@ -245,7 +239,7 @@ class CreatePinViewController: UIViewController, CLLocationManagerDelegate, Proc
         print("Location Failed: \(error)")
     }
     
-    override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 

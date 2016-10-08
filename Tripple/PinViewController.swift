@@ -86,7 +86,7 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationBar.isTranslucent = true
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
@@ -115,7 +115,7 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     func locationUpdated(location: CLLocation) {
         guard let pinItem = pinItem else { return }
         let pinLocation = pinItem.pin.currentEvent.location
-        
+    
         let distance = location.distance(from: pinLocation) * 0.000621371 // in miles
         DispatchQueue.main.async {
             if distance <= 0.25 {
@@ -137,7 +137,7 @@ class PinViewController: UIViewController, MKMapViewDelegate {
     // Fetches GPS information for events (city names, distances, etc.)
     func fetchEventInformation(events: [Event]) {
         eventInfoList = []
-        
+    
         let descendingEvents = events.sorted{$0.0.createdDate.compare($0.1.createdDate as Date) == .orderedDescending}
         
         let geocoder = CLGeocoder()

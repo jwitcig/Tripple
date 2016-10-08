@@ -22,7 +22,7 @@ class Pin: Equatable, Hashable {
     
     var title: String
     var message: String?
-    
+        
     var currentEvent: Event
 
     var timestamp = Date()

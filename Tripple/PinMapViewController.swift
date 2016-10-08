@@ -13,15 +13,13 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-
-
 struct MapItem {
     let pin: Pin?
     let pinID: String
     let location: CLLocation
     let annotation: MKPointAnnotation
     
-    init (pinID: String, location: CLLocation, pin: Pin? = nil, annotation: MKPointAnnotation) {
+    init(pinID: String, location: CLLocation, pin: Pin? = nil, annotation: MKPointAnnotation) {
         self.pinID = pinID
         self.location = location
         self.pin = pin
@@ -29,7 +27,7 @@ struct MapItem {
     }
 }
 
-class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, GADBannerViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -62,15 +60,12 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             
             
             let geofire = GeoFire(firebaseRef: databaseRef.child("geofire"))!
-            
-            let query = geofire.queryAtLocation($0.location, withRadius: 20.0)
-            query.observeEventType(.KeyEntered, withBlock: { key, location in
-                self.addMapItem(pinID: key, location: location)
+            let query = geofire.query(at: $0.0, withRadius: 20.0)
+            query?.observe(.keyEntered, with: { key, location in
+                self.addMapItem(pinID: key!, location: location!)
             })
 
         }
-        locationHandler.requestLocation()
-        
         navigationBar.isTranslucent = true
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
@@ -82,7 +77,7 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         let buttonItem = MKUserTrackingBarButtonItem(mapView: mapView)
         navigationBar.topItem?.leftBarButtonItem = buttonItem
         
-        pinInfoView.pickupSuccessBlock = { pin, event in
+        pinInfoView.pickupSuccessBlock = { pickup, pin, event in
             let title = "You picked up \(pin.title)"
             let message = "You have 24 hours to carry the message wherever you like! Hurry!"
             
@@ -130,6 +125,32 @@ class PinMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
 //            self.adBannerHolder.hidden = true
 //        }
 //    }
+
+    func createAdBannerView() -> GADBannerView {
+        let adView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        adView.adUnitID = "ca-app-pub-0507224597790106/4302627325"
+        adView.delegate = self
+        adView.rootViewController = self
+        let request = GADRequest()
+        request.testDevices = [kGADSimulatorID, "8dba35d6e5470a34c709123c81ec85c1"]
+        adView.load(request)
+        
+        adBannerHolder.addSubview(adView)
+        adBannerHolder.isHidden = true
+        return adView
+    }
+    
+    func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
+        UIView.animate(withDuration: 0.8, animations: {
+            self.adBannerHolder.isHidden = false
+        }) 
+    }
+    
+    func adView(_ bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        UIView.animate(withDuration: 0.8, animations: {
+            self.adBannerHolder.isHidden = true
+        }) 
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -242,7 +263,7 @@ class PinInfoView: UIView {
     let verticalLimit : CGFloat = -10
     var totalTranslation : CGFloat = -200
     
-    var pickupSuccessBlock: ((_ pin: Pin, _ event: Event)->())!
+    var pickupSuccessBlock: ((_ pickup: Event, _ pin: Pin, _ waypoint: Event)->())!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -333,6 +354,31 @@ class PinInfoView: UIView {
 //        }
 //        
 //    }
+
+    @IBAction func pickUpPinPressed(_ sender: UIButton) {
+        // TODO: implement user info
+        guard let userID = FIRAuth.auth()?.currentUser?.uid else {
+            print("missing user information")
+            return
+        }
+        
+        guard let pin = mapItem.pin else {
+            print("missing pin")
+            return
+        }
+        
+        let databaseRef = FIRDatabase.database().reference()
+        let pickupsRef = databaseRef.child("\(pin.id)/pickups")
+        
+        let pickup = Event(id: pickupsRef.childByAutoId().key,
+                        pinID: pin.id,
+                     location: location!,
+                         type: EventType.Pickup.rawValue,
+                       userID: userID,
+              previousEventID: pin.currentEvent.id)
+        
+        
+    }
     
     @IBAction func viewDragged(_ sender: UIPanGestureRecognizer) {
         return

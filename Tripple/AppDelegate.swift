@@ -14,7 +14,9 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        return true
+    }
     
     override init() {
         let servicesFileName = Bundle.main.infoDictionary!["Google Services File"] as! String
@@ -22,11 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let options = FIROptions(contentsOfFile: Bundle.main.path(forResource: servicesFileName, ofType: "plist"))
         FIRApp.configure(with: options!)
     }
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        return true
-    }
-    
+
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return true
     }

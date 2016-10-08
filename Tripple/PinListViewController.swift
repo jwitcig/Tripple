@@ -112,7 +112,8 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
+
+    switch section {
         case 0:
             return pickedUpPins.count > 0 ? "You're Carrying [\(pickedUpPins.count)]" : nil
         case 1:
@@ -141,7 +142,6 @@ class PinListViewController: UIViewController, UITableViewDataSource, UITableVie
         default:
             fatalError("Unimplemented section")
         }
-        
         
         guard let pinViewController = self.storyboard?.instantiateViewController(withIdentifier: "PinViewController") as? PinViewController else { return }
         

@@ -65,8 +65,9 @@ class AccountViewController: UIViewController {
         do {
             try FIRAuth.auth()?.signOut()
         } catch {
-            
+            print("Error signing out")
         }
+        
     }
 
 }
