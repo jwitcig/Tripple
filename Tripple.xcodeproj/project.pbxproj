@@ -31,6 +31,7 @@
 		8B37FD931D4C37EE00073E67 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD911D4C37EE00073E67 /* Event.swift */; };
 		8B37FD941D4C464400073E67 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B37FD7B1D4C301F00073E67 /* AWSDynamoDB.framework */; };
 		8B37FD971D4C54F400073E67 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B37FD961D4C54F400073E67 /* Info.plist */; };
+<<<<<<< HEAD
 		8B5816A41D5ED59000AB58A5 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A21D5ED57C00AB58A5 /* AWSDynamoDB.framework */; };
 		8B5816AA1D5ED63400AB58A5 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A61D5ED63400AB58A5 /* AWSCore.framework */; };
 		8B5816AC1D5ED63400AB58A5 /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A81D5ED63400AB58A5 /* AWSLambda.framework */; };
@@ -45,12 +46,22 @@
 		8B5816B51D5ED65700AB58A5 /* AWSMobileAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5816A91D5ED63400AB58A5 /* AWSMobileAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B68342D1D5D6C0600E9D79C /* NoSQLTableFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B68342C1D5D6C0600E9D79C /* NoSQLTableFactory.swift */; };
 		8B6834351D5D6EA600E9D79C /* EventTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6834341D5D6EA600E9D79C /* EventTable.swift */; };
+=======
+		8B4AF3E61D51D41300789047 /* icon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4AF3E31D51D41300789047 /* icon1024.png */; };
+		8B4AF3E71D51D41300789047 /* icon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4AF3E41D51D41300789047 /* icon180.png */; };
+		8B4AF3E81D51D41300789047 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4AF3E51D51D41300789047 /* icon120.png */; };
+		8B592C3A1D9B5AC90051D818 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
+		8B592C3B1D9B5AC90051D818 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
 		8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
-		8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
 		8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; };
 		8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591951D4E980600BC6EBD /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B85919B1D4E981200BC6EBD /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; };
+<<<<<<< HEAD
 		8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8591961D4E980600BC6EBD /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+=======
+		8B85919D1D4EB7FF00BC6EBD /* PinTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B37FD851D4C32B300073E67 /* PinTable.swift */; };
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
 		8B85919F1D4EFEDF00BC6EBD /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85919E1D4EFEDF00BC6EBD /* PinViewController.swift */; };
 		8B8591A31D500BC900BC6EBD /* CacheTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8591A21D500BC900BC6EBD /* CacheTransaction.swift */; };
 		8B8591A61D50907000BC6EBD /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8B8591A41D50907000BC6EBD /* GoogleSignIn.bundle */; };
@@ -105,10 +116,18 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+<<<<<<< HEAD
 				8B5816B31D5ED65700AB58A5 /* AWSLambda.framework in Embed Frameworks */,
 				8B5816B51D5ED65700AB58A5 /* AWSMobileAnalytics.framework in Embed Frameworks */,
 				8B85919C1D4E981200BC6EBD /* RealmSwift.framework in Embed Frameworks */,
 				8B882BE91D614798006B8394 /* GeohashKitiOS.framework in Embed Frameworks */,
+=======
+				8B37FD691D4C2C8100073E67 /* AWSCore.framework in Embed Frameworks */,
+				8B37FD6D1D4C2C8100073E67 /* AWSMobileAnalytics.framework in Embed Frameworks */,
+				8B592C3B1D9B5AC90051D818 /* RealmSwift.framework in Embed Frameworks */,
+				8B37FD951D4C464400073E67 /* AWSDynamoDB.framework in Embed Frameworks */,
+				8B37FD6B1D4C2C8100073E67 /* AWSLambda.framework in Embed Frameworks */,
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
 				8B85919A1D4E981200BC6EBD /* Realm.framework in Embed Frameworks */,
 				8B5816B11D5ED65700AB58A5 /* AWSDynamoDB.framework in Embed Frameworks */,
 				8B5816AF1D5ED65700AB58A5 /* AWSCore.framework in Embed Frameworks */,
@@ -192,7 +211,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				8B5816B21D5ED65700AB58A5 /* AWSLambda.framework in Frameworks */,
+=======
+				8B592C3A1D9B5AC90051D818 /* RealmSwift.framework in Frameworks */,
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
 				8B8591971D4E980600BC6EBD /* Realm.framework in Frameworks */,
 				8B882BE81D614798006B8394 /* GeohashKitiOS.framework in Frameworks */,
 				8B874C461D4D7BD600AEF8A1 /* GoogleMobileAds.framework in Frameworks */,
@@ -203,7 +226,6 @@
 				8B8591991D4E981200BC6EBD /* Realm.framework in Frameworks */,
 				8B37FD781D4C2D5200073E67 /* libsqlite3.tbd in Frameworks */,
 				8B8591B91D50A01D00BC6EBD /* Bolts.framework in Frameworks */,
-				8B8591981D4E980600BC6EBD /* RealmSwift.framework in Frameworks */,
 				8B37FD6A1D4C2C8100073E67 /* AWSLambda.framework in Frameworks */,
 				8B37FD671D4C2C4100073E67 /* GoogleUtilities.framework in Frameworks */,
 				8B37FD681D4C2C8100073E67 /* AWSCore.framework in Frameworks */,
@@ -461,6 +483,7 @@
 					8BD527851D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 349WFX4WJR;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 0;
@@ -469,10 +492,12 @@
 					};
 					8BD5279B1D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8BD527851D3C2CA1004F100E;
 					};
 					8BD527A61D3C2CA1004F100E = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 8BD527851D3C2CA1004F100E;
 					};
 				};
@@ -734,6 +759,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -758,6 +784,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.Tripple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -769,6 +796,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripple.app/Tripple";
 			};
 			name = Debug;
@@ -781,6 +809,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripple.app/Tripple";
 			};
 			name = Release;
@@ -792,6 +821,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Tripple;
 			};
 			name = Debug;
@@ -803,6 +833,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jwitapps.TrippleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Tripple;
 			};
 			name = Release;

@@ -35,7 +35,7 @@ protocol Event {
     
     var type: String { get set }
     
-    var createdDate: NSDate { get set }
+    var createdDate: Date { get set }
 }
 
 protocol LocalEventModel: Event {
@@ -84,6 +84,13 @@ extension LocalEventModel {
         get { return _userId ?? "" }
         set { _userId = newValue }
     }
+<<<<<<< HEAD:Tripple/Event.swift
+=======
+    var id: String {
+        get { return _id ?? UUID().uuidString }
+        set { _id = newValue }
+    }
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8:Tripple/Waypoint.swift
     var latitude: CLLocationDegrees {
         get { return _latitude }
         set { _latitude = newValue }
@@ -108,9 +115,9 @@ extension LocalEventModel {
         get { return _geohash }
         set { _geohash = newValue }
     }
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
-            return NSDate(timeIntervalSince1970: Double(_timestamp))
+            return Date(timeIntervalSince1970: Double(_timestamp))
         }
         set {
             _timestamp = Int(newValue.timeIntervalSince1970)
@@ -123,13 +130,20 @@ extension CloudEventModel {
         get { return _userId ?? "" }
         set { _userId = newValue }
     }
+<<<<<<< HEAD:Tripple/Event.swift
+=======
+    var id: String {
+        get { return _id ?? UUID().uuidString }
+        set { _id = newValue }
+    }
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8:Tripple/Waypoint.swift
     var latitude: CLLocationDegrees {
         get { return _latitude?.doubleValue ?? 0.0 }
-        set { _latitude = newValue }
+        set { _latitude = newValue as NSNumber? }
     }
     var longitude: CLLocationDegrees {
         get { return _longitude?.doubleValue ?? 0.0 }
-        set { _longitude = newValue }
+        set { _longitude = newValue as NSNumber? }
     }
     var pinId: String {
         get { return _pinId ?? "" }
@@ -147,19 +161,20 @@ extension CloudEventModel {
         get { return _geohash ?? "" }
         set { _geohash = newValue }
     }
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
             if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
+                return Date(timeIntervalSince1970: interval.doubleValue)
             }
-            return NSDate()
+            return Date()
         }
         set {
-            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+            _timestamp = NSNumber(value: newValue.timeIntervalSince1970 as Double)
         }
     }
 }
 
+<<<<<<< HEAD:Tripple/Event.swift
 class LocalEvent: Object, LocalEventModel {
     dynamic var _id = ""
     dynamic var _userId = "" {
@@ -168,6 +183,11 @@ class LocalEvent: Object, LocalEventModel {
     dynamic var _timestamp = 0 {
         didSet { updateId() }
     }
+=======
+class LocalWaypoint: Object, LocalWaypointModel {
+    dynamic var _userId = ""
+    dynamic var _id = UUID().uuidString
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8:Tripple/Waypoint.swift
     dynamic var _latitude: Double = 0.0
     dynamic var _longitude: Double = 0.0
     dynamic var _pinId = ""
@@ -190,6 +210,10 @@ class LocalEvent: Object, LocalEventModel {
 
 class CloudEvent: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudEventModel {
     var _userId: String?
+<<<<<<< HEAD:Tripple/Event.swift
+=======
+    var _id: String? = UUID().uuidString
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8:Tripple/Waypoint.swift
     var _latitude: NSNumber?
     var _longitude: NSNumber?
     var _pinId: String?
@@ -212,7 +236,7 @@ class CloudEvent: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudEventModel {
         return "_timestamp"
     }
     
-    override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
+    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
                "_userId" : "userId",
                "_latitude" : "latitude",
@@ -230,12 +254,25 @@ class CloudEvent: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudEventModel {
     }
     
     // additions
+<<<<<<< HEAD:Tripple/Event.swift
+=======
+
+    var dropLocation: CLLocation {
+        get {
+            return CLLocation(latitude: latitude, longitude: longitude)
+        }
+        set {
+            _latitude = NSNumber(value: newValue.coordinate.latitude as Double)
+            _longitude =  NSNumber(value: newValue.coordinate.longitude as Double)
+        }
+    }
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8:Tripple/Waypoint.swift
     
     override init() {
         super.init()
     }
     
-    override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
+    override init(dictionary dictionaryValue: [AnyHashable: Any]!, error: ()) throws {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     

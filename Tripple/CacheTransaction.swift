@@ -17,18 +17,22 @@ enum CacheTransactionType: String {
 }
 
 class CacheTransaction: Object {
-    dynamic var _timestamp = Int(NSDate().timeIntervalSince1970)
+    dynamic var _timestamp = Int(Date().timeIntervalSince1970)
     dynamic var _cacheType = ""
     dynamic var _note = ""
 
+<<<<<<< HEAD
     static let expirationInterval = NSTimeInterval(30) // 30 sec
+=======
+    static let expirationInterval = TimeInterval(60 * 3) // 3 minutes
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
    
-    var time: NSDate {
-        return NSDate(timeIntervalSince1970: Double(_timestamp))
+    var time: Date {
+        return Date(timeIntervalSince1970: Double(_timestamp))
     }
     
     var expired: Bool {
-        return NSDate().timeIntervalSinceDate(time) > CacheTransaction.expirationInterval
+        return Date().timeIntervalSince(time) > CacheTransaction.expirationInterval
     }
     
     override static func primaryKey() -> String? {
@@ -39,8 +43,13 @@ class CacheTransaction: Object {
         return ["expirationInterval", "expired", "time"]
     }
     
+<<<<<<< HEAD
     static func cacheHasExpired(cacheType cacheType: CacheTransactionType, note: String? = nil, realm: Realm? = nil) -> Bool {
         let acceptableCacheTime = Int(NSDate().dateByAddingTimeInterval(-CacheTransaction.expirationInterval).timeIntervalSince1970)
+=======
+    static func cacheHasExpired(cacheType: CacheTransactionType, note: String? = nil) -> Bool {
+        let acceptableCacheTime = Int(Date().addingTimeInterval(-CacheTransaction.expirationInterval).timeIntervalSince1970)
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         
         let queryset = try! (realm ?? Realm()).objects(CacheTransaction.self)
                                    .filter("_timestamp > %@", acceptableCacheTime)
@@ -53,10 +62,14 @@ class CacheTransaction: Object {
         return queryset.count == 0
     }
     
+<<<<<<< HEAD
     static func markCacheUpdated(cacheType cacheType: CacheTransactionType, note: String = "", realm customRealm: Realm? = nil) {
         
         let realm = try! customRealm ?? Realm()
         
+=======
+    static func markCacheUpdated(cacheType: CacheTransactionType, note: String = "") {
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         let cacheTransaction = CacheTransaction()
         cacheTransaction._cacheType = cacheType.rawValue
         cacheTransaction._note = note

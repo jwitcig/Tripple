@@ -37,7 +37,11 @@ struct Syncer {
         }
     }
     
+<<<<<<< HEAD
     func writeToLocal<T: Object>(realmClass: T.Type, cloudRepresentations: [AWSDynamoDBObjectModel], completionHandler: ((realm: Realm)->())? = nil) {
+=======
+    func writeToLocal<T: Object>(_ realmClass: T.Type, cloudRepresentations: [AWSDynamoDBObjectModel]) -> [T] {
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         
         operationQueue.addOperationWithBlock {
             let cleanedRepresentations: [AnyObject] = cloudRepresentations.map {
@@ -49,6 +53,7 @@ struct Syncer {
                 return cleaned
             }
             
+<<<<<<< HEAD
             try! self.realm.write {
                 cleanedRepresentations.forEach {
                     var object: T
@@ -77,6 +82,12 @@ struct Syncer {
     func syncUsersInteractions() {
         guard let userId = AWSIdentityManager.defaultIdentityManager().identityId else {
             return
+=======
+            if let value = cleaned?["_timestamp"] as? Double {
+                cleaned?["_timestamp"] =  Int(value)
+            }
+            return cleaned as AnyObject
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         }
         
         if CacheTransaction.cacheHasExpired(cacheType: .UserData, note: userId) {

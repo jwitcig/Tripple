@@ -25,7 +25,7 @@ protocol Pin {
     var pinStatus: String { get set }
     var geohash: String { get set }
     
-    var createdDate: NSDate { get set }
+    var createdDate: Date { get set }
 }
 
 protocol LocalPinModel: Pin {
@@ -70,6 +70,13 @@ extension LocalPinModel {
         get { return _userId }
         set { _userId = newValue }
     }
+<<<<<<< HEAD
+=======
+    var id: String {
+        get { return _id ?? UUID().uuidString }
+        set { _id = newValue }
+    }
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     var message: String? {
         get { return _message }
         set { _message = newValue }
@@ -87,9 +94,14 @@ extension LocalPinModel {
         set { _geohash = newValue }
     }
 
+<<<<<<< HEAD
     var createdDate: NSDate {
+=======
+    
+    var createdDate: Date {
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
         get {
-            return NSDate(timeIntervalSince1970: Double(_timestamp))
+            return Date(timeIntervalSince1970: Double(_timestamp))
         }
         set {
             _timestamp = Int(newValue.timeIntervalSince1970)
@@ -102,6 +114,13 @@ extension CloudPinModel {
         get { return _userId ?? "" }
         set { _userId = newValue }
     }
+<<<<<<< HEAD
+=======
+    var id: String {
+        get { return _id ?? UUID().uuidString }
+        set { _id = newValue }
+    }
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     var message: String? {
         get { return _message }
         set { _message = newValue }
@@ -119,20 +138,21 @@ extension CloudPinModel {
         set { _geohash = newValue }
     }
     
-    var createdDate: NSDate {
+    var createdDate: Date {
         get {
             if let interval = _timestamp {
-                return NSDate(timeIntervalSince1970: interval.doubleValue)
+                return Date(timeIntervalSince1970: interval.doubleValue)
             }
-            return NSDate()
+            return Date()
         }
         set {
-            _timestamp = NSNumber(double: newValue.timeIntervalSince1970)
+            _timestamp = NSNumber(value: newValue.timeIntervalSince1970 as Double)
         }
     }
 }
 
 class LocalPin: Object, LocalPinModel {
+<<<<<<< HEAD
     dynamic var _id = ""
     dynamic var _userId = "" {
         didSet { updateId() }
@@ -140,6 +160,11 @@ class LocalPin: Object, LocalPinModel {
     dynamic var _timestamp = 0 {
         didSet { updateId() }
     }
+=======
+    dynamic var _userId = ""
+    dynamic var _id = UUID().uuidString
+    dynamic var _message: String?
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     dynamic var _title = ""
     dynamic var _message: String?
     dynamic var _pinStatus = ""
@@ -170,6 +195,10 @@ class LocalPin: Object, LocalPinModel {
 
 class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
     var _userId: String?
+<<<<<<< HEAD
+=======
+    var _id: String? = UUID().uuidString
+>>>>>>> c1895d8be9fb31bb84b5a483d597d33bf21018f8
     var _message: String?
     var _title: String?
     var _timestamp: NSNumber? {
@@ -191,7 +220,7 @@ class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
         return "_timestamp"
     }
     
-    override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject] {
+    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
                "_userId" : "userId",
                "_message" : "message",
@@ -219,7 +248,7 @@ class CloudPin: AWSDynamoDBObjectModel, AWSDynamoDBModeling, CloudPinModel  {
         super.init()
     }
     
-    override init(dictionary dictionaryValue: [NSObject : AnyObject]!, error: ()) throws {
+    override init(dictionary dictionaryValue: [AnyHashable: Any]!, error: ()) throws {
         try super.init(dictionary: dictionaryValue, error: error)
     }
     
