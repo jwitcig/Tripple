@@ -85,6 +85,8 @@
 	<string>456108827847092</string>
 	<key>FacebookDisplayName</key>
 	<string>Tripple</string>
+	<key>Google Services File</key>
+	<string>$(GOOGLE_SERVICES_FILE)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -100,21 +102,21 @@
 		<dict>
 			<key>amazonaws.com</key>
 			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
 				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
 				<string>TLSv1.0</string>
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<false/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
 			</dict>
 			<key>amazonaws.com.cn</key>
 			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
 				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
 				<string>TLSv1.0</string>
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<false/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
 			</dict>
 			<key>cloudfront.net</key>
 			<dict>
@@ -150,7 +152,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>Google Services File</key>
-	<string>$(GOOGLE_SERVICES_FILE)</string>
 </dict>
 </plist>
